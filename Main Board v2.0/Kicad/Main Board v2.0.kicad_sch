@@ -1,0 +1,279 @@
+(kicad_sch
+	(version 20260306)
+	(generator "eeschema")
+	(generator_version "10.0")
+	(uuid "91a97de0-fe3a-4a53-b587-b32edd62d6f9")
+	(paper "A3")
+	(title_block
+		(title "Zalt Main Board")
+		(rev "1")
+		(company "Jacobi Software")
+	)
+	(lib_symbols)
+	(sheet
+		(at 96.52 128.27)
+		(size 22.86 35.56)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "0256e416-4ec8-489e-ad65-c3c8e0d7f516")
+		(property "Sheetname" "Memory"
+			(at 96.52 127.5584 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Memory.kicad_sch"
+			(at 96.52 164.4146 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 144.78 73.66)
+		(size 25.4 30.48)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "38464a8b-0df1-4971-a790-8d514365b55d")
+		(property "Sheetname" "MMU"
+			(at 144.78 72.9484 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MMU.kicad_sch"
+			(at 144.78 104.7246 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
+					(page "3")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 97.79 67.31)
+		(size 24.13 27.94)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "5629c61f-0e25-4cd4-88fe-4b15ad7083f0")
+		(property "Sheetname" "CPU"
+			(at 97.79 66.5984 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "CPU.kicad_sch"
+			(at 97.79 95.8346 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "A" output
+			(at 97.79 72.39 180)
+			(uuid "ed83838f-6e19-4961-bea8-37562f48c7bd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "D" bidirectional
+			(at 97.79 78.74 180)
+			(uuid "b47ceae5-5cff-45f9-9781-856be97eff34")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CPU_CTRL" bidirectional
+			(at 97.79 87.63 180)
+			(uuid "8ed5b8e9-a5c1-48c3-9ad6-f155ce9a0289")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 157.48 125.73)
+		(size 20.32 31.75)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "99986d84-8d01-4a1f-b315-e2163d64878e")
+		(property "Sheetname" "Expansion Bus"
+			(at 157.48 125.0184 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "ExpansionBus.kicad_sch"
+			(at 157.48 158.0646 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 187.96 74.93)
+		(size 24.13 29.21)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "bb4a9de7-d70e-4fb8-828d-baaabe316e47")
+		(property "Sheetname" "Control Logic"
+			(at 187.96 74.2184 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Control Logic.kicad_sch"
+			(at 187.96 104.7246 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
+					(page "5")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+	(embedded_fonts no)
+)

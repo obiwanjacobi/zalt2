@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "CPLD_Xilinx") (type "Legacy") (uri "${KIPRJMOD}/_libs/CPLD_Xilinx.lib") (options "") (descr ""))
+)

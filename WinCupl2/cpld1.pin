@@ -1,0 +1,8 @@
+CHIP "C:\My\MyProjects\zalt2\WinCupl2\cpld1" ASSIGNED TO AN TQFP100
+A					: 2
+C					: 7
+TDI					: 4
+Q					: 19
+TMS					: 15
+TCK					: 62
+TDO					: 73

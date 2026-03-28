@@ -1,0 +1,29 @@
+#$ TOOL CUPL
+# Berkeley PLA format generated using CUPL(WM) 5.0a
+# Serial#  MW-10400000
+# Created  Sat Mar 28 15:31:49 2026
+#
+#    Name        cpld1.pld
+#    Partno      
+#    Revision    
+#    Date        
+#    Designer    
+#    Company     
+#    Assembly    
+#    Location    
+#
+#$ TITLE  cpld1.pld
+#$ MODULE  cpld1
+#$ JEDECFILE  cpld1
+#$ DEVICE  f1508isptqfp100
+#$ PINS   3 A+:2 C+:7 Q+:19 
+.i 2
+.o 1
+.type f
+.ilb  A C 
+.ob   Q- 
+.phase 1
+.p 2
+0- 1
+-0 1
+.e

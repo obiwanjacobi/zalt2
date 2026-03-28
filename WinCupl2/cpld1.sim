@@ -1,0 +1,15 @@
+%SIGNAL
+PIN   2 =  A 
+PIN   7 =  C 
+PIN  19 =  Q 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+!Q =>
+    !A
+  # !C
+
+%END

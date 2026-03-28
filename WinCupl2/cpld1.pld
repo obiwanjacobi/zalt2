@@ -1,0 +1,19 @@
+Name       cpld1.pld;
+Partno     ;
+Date       ;
+Revision   ;
+Designer   ;
+Company    ;
+Assembly   ;
+Location   ;
+Device     F1508ISPTQFP100;
+
+/* INPUT PINS */
+PIN 2 = A; /* 1st AND gate input */
+PIN 7 = C; /* 2nd AND gate input */
+
+/* OUTPUT PINS */
+PIN 19 = Q; /* AND gate output */
+
+/* LOGIC EQUATION */
+Q = A & C;

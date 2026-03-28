@@ -1,0 +1,339 @@
+Atmel ATF1508 Fitter Version 1918 ,running Sat Mar 28 15:31:55 2026
+
+
+
+
+fit1508 C:\My\MyProjects\zalt2\WinCupl2\cpld1.tt2
+-CUPL 
+-device TQFP100
+-tech ATF1508AS
+-JTAG ON
+
+****** Initial fitting strategy and property ******
+ Netlist_in_file = cpld1.tt2
+ Netlist_out_file = cpld1.tt3
+ Jedec_file = cpld1.jed
+ Vector_file = cpld1.tmv
+ verilog_file = cpld1.vt
+ Log_file = cpld1.fit
+ Device_name = TQFP100
+ Tech_name = ATF1508AS 
+ Package_type = TQFP
+ Preassignment = try 
+ Security_mode = OFF
+ Pin-Keeper = OFF
+ supporter = CUPL
+ optimize = ON
+ Xor_synthesis = OFF
+ Foldback_logic = OFF
+ Cascade_logic = OFF
+ Output_fast = ON
+ SSTL_input = off
+ *******************************
+ Power down pin 1 = OFF
+ Power down pin 2 = OFF
+ power_reset = OFF
+ JTAG = ON
+ TDI pullup = OFF
+ TMS pullup = OFF
+ MC_power = OFF
+ Open_collector = OFF
+ ITD0 = ON
+ ITD1 = ON
+ ITD2 = ON
+ Fast_inlatch = off
+ Latch_synthesis = off 
+ Push_gate = on 
+ Verilog_sim = off 
+ VHDL_sim = off 
+ Out_Edif = off 
+ Logic Doubling = off 
+ ****** End of fitting strategy and property ******
+---------------------------------------------------------
+ Fitter_Pass 1, Preassign = KEEP, LOGIC_DOUBLING : OFF 
+ ... 
+
+Performing global Output Enable pin assignments ...
+
+Performing global pin assignments ...
+--------------------------------------
+
+
+
+Final global control pins assignment (if applicable)...
+-------------------------------------------------------
+
+
+
+Performing input pin pre-assignments ...
+------------------------------------
+
+Attempt to place floating signals ...
+------------------------------------
+A is placed at pin 2 (MC 1)
+C is placed at pin 7 (MC 27)
+TDI is placed at pin 4 (MC 32)
+Q is placed at pin 19 (MC 43)
+TMS is placed at pin 15 (MC 48)
+TCK is placed at pin 62 (MC 96)
+TDO is placed at pin 73 (MC 112)
+
+                                    G           V              G           V                    
+                                    N           C              N           C                    
+                                    D           C              D           C                    
+                 +------------------------------------------------------------------------------+
+                 | 100 99 98 97 96 95 94 93 92 91 90 89 88 87 86 85 84 83 82 81 80 79 78 77 76  |
+                 | 1                                                                         75 |   
+                A| 2                                                                         74 |GND
+              VCC| 3                                                                         73 |TDO
+              TDI| 4                                                                         72 |   
+                 | 5                                                                         71 |   
+                 | 6                                                                         70 |   
+                C| 7                                                                         69 |   
+                 | 8                                                                         68 |   
+                 | 9                                                                         67 |   
+                 | 10                                                                        66 |VCC
+              GND| 11                                                                        65 |   
+                 | 12                                ATF1508                                 64 |   
+                 | 13                             100-Lead TQFP                              63 |   
+                 | 14                                                                        62 |TCK
+              TMS| 15                                                                        61 |   
+                 | 16                                                                        60 |   
+                 | 17                                                                        59 |GND
+              VCC| 18                                                                        58 |   
+                Q| 19                                                                        57 |   
+                 | 20                                                                        56 |   
+                 | 21                                                                        55 |   
+                 | 22                                                                        54 |   
+                 | 23                                                                        53 |   
+                 | 24                                                                        52 |   
+                 | 25                                                                        51 |VCC
+                 |  26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50  |
+                 +------------------------------------------------------------------------------+
+                     G                       V           G  V           G                       
+                     N                       C           N  C           N                       
+                     D                       C           D  C           D                       
+
+
+
+
+VCC = Supply Voltage pin for the device core
+
+GND = GND pin which must be connected to ground
+
+TMS,TDI,TDO,TDI = JTAG pins reserved for JTAG interface
+
+NC = Unused I/O pins which must be unconnected on the board
+
+Universal-Interconnect-Multiplexer assignments
+------------------------------------------------
+FanIn assignment for block C [2]
+{
+A,
+C,
+}
+Multiplexer assignment for block C
+C			(MC2	P)   : MUX 0		Ref (B27p)
+A			(MC1	P)   : MUX 1		Ref (A1p)
+
+Creating JEDEC file C:\My\MyProjects\zalt2\WinCupl2\cpld1.jed ...
+
+TQFP100 programmed logic:
+-----------------------------------
+Q = (A & C);
+
+
+TQFP100 Pin/Node Placement:
+------------------------------------
+Pin 2  = A; /* MC 1 */
+Pin 4  = TDI; /* MC 32 */
+Pin 7  = C; /* MC 27 */
+Pin 15 = TMS; /* MC 48 */ 
+Pin 19 = Q; /* MC 43 */ 
+Pin 62 = TCK; /* MC 96 */ 
+Pin 73 = TDO; /* MC 112 */ 
+
+** Resource Usage **
+
+
+DCERP Field = Summary of Allocations.
+|||||
+|||||_Preset [p,-]       ==  p = PT preset, - No Preset.
+||||
+||||__Reset [g,r,-]      ==  g= Global AR, r = PT reset, - No reset.
+|||
+|||___Clock Enable [e,-] ==  e = Product Term, - always enabled.
+||
+||____Clock [c,g,-],     ==  c = Product term, g = Global term, - No Clock.
+|
+|_____Type [C,D,L,T],    ==  Register type C= combin, D=dff, L=latch, T=tff.
+
+For input only = INPUT.
+
+
+SO Pin Options Field = Summary of Allocations.
+||
+||_OpenCol [o,-]      ==  o = Open Collector enabled, - CMOS drive.
+|
+|__Slew [s,f]         ==  Output Slew/Drive rate, s = slow/low, f = fast/hi drive.
+
+
+MCell Pin# Oe   PinDrive  DCERP  FBDrive  DCERP  Foldback  CascadeOut     TotPT SO
+MC1   2    --   A         INPUT  --              --        --             0     f- 
+MC2   0         --               --              --        --             0     f- 
+MC3   1         --               --              --        --             0     f- 
+MC4   0         --               --              --        --             0     f- 
+MC5   100       --               --              --        --             0     f- 
+MC6   99        --               --              --        --             0     f- 
+MC7   0         --               --              --        --             0     f- 
+MC8   98        --               --              --        --             0     f- 
+MC9   97        --               --              --        --             0     f- 
+MC10  0         --               --              --        --             0     f- 
+MC11  96        --               --              --        --             0     f- 
+MC12  0         --               --              --        --             0     f- 
+MC13  94        --               --              --        --             0     f- 
+MC14  93        --               --              --        --             0     f- 
+MC15  0         --               --              --        --             0     f- 
+MC16  92        --               --              --        --             0     f- 
+MC17  14        --               --              --        --             0     f- 
+MC18  0         --               --              --        --             0     f- 
+MC19  13        --               --              --        --             0     f- 
+MC20  0         --               --              --        --             0     f- 
+MC21  12        --               --              --        --             0     f- 
+MC22  10        --               --              --        --             0     f- 
+MC23  0         --               --              --        --             0     f- 
+MC24  9         --               --              --        --             0     f- 
+MC25  8         --               --              --        --             0     f- 
+MC26  0         --               --              --        --             0     f- 
+MC27  7    --   C         INPUT  --              --        --             0     f- 
+MC28  0         --               --              --        --             0     f- 
+MC29  6         --               --              --        --             0     f- 
+MC30  5         --               --              --        --             0     f- 
+MC31  0         --               --              --        --             0     f- 
+MC32  4    --   TDI       INPUT  --              --        --             0     f- 
+MC33  25        --               --              --        --             0     f- 
+MC34  0         --               --              --        --             0     f- 
+MC35  24        --               --              --        --             0     f- 
+MC36  0         --               --              --        --             0     f- 
+MC37  23        --               --              --        --             0     f- 
+MC38  22        --               --              --        --             0     f- 
+MC39  0         --               --              --        --             0     f- 
+MC40  21        --               --              --        --             0     f- 
+MC41  20        --               --              --        --             0     f- 
+MC42  0         --               --              --        --             0     f- 
+MC43  19   on   Q         C----  --              --        --             1     f- 
+MC44  0         --               --              --        --             0     f- 
+MC45  17        --               --              --        --             0     f- 
+MC46  16        --               --              --        --             0     f- 
+MC47  0         --               --              --        --             0     f- 
+MC48  15   --   TMS       INPUT  --              --        --             0     f- 
+MC49  37        --               --              --        --             0     f- 
+MC50  0         --               --              --        --             0     f- 
+MC51  36        --               --              --        --             0     f- 
+MC52  0         --               --              --        --             0     f- 
+MC53  35        --               --              --        --             0     f- 
+MC54  33        --               --              --        --             0     f- 
+MC55  0         --               --              --        --             0     f- 
+MC56  32        --               --              --        --             0     f- 
+MC57  31        --               --              --        --             0     f- 
+MC58  0         --               --              --        --             0     f- 
+MC59  30        --               --              --        --             0     f- 
+MC60  0         --               --              --        --             0     f- 
+MC61  29        --               --              --        --             0     f- 
+MC62  28        --               --              --        --             0     f- 
+MC63  0         --               --              --        --             0     f- 
+MC64  27        --               --              --        --             0     f- 
+MC65  40        --               --              --        --             0     f- 
+MC66  0         --               --              --        --             0     f- 
+MC67  41        --               --              --        --             0     f- 
+MC68  0         --               --              --        --             0     f- 
+MC69  42        --               --              --        --             0     f- 
+MC70  44        --               --              --        --             0     f- 
+MC71  0         --               --              --        --             0     f- 
+MC72  45        --               --              --        --             0     f- 
+MC73  46        --               --              --        --             0     f- 
+MC74  0         --               --              --        --             0     f- 
+MC75  47        --               --              --        --             0     f- 
+MC76  0         --               --              --        --             0     f- 
+MC77  48        --               --              --        --             0     f- 
+MC78  49        --               --              --        --             0     f- 
+MC79  0         --               --              --        --             0     f- 
+MC80  50        --               --              --        --             0     f- 
+MC81  52        --               --              --        --             0     f- 
+MC82  0         --               --              --        --             0     f- 
+MC83  53        --               --              --        --             0     f- 
+MC84  0         --               --              --        --             0     f- 
+MC85  54        --               --              --        --             0     f- 
+MC86  55        --               --              --        --             0     f- 
+MC87  0         --               --              --        --             0     f- 
+MC88  56        --               --              --        --             0     f- 
+MC89  57        --               --              --        --             0     f- 
+MC90  0         --               --              --        --             0     f- 
+MC91  58        --               --              --        --             0     f- 
+MC92  0         --               --              --        --             0     f- 
+MC93  60        --               --              --        --             0     f- 
+MC94  61        --               --              --        --             0     f- 
+MC95  0         --               --              --        --             0     f- 
+MC96  62   --   TCK       INPUT  --              --        --             0     f- 
+MC97  63        --               --              --        --             0     f- 
+MC98  0         --               --              --        --             0     f- 
+MC99  64        --               --              --        --             0     f- 
+MC100 0         --               --              --        --             0     f- 
+MC101 65        --               --              --        --             0     f- 
+MC102 67        --               --              --        --             0     f- 
+MC103 0         --               --              --        --             0     f- 
+MC104 68        --               --              --        --             0     f- 
+MC105 69        --               --              --        --             0     f- 
+MC106 0         --               --              --        --             0     f- 
+MC107 70        --               --              --        --             0     f- 
+MC108 0         --               --              --        --             0     f- 
+MC109 71        --               --              --        --             0     f- 
+MC110 72        --               --              --        --             0     f- 
+MC111 0         --               --              --        --             0     f- 
+MC112 73   --   TDO       C----  --              --        --             0     f- 
+MC113 75        --               --              --        --             0     f- 
+MC114 0         --               --              --        --             0     f- 
+MC115 76        --               --              --        --             0     f- 
+MC116 0         --               --              --        --             0     f- 
+MC117 77        --               --              --        --             0     f- 
+MC118 78        --               --              --        --             0     f- 
+MC119 0         --               --              --        --             0     f- 
+MC120 79        --               --              --        --             0     f- 
+MC121 80        --               --              --        --             0     f- 
+MC122 0         --               --              --        --             0     f- 
+MC123 81        --               --              --        --             0     f- 
+MC124 0         --               --              --        --             0     f- 
+MC125 83        --               --              --        --             0     f- 
+MC126 84        --               --              --        --             0     f- 
+MC127 0         --               --              --        --             0     f- 
+MC128 85        --               --              --        --             0     f- 
+MC0   90        --               --              --        --             0     f- 
+MC0   89        --               --              --        --             0     f- 
+MC0   88        --               --              --        --             0     f- 
+MC0   87        --               --              --        --             0     f- 
+
+Logic Array Block			Macro Cells	I/O Pins	Foldbacks	TotalPT	FanIN		Cascades
+A: MC1	- MC16		0/16(0%)	1/16(6%)	0/16(0%)	0/80(0%)	2/40(5%)	0
+B: MC17	- MC32		0/16(0%)	2/16(12%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+C: MC33	- MC48		1/16(6%)	2/16(12%)	0/16(0%)	1/80(1%)	0/40(0%)	0
+D: MC49	- MC64		0/16(0%)	0/16(0%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+E: MC65	- MC80		0/16(0%)	0/16(0%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+F: MC81	- MC96		0/16(0%)	1/16(6%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+G: MC97	- MC112		1/16(6%)	1/16(6%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+H: MC113- MC128		0/16(0%)	0/16(0%)	0/16(0%)	0/80(0%)	0/40(0%)	0
+
+Total dedicated input used:	0/4 	(0%)
+Total I/O pins used		7/80 	(8%)
+Total Macro cells used 		2/128 	(1%)
+Total Flip-Flop used 		0/128 	(0%)
+Total Foldback logic used 	0/128 	(0%)
+Total Nodes+FB/MCells 		2/128 	(1%)
+Total cascade used 		0
+Total input pins 			5
+Total output pins 		2
+Total Pts 				1
+Creating pla file C:\My\MyProjects\zalt2\WinCupl2\cpld1.tt3 with 0 inputs 0 outputs, 0 pins 0 nodes and 0 pterms...
+
+----------------  End fitter, Design FITS
+$Device TQFP100 fits; JTAG ON; Secure OFF
+FIT1508 completed in 0.00 seconds
