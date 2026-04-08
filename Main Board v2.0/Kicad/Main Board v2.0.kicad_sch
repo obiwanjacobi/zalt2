@@ -406,7 +406,7 @@
 				(justify left)
 			)
 		)
-		(pin "A[0..15]" input
+		(pin "A[0..15]" tri_state
 			(at 204.47 90.17 180)
 			(uuid "a6b8b2cc-e8a5-424e-bd4b-46621c8fe14e")
 			(effects
@@ -472,7 +472,7 @@
 				(justify left top)
 			)
 		)
-		(pin "A[0..15]" input
+		(pin "A[0..15]" tri_state
 			(at 144.78 81.28 180)
 			(uuid "96ed693e-81e0-42d0-a03f-c9f3d253caab")
 			(effects
@@ -548,7 +548,7 @@
 				(justify left top)
 			)
 		)
-		(pin "A[0..15]" output
+		(pin "A[0..15]" tri_state
 			(at 88.9 82.55 180)
 			(uuid "e2f23985-2b6e-4145-af7b-741fca420c05")
 			(effects
@@ -614,7 +614,7 @@
 				(justify left top)
 			)
 		)
-		(pin "A[0..15]" bidirectional
+		(pin "A[0..15]" tri_state
 			(at 213.36 142.24 180)
 			(uuid "e11239ab-bee7-419f-9719-f3a1695f1472")
 			(effects
@@ -690,7 +690,7 @@
 				(justify left top)
 			)
 		)
-		(pin "A[0..15]" input
+		(pin "A[0..15]" tri_state
 			(at 144.78 140.97 180)
 			(uuid "75c83613-3062-4cf2-b0d2-191e6ac11055")
 			(effects

@@ -17,8 +17,8 @@
 			(on_board yes)
 			(in_pos_files yes)
 			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "U"
-				(at -13.97 35.56 0)
+			(property "Reference" "U9"
+				(at 2.1433 39.37 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -29,7 +29,7 @@
 				)
 			)
 			(property "Value" "Z80CPU"
-				(at 6.35 35.56 0)
+				(at 2.1433 36.83 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -39,7 +39,7 @@
 					(justify left)
 				)
 			)
-			(property "Footprint" ""
+			(property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket_LongPads"
 				(at 0 10.16 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -108,7 +108,7 @@
 				)
 			)
 			(symbol "Z80CPU_1_1"
-				(pin output line
+				(pin tri_state line
 					(at 17.78 2.54 180)
 					(length 3.81)
 					(name "A11"
@@ -126,7 +126,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 0 180)
 					(length 3.81)
 					(name "A12"
@@ -144,7 +144,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 -2.54 180)
 					(length 3.81)
 					(name "A13"
@@ -162,7 +162,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 -5.08 180)
 					(length 3.81)
 					(name "A14"
@@ -180,7 +180,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 -7.62 180)
 					(length 3.81)
 					(name "A15"
@@ -630,7 +630,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 30.48 180)
 					(length 3.81)
 					(name "A0"
@@ -648,7 +648,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 27.94 180)
 					(length 3.81)
 					(name "A1"
@@ -666,7 +666,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 25.4 180)
 					(length 3.81)
 					(name "A2"
@@ -684,7 +684,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 22.86 180)
 					(length 3.81)
 					(name "A3"
@@ -702,7 +702,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 20.32 180)
 					(length 3.81)
 					(name "A4"
@@ -720,7 +720,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 17.78 180)
 					(length 3.81)
 					(name "A5"
@@ -738,7 +738,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 15.24 180)
 					(length 3.81)
 					(name "A6"
@@ -756,7 +756,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 12.7 180)
 					(length 3.81)
 					(name "A7"
@@ -774,7 +774,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 10.16 180)
 					(length 3.81)
 					(name "A8"
@@ -792,7 +792,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 7.62 180)
 					(length 3.81)
 					(name "A9"
@@ -810,7 +810,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin tri_state line
 					(at 17.78 5.08 180)
 					(length 3.81)
 					(name "A10"
@@ -947,6 +947,183 @@
 				)
 			)
 			(symbol "C_1_1"
+				(pin passive line
+					(at 0 3.81 270)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -3.81 90)
+					(length 2.794)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
+		(symbol "Device:C_Polarized"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0.254)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "C"
+				(at 0.635 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "C_Polarized"
+				(at 0.635 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" ""
+				(at 0.9652 -3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Polarized capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "cap capacitor"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "CP_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "C_Polarized_0_1"
+				(rectangle
+					(start -2.286 0.508)
+					(end 2.286 1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.778 2.286) (xy -0.762 2.286)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy -1.27 2.794) (xy -1.27 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start 2.286 -0.508)
+					(end -2.286 -1.016)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+			)
+			(symbol "C_Polarized_1_1"
 				(pin passive line
 					(at 0 3.81 270)
 					(length 2.794)
@@ -2038,6 +2215,16 @@
 			(embedded_fonts no)
 		)
 	)
+	(text "Simple RC time \nfor  ~{RESET}"
+		(exclude_from_sim no)
+		(at 148.844 158.496 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "69079e7d-f218-4afd-a3bd-b8e2c3ea2fc1")
+	)
 	(junction
 		(at 132.08 69.85)
 		(diameter 0)
@@ -2079,6 +2266,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ad8034a7-983b-4b68-a420-d6cf5371bbf2")
+	)
+	(junction
+		(at 129.54 138.43)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "caf35461-2eb1-409d-b6b1-830ce10ce4af")
 	)
 	(junction
 		(at 129.54 54.61)
@@ -2778,6 +2971,16 @@
 	)
 	(wire
 		(pts
+			(xy 129.54 138.43) (xy 129.54 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7dd67401-ff03-48d8-8ed9-135cc861f14e")
+	)
+	(wire
+		(pts
 			(xy 127 62.23) (xy 143.51 62.23)
 		)
 		(stroke
@@ -2825,6 +3028,16 @@
 			(type default)
 		)
 		(uuid "87df4d52-c6da-4f25-a9fa-2a956930d679")
+	)
+	(wire
+		(pts
+			(xy 129.54 167.64) (xy 129.54 172.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8866dd9b-abb0-4432-ba63-db13b761528b")
 	)
 	(wire
 		(pts
@@ -3947,7 +4160,7 @@
 		)
 	)
 	(hierarchical_label "A[0..15]"
-		(shape output)
+		(shape tri_state)
 		(at 220.98 41.91 0)
 		(effects
 			(font
@@ -4494,7 +4707,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-40_W15.24mm_Socket_LongPads"
+		(property "Footprint" "Socket:3M_Textool_240-1288-00-0602J_2x20_P2.54mm"
 			(at 161.29 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -4651,6 +4864,166 @@
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/5629c61f-0e25-4cd4-88fe-4b15ad7083f0"
 					(reference "U9")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 129.54 172.72 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "73319efd-3e2e-4935-bc3d-965db5163ca3")
+		(property "Reference" "#PWR087"
+			(at 129.54 179.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 129.54 177.8 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 129.54 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 129.54 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a1d0119c-8c6d-4a09-a9af-9979a6b5319c")
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/5629c61f-0e25-4cd4-88fe-4b15ad7083f0"
+					(reference "#PWR087")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Polarized")
+		(at 129.54 163.83 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "737c78d0-ffbe-4bab-bba9-6c8f573503bd")
+		(property "Reference" "C24"
+			(at 133.35 161.6709 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100u"
+			(at 133.35 164.2109 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_THT:CP_Radial_D10.0mm_P5.00mm"
+			(at 130.5052 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Polarized capacitor"
+			(at 129.54 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b02c0038-9247-4e07-a9f7-0b83783bbf98")
+		)
+		(pin "2"
+			(uuid "65b875d3-220a-40a5-b30e-37b750f60f14")
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/5629c61f-0e25-4cd4-88fe-4b15ad7083f0"
+					(reference "C24")
 					(unit 1)
 				)
 			)

@@ -4079,7 +4079,7 @@
 		)
 	)
 	(hierarchical_label "A[0..15]"
-		(shape input)
+		(shape tri_state)
 		(at 25.4 125.73 180)
 		(effects
 			(font
@@ -4855,7 +4855,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Socket:3M_Textool_240-1288-00-0602J_2x20_P2.54mm"
+		(property "Footprint" "Socket:3M_Textool_232-1288-00-0602J_2x16_P2.54mm"
 			(at 176.53 62.23 0)
 			(hide yes)
 			(show_name no)
