@@ -2,7 +2,7 @@
 	(version 20260306)
 	(generator "eeschema")
 	(generator_version "10.0")
-	(uuid "53de3ad8-0724-47cd-bca4-ac2116a7cd2f")
+	(uuid "ba4390ce-bcdf-47e5-9ee2-e8d1becf2a25")
 	(paper "A4")
 	(title_block
 		(title "System IO")
@@ -2674,7 +2674,7 @@
 		)
 		(uuid "74c8871f-e0e6-4dc7-a6b1-3a66fba3ed16")
 	)
-	(text "Realtime Clock (no INT):\n- CMD: RTC-DATE\n	- RD: Year (?)\n	- RD: Month (1-12)\n	- RD: Day (1-31)\n\n- CMD: RTC-TIME (can stop reading at any time)\n	- RD: Hour (0-23)\n	- RD: Minute (0-59)\n	- RD: Second (0-59)\n	- RD: Milli (0-99)\n\nBIOS Settings:\n- CMD: SETTING\n	- WR: [address] (0-255)\n	- RD: value / WR: value (0-255)\n\nConsole:\n- CMD: CONSOLE-n (n:0-1)\n	- WR: value (0-255) - output\n	- (or) RD: value (0-255) - input, response to INT\n- STAT: OutputBufferEmpty, InputBufferFull\n- INT: receive input\n\nKeyboard (INT):\n- CMD: KEYBOARD (key-table values)\n	- RD: LSB\n	- RD: MSB\n- INT: receive input\n\nSystem-Timer:\n- INT every tick (100ms).\n\nProg Timers:\n- CMD: TIMER-n (n:0-?)\n	- WR: interval\n- INT every tick\n"
+	(text "Realtime Clock (no INT):\n- CMD: RTC-DATE\n	- RD: Year (?)\n	- RD: Month (1-12)\n	- RD: Day (1-31)\n\n- CMD: RTC-TIME (can stop reading at any time)\n	- RD: Hour (0-23)\n	- RD: Minute (0-59)\n	- RD: Second (0-59)\n\nBIOS Settings:\n- CMD: SETTING\n	- WR: [address] (0-255)\n	- RD: value / WR: value (0-255)\n\nConsole:\n- CMD: CONSOLE-n (n:0-1)\n	- WR: value (0-255) - output\n	- (or) RD: value (0-255) - input, response to INT\n- STAT: OutputBufferEmpty, InputBufferFull\n- INT: receive input\n\nKeyboard (INT):\n- CMD: KEYBOARD (key-table values)\n	- RD: LSB\n	- RD: MSB\n- INT: receive input\n\nSystem-Timer:\n- INT every tick (100ms).\n\nProg Timers:\n- CMD: TIMER-n (n:0-?)\n	- WR: interval\n- INT every tick\n"
 		(exclude_from_sim no)
 		(at 224.028 58.674 0)
 		(effects

@@ -1,5 +1,7 @@
 # Z80 CPU Source Code
 
+Toolchain: z88dk
+
 ## BIOS
 
 Basic Input/Output System - contains hardware abstraction for main IO functions.
