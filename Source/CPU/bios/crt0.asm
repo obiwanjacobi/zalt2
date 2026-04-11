@@ -8,7 +8,7 @@ PUBLIC _crt0
 
 EXTERN _main                ; C entry point (main.c must define main())
 
-defc STACK_TOP = 0xFFFF     ; top of RAM
+defc STACK_TOP = 0x0000     ; top of RAM (assume underflow)
 
 _crt0:
     di                      ; disable interrupts during init

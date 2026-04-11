@@ -33,4 +33,3 @@ The CPU memory address is mapped by the MMU to one of the memory pages in physic
 We are using a powered ISA backplane to make this a modular system.
 
 > After some research I found the goal to keep the ISA bus ISA-compatible -that it would run original PC ISA-cards- to be a great burdon and compilcate the design unnecessary.
-
