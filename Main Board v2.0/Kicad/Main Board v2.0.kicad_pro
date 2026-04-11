@@ -670,7 +670,7 @@
         "uuid": "91a97de0-fe3a-4a53-b587-b32edd62d6f9"
       }
     ],
-    "used_designators": "#PWR79-87,U10-12,C24,J2,J5",
+    "used_designators": "U1-2,U10-11,J5-10,Y2,#PWR39,#PWR77-85",
     "variants": []
   },
   "sheets": [
@@ -697,6 +697,10 @@
     [
       "5629c61f-0e25-4cd4-88fe-4b15ad7083f0",
       "CPU"
+    ],
+    [
+      "8afc0c21-17c7-476a-8160-a21f573fa6ee",
+      "SysIO"
     ]
   ],
   "text_variables": {},
