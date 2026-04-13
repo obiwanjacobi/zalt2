@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "Zalt System IO",
+			"path": "Source/MCU/src/Zalt System IO"
+		}
+	],
+	"settings": {}
+}
