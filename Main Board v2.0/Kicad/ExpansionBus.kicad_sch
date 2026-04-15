@@ -2628,6 +2628,16 @@
 		)
 		(uuid "9aca7ebb-fd6d-4c51-9aba-3acef2a74fbd")
 	)
+	(text "What is the max thickness of PCB that fits into ISA slot?\nThis seems to be 1.6mm."
+		(exclude_from_sim no)
+		(at 230.632 104.648 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "9f43d1af-91ad-438f-a08d-a807d2faa3e5")
+	)
 	(text "20MHz"
 		(exclude_from_sim no)
 		(at 72.898 100.584 0)

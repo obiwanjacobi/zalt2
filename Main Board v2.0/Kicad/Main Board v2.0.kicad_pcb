@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(general
-		(thickness 2.63)
+		(thickness 1.56)
 		(legacy_teardrops no)
 	)
 	(paper "A4")
@@ -13,21 +13,16 @@
 	)
 	(layers
 		(0 "F.Cu" signal)
-		(4 "In1.Cu" signal)
-		(6 "In2.Cu" signal)
+		(4 "In1.Cu" signal "GND.Cu")
+		(6 "In2.Cu" signal "VCC.Cu")
 		(2 "B.Cu" signal)
-		(9 "F.Adhes" user "F.Adhesive")
-		(11 "B.Adhes" user "B.Adhesive")
 		(13 "F.Paste" user)
 		(15 "B.Paste" user)
 		(5 "F.SilkS" user "F.Silkscreen")
 		(7 "B.SilkS" user "B.Silkscreen")
 		(1 "F.Mask" user)
 		(3 "B.Mask" user)
-		(17 "Dwgs.User" user "User.Drawings")
 		(19 "Cmts.User" user "User.Comments")
-		(21 "Eco1.User" user "User.Eco1")
-		(23 "Eco2.User" user "User.Eco2")
 		(25 "Edge.Cuts" user)
 		(27 "Margin" user)
 		(31 "F.CrtYd" user "F.Courtyard")
@@ -53,7 +48,7 @@
 			)
 			(layer "dielectric 1"
 				(type "core")
-				(thickness 1.51)
+				(thickness 0.4)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
@@ -64,7 +59,7 @@
 			)
 			(layer "dielectric 2"
 				(type "prepreg")
-				(thickness 0.48)
+				(thickness 0.6)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
@@ -75,7 +70,7 @@
 			)
 			(layer "dielectric 3"
 				(type "core")
-				(thickness 0.48)
+				(thickness 0.4)
 				(material "FR4")
 				(epsilon_r 4.5)
 				(loss_tangent 0.02)
@@ -1100,7 +1095,7 @@
 	(footprint "Capacitor_SMD:C_0201_0603Metric_Pad0.64x0.40mm_HandSolder"
 		(layer "F.Cu")
 		(uuid "1900f8d2-1ad1-49da-a0ae-2656ebcad682")
-		(at 129.2915 79.764)
+		(at 173.1319 82.9644)
 		(descr "Capacitor SMD 0201 (0603 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: https://www.vishay.com/docs/20052/crcw0201e3.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C21"
@@ -1407,12 +1402,12 @@
 			)
 		)
 	)
-	(footprint "Package_DIP:CERDIP-20_W7.62mm_SideBrazed_LongPads_Socket"
+	(footprint "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
 		(layer "F.Cu")
 		(uuid "20757ae8-b6d1-4571-a778-6f29bdf90a9e")
 		(at 145.472 48.367)
-		(descr "20-lead through-hole mounted CERDIP, JEDEC MS-015-AE package, row spacing 7.62mm (300 mils), SideBrazed, LongPads, Socket, https://www.jedec.org/system/files/docs/Ms-015a.pdf")
-		(tags "THT DIP DIL CERDIP ceramic 2.54mm 7.62mm 300mil SideBrazed LongPads Socket")
+		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
+		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U1"
 			(at 3.81 -2.33 0)
 			(layer "F.SilkS")
@@ -1457,7 +1452,7 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "package/DIP"
+		(property "KiLib_Generator" "package/DIP/legacy"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -1567,38 +1562,8 @@
 			(uuid "f367bc41-888a-4b84-ba69-e72eaf85b5b4")
 		)
 		(fp_line
-			(start 0.065 -0.27)
-			(end 1.065 -1.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "9cd07ced-d273-4372-9e26-88518aaf951a")
-		)
-		(fp_line
-			(start 0.065 24.13)
-			(end 0.065 -0.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "418b0142-64e4-407e-a937-05142e7218a0")
-		)
-		(fp_line
-			(start 1.065 -1.27)
-			(end 7.555 -1.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "135f4b49-df7c-46ce-bb26-8fcb48e56b49")
-		)
-		(fp_line
-			(start 7.555 -1.27)
-			(end 7.555 24.13)
+			(start 0.635 -0.27)
+			(end 1.635 -1.27)
 			(stroke
 				(width 0.1)
 				(type solid)
@@ -1607,14 +1572,44 @@
 			(uuid "41f61591-df9b-4a14-9ea0-674d83fec9dd")
 		)
 		(fp_line
-			(start 7.555 24.13)
-			(end 0.065 24.13)
+			(start 0.635 24.13)
+			(end 0.635 -0.27)
 			(stroke
 				(width 0.1)
 				(type solid)
 			)
 			(layer "F.Fab")
 			(uuid "23746f67-7143-40d9-be62-6dcdc72be132")
+		)
+		(fp_line
+			(start 1.635 -1.27)
+			(end 6.985 -1.27)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "9cd07ced-d273-4372-9e26-88518aaf951a")
+		)
+		(fp_line
+			(start 6.985 -1.27)
+			(end 6.985 24.13)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "135f4b49-df7c-46ce-bb26-8fcb48e56b49")
+		)
+		(fp_line
+			(start 6.985 24.13)
+			(end 0.635 24.13)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "418b0142-64e4-407e-a937-05142e7218a0")
 		)
 		(fp_rect
 			(start -1.27 -1.33)
@@ -1866,7 +1861,7 @@
 			(uuid "e7231be4-96dc-426b-af37-2e168c9d0f87")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DIP.3dshapes/CERDIP-20_W7.62mm_SideBrazed_LongPads_Socket.step"
+		(model "${KICAD10_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-20_W7.62mm_Socket.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -5830,12 +5825,12 @@
 			)
 		)
 	)
-	(footprint "Package_DIP:CERDIP-20_W7.62mm_SideBrazed_LongPads_Socket"
+	(footprint "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
 		(layer "F.Cu")
 		(uuid "49a40bb5-c558-4a39-aa32-b145e0d8e8bf")
 		(at 163.379 48.875)
-		(descr "20-lead through-hole mounted CERDIP, JEDEC MS-015-AE package, row spacing 7.62mm (300 mils), SideBrazed, LongPads, Socket, https://www.jedec.org/system/files/docs/Ms-015a.pdf")
-		(tags "THT DIP DIL CERDIP ceramic 2.54mm 7.62mm 300mil SideBrazed LongPads Socket")
+		(descr "20-lead though-hole mounted DIP package, row spacing 7.62mm (300 mils), Socket, LongPads")
+		(tags "THT DIP DIL PDIP 2.54mm 7.62mm 300mil Socket LongPads")
 		(property "Reference" "U3"
 			(at 3.81 -2.33 0)
 			(layer "F.SilkS")
@@ -5880,7 +5875,7 @@
 				)
 			)
 		)
-		(property "KiLib_Generator" "package/DIP"
+		(property "KiLib_Generator" "package/DIP/legacy"
 			(at 0 0 0)
 			(layer "F.SilkS")
 			(hide yes)
@@ -5990,38 +5985,8 @@
 			(uuid "e7226ee6-c202-4322-ae3c-f3aa6b7c29e4")
 		)
 		(fp_line
-			(start 0.065 -0.27)
-			(end 1.065 -1.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "100edf35-fad4-4ba4-b07b-fd5c4bbe3512")
-		)
-		(fp_line
-			(start 0.065 24.13)
-			(end 0.065 -0.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "7f479970-2247-4829-962d-e33cc9f41adb")
-		)
-		(fp_line
-			(start 1.065 -1.27)
-			(end 7.555 -1.27)
-			(stroke
-				(width 0.1)
-				(type solid)
-			)
-			(layer "F.Fab")
-			(uuid "69fcb85a-3cb3-4140-9b69-3188bc18ff18")
-		)
-		(fp_line
-			(start 7.555 -1.27)
-			(end 7.555 24.13)
+			(start 0.635 -0.27)
+			(end 1.635 -1.27)
 			(stroke
 				(width 0.1)
 				(type solid)
@@ -6030,14 +5995,44 @@
 			(uuid "55e7e161-d6fd-4b29-98cd-7a4ca18c70eb")
 		)
 		(fp_line
-			(start 7.555 24.13)
-			(end 0.065 24.13)
+			(start 0.635 24.13)
+			(end 0.635 -0.27)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "100edf35-fad4-4ba4-b07b-fd5c4bbe3512")
+		)
+		(fp_line
+			(start 1.635 -1.27)
+			(end 6.985 -1.27)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "7f479970-2247-4829-962d-e33cc9f41adb")
+		)
+		(fp_line
+			(start 6.985 -1.27)
+			(end 6.985 24.13)
 			(stroke
 				(width 0.1)
 				(type solid)
 			)
 			(layer "F.Fab")
 			(uuid "267a2a3f-9f5f-4029-8bc3-a6a09bdca3b2")
+		)
+		(fp_line
+			(start 6.985 24.13)
+			(end 0.635 24.13)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "69fcb85a-3cb3-4140-9b69-3188bc18ff18")
 		)
 		(fp_rect
 			(start -1.27 -1.33)
@@ -6289,7 +6284,7 @@
 			(uuid "0167a0dc-1ab8-4cee-a8a7-5d219a7625c9")
 		)
 		(embedded_fonts no)
-		(model "${KICAD10_3DMODEL_DIR}/Package_DIP.3dshapes/CERDIP-20_W7.62mm_SideBrazed_LongPads_Socket.step"
+		(model "${KICAD10_3DMODEL_DIR}/Package_DIP.3dshapes/DIP-20_W7.62mm_Socket.step"
 			(offset
 				(xyz 0 0 0)
 			)
@@ -7252,7 +7247,7 @@
 	(footprint "Connector_PinSocket_2.54mm:PinSocket_1x06_P2.54mm_Vertical"
 		(layer "F.Cu")
 		(uuid "6ef54c44-bd9c-4a01-9c11-e7f32f519e95")
-		(at 256.47 108.946)
+		(at 251.9742 98.3542)
 		(descr "Through hole straight socket strip, 1x06, 2.54mm pitch, single row (from Kicad 4.0.7), script generated")
 		(tags "Through hole socket strip THT 1x06 2.54mm single row")
 		(property "Reference" "J8"
@@ -9449,7 +9444,7 @@
 			(drill 0.8)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "~{SYSDEN}")
+			(net "SYSCMD")
 			(pinfunction "PB1_2")
 			(pintype "bidirectional")
 			(uuid "8b55d01a-fda0-4d1a-abb1-7f6671a63b0b")
@@ -9460,7 +9455,7 @@
 			(drill 0.8)
 			(layers "*.Cu" "*.Mask")
 			(remove_unused_layers no)
-			(net "SYSCMD")
+			(net "~{SYSDEN}")
 			(pinfunction "PB2_3")
 			(pintype "bidirectional")
 			(uuid "f07e2d28-590c-4aff-a63a-eb4159ff75a0")
@@ -10046,7 +10041,7 @@
 	(footprint "Capacitor_SMD:C_0201_0603Metric_Pad0.64x0.40mm_HandSolder"
 		(layer "F.Cu")
 		(uuid "8854b900-2fcf-4d5a-b70c-dcdb98c5304b")
-		(at 129.2915 81.514)
+		(at 173.1319 84.7144)
 		(descr "Capacitor SMD 0201 (0603 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: https://www.vishay.com/docs/20052/crcw0201e3.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C22"
@@ -12253,7 +12248,7 @@
 	(footprint "Package_QFP:TQFP-144_20x20mm_P0.5mm"
 		(layer "F.Cu")
 		(uuid "9b8e702f-9aea-4376-8b8d-1b2f73515778")
-		(at 182.429 118.158)
+		(at 208.1139 118.158)
 		(descr "TQFP, 144 Pin (JEDEC MS-026 variation AFB, 1.00mm body thickness, https://www.jedec.org/document_search?search_api_views_fulltext=MS-026)")
 		(tags "TQFP QFP")
 		(property "Reference" "U7"
@@ -19962,7 +19957,7 @@
 	(footprint "Connector_IDC:IDC-Header_2x07_P2.54mm_Vertical"
 		(layer "F.Cu")
 		(uuid "c8f192dc-3511-4b3b-b94a-2685a2ffe810")
-		(at 209.48 109.962)
+		(at 260.5848 114.788)
 		(descr "Through hole IDC box header, 2x07, 2.54mm pitch, DIN 41651 / IEC 60603-13, double rows, https://docs.google.com/spreadsheets/d/16SsEcesNF15N3Lb4niX7dcUr-NY5_MFPQhobNuNppn4/edit#gid=0")
 		(tags "Through hole vertical IDC box header THT 2x07 2.54mm double row")
 		(property "Reference" "J3"
@@ -25158,7 +25153,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "13fb863c-4205-451d-9dd9-4ec865faa038")
-		(at 183.064 127.361 180)
+		(at 208.7489 127.361 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C12"
@@ -25322,7 +25317,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "217589e9-2048-4382-bea2-4cc42f954dbf")
-		(at 199.2965 115.005 180)
+		(at 222.5375 86.7348 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor handsolder")
 		(property "Reference" "R28"
@@ -25486,7 +25481,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "39b808d5-0d37-4fd7-a46a-568afe8a6bb1")
-		(at 199.2965 120.025 180)
+		(at 222.5375 91.7548 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor handsolder")
 		(property "Reference" "R30"
@@ -25650,7 +25645,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "46b91d3d-2e31-40fc-a8a3-f3acd8241865")
-		(at 173.031 106.025 180)
+		(at 198.7159 106.025 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C7"
@@ -25814,7 +25809,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "53d3bceb-ad13-4e9b-bb89-d76a58746c0c")
-		(at 123.1465 83.128 180)
+		(at 166.9869 86.3284 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C3"
@@ -25978,7 +25973,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "6c817ba8-57d3-45bf-8474-d1ab047774b4")
-		(at 189.795 120.503 -90)
+		(at 215.4799 120.503 -90)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C10"
@@ -26142,7 +26137,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "72026fed-7d33-471f-b063-7b3c57850632")
-		(at 123.1465 90.658 180)
+		(at 166.9869 93.8584 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C6"
@@ -26305,7 +26300,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "728c4af0-d5f0-4ec9-baeb-4ca2f522acb2")
-		(at 123.1465 80.618 180)
+		(at 166.9869 83.8184 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C2"
@@ -26469,7 +26464,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "72cef58b-6140-4db2-98c1-f5a5fc22c3c2")
-		(at 123.1465 88.148 180)
+		(at 166.9869 91.3484 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C5"
@@ -26632,7 +26627,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "78cbe132-2f27-468d-a099-aad6132c8163")
-		(at 169.602 108.311 180)
+		(at 195.2869 108.311 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C16"
@@ -26796,7 +26791,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "82c901fc-0c5a-4930-8001-c72623efe168")
-		(at 123.1465 85.638 180)
+		(at 166.9869 88.8384 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C4"
@@ -26960,7 +26955,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "8cdaf08d-e82e-41ff-8789-5a9a64e26caa")
-		(at 188.906 127.361 180)
+		(at 214.5909 127.361 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C11"
@@ -27288,7 +27283,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "9c2047bc-53bc-4f61-b468-cc3352a7e886")
-		(at 172.142 115.677 -90)
+		(at 197.8269 115.677 -90)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C15"
@@ -27616,7 +27611,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "bb7708f9-1a74-4b3f-ad96-b826bbfb96ee")
-		(at 171.253 129.012 180)
+		(at 196.9379 129.012 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C14"
@@ -27780,7 +27775,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "bc8de07f-5bd5-4f65-b8fa-366f1c439514")
-		(at 199.2965 122.535 180)
+		(at 222.5375 94.2648 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor handsolder")
 		(property "Reference" "R31"
@@ -27944,7 +27939,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "c88cadff-1a57-4856-91e0-6c32bb25c08c")
-		(at 181.794 110.724 180)
+		(at 207.4789 110.724 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C8"
@@ -28108,7 +28103,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "dddab38c-781c-447e-a161-cc2b5c0a8f93")
-		(at 123.1465 78.108 180)
+		(at 166.9869 81.3084 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C1"
@@ -28272,7 +28267,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "e7a92e22-295c-41e8-ac4c-299fe3694f27")
-		(at 176.0525 127.361 180)
+		(at 201.7374 127.361 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C13"
@@ -28600,7 +28595,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "f682afa5-4a9f-4d9d-8154-599af9e1a20d")
-		(at 188.525 110.724 180)
+		(at 214.2099 110.724 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C9"
@@ -28764,7 +28759,7 @@
 	(footprint "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "fc4613c1-c742-4280-9baf-1e2b4353652b")
-		(at 199.2965 117.515 180)
+		(at 222.5375 89.2448 180)
 		(descr "Resistor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "resistor handsolder")
 		(property "Reference" "R29"
@@ -28928,7 +28923,7 @@
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "B.Cu")
 		(uuid "fe0e3041-fb04-4a99-97ae-cf878a3a0316")
-		(at 216.6955 86.811 180)
+		(at 216.6955 85.7812 180)
 		(descr "Capacitor SMD 0603 (1608 Metric), square (rectangular) end terminal, IPC-7351 nominal with elongated pad for handsoldering. (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf)")
 		(tags "capacitor handsolder")
 		(property "Reference" "C17"
