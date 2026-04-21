@@ -4250,6 +4250,26 @@
 		)
 		(uuid "17b1ef9b-e98c-40c3-8f00-08722928951a")
 	)
+	(label "SYS_D3"
+		(at 85.09 69.85 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "20c0eed4-8fa9-4a7a-8bdb-cf3f301a76dd")
+	)
+	(label "SYS_D1"
+		(at 85.09 64.77 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "235e5b83-ef75-4ebe-be3c-1269655eb3d5")
+	)
 	(label "SCK"
 		(at 185.42 139.7 0)
 		(effects
@@ -4259,6 +4279,16 @@
 			(justify left bottom)
 		)
 		(uuid "261485a3-97fd-4082-b1fa-e679e25c9e07")
+	)
+	(label "SYS_D2"
+		(at 85.09 67.31 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "2be166ee-fc9e-42ce-a981-41a2d7326983")
 	)
 	(label "TDI"
 		(at 93.98 120.65 180)
@@ -4310,6 +4340,16 @@
 		)
 		(uuid "3eb65da1-177e-447a-a961-e765e79a9dc4")
 	)
+	(label "SYS_D4"
+		(at 85.09 72.39 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "4854c500-7a19-4abb-a130-941381d85c13")
+	)
 	(label "D5"
 		(at 45.72 180.34 180)
 		(effects
@@ -4319,6 +4359,16 @@
 			(justify right bottom)
 		)
 		(uuid "4ecd4f81-62f3-4b07-a6be-96c0c194410c")
+	)
+	(label "SYS_D0"
+		(at 85.09 62.23 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "50b08316-ce45-45d8-8eec-ab42fce4eb1a")
 	)
 	(label "RX1"
 		(at 187.96 100.33 0)
@@ -4550,6 +4600,16 @@
 		)
 		(uuid "d5ea5b07-23c9-4436-930a-e61002355aab")
 	)
+	(label "SYS_D6"
+		(at 85.09 77.47 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d7bc0d48-ab69-4bde-a384-27996a66f2f6")
+	)
 	(label "D0"
 		(at 45.72 167.64 180)
 		(effects
@@ -4579,6 +4639,26 @@
 			(justify left bottom)
 		)
 		(uuid "e3031d0b-25c2-4d26-90b8-a5a4be9dba75")
+	)
+	(label "SYS_D7"
+		(at 85.09 80.01 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "ea3142a9-cdca-474e-a352-5f43bc709cae")
+	)
+	(label "SYS_D5"
+		(at 85.09 74.93 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "eb4cc0c1-1c85-4120-a1e6-67b21c088763")
 	)
 	(label "RX0"
 		(at 187.96 85.09 0)

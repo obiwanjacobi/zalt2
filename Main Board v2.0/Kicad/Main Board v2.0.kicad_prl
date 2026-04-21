@@ -2,7 +2,7 @@
   "board": {
     "active_layer": 0,
     "active_layer_preset": "",
-    "auto_track_width": true,
+    "auto_track_width": false,
     "hidden_netclasses": [],
     "hidden_nets": [],
     "high_contrast_mode": 0,
@@ -51,7 +51,7 @@
       "conflict_shadows",
       "shapes"
     ],
-    "visible_layers": "ffffffff_ffffffff_fffffff5_f7f75fa5",
+    "visible_layers": "ffffffff_ffffffff_fffffff5_55f75f05",
     "zone_display_mode": 0
   },
   "git": {
@@ -94,24 +94,24 @@
       11
     ],
     "col_widths": [
-      136,
+      98,
+      113,
+      163,
       131,
-      181,
-      145,
-      156,
-      185,
-      159,
-      154,
-      85,
-      85,
-      111,
-      104
+      140,
+      167,
+      143,
+      139,
+      66,
+      68,
+      110,
+      1171
     ],
     "custom_group_rules": [],
     "expanded_rows": [],
     "filter_by_net_name": true,
     "filter_by_netclass": true,
-    "filter_text": "",
+    "filter_text": "D4",
     "group_by_constraint": false,
     "group_by_netclass": false,
     "show_time_domain_details": false,

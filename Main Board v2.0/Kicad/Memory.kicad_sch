@@ -2040,6 +2040,15 @@
 		(uuid "547a5d98-56b0-4b43-a470-8cff75929ca1")
 	)
 	(bus_entry
+		(at 44.45 41.91)
+		(size 2.54 2.54)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "71d3945d-26e1-4c69-b8d1-b3eafb65e875")
+	)
+	(bus_entry
 		(at 46.99 54.61)
 		(size -2.54 -2.54)
 		(stroke
@@ -2065,15 +2074,6 @@
 			(type default)
 		)
 		(uuid "a6c98e36-ad46-45cb-a824-b68ff9189846")
-	)
-	(bus_entry
-		(at 45.72 151.13)
-		(size 2.54 2.54)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bcc967c6-9436-40f6-bcfe-9bc74bede7f2")
 	)
 	(bus_entry
 		(at 45.72 135.89)
@@ -2225,6 +2225,16 @@
 		)
 		(uuid "11801059-2bda-4a84-90d5-01071b2b83c0")
 	)
+	(bus
+		(pts
+			(xy 45.72 116.84) (xy 45.72 148.59)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1336c7d3-201b-4cf7-9f18-fb49ef8efcce")
+	)
 	(wire
 		(pts
 			(xy 223.52 63.5) (xy 213.36 63.5)
@@ -2334,6 +2344,16 @@
 			(type default)
 		)
 		(uuid "2c1aa9a5-a688-4e49-80d2-5850f274ba70")
+	)
+	(wire
+		(pts
+			(xy 46.99 44.45) (xy 57.15 44.45)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f78c2e0-f419-4571-94f3-2e4f21931d40")
 	)
 	(wire
 		(pts
@@ -2747,16 +2767,6 @@
 	)
 	(wire
 		(pts
-			(xy 48.26 153.67) (xy 59.69 153.67)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7773e72b-f5a7-43fd-bcdb-662e9bd37811")
-	)
-	(wire
-		(pts
 			(xy 48.26 125.73) (xy 59.69 125.73)
 		)
 		(stroke
@@ -2894,16 +2904,6 @@
 			(type default)
 		)
 		(uuid "9ceee181-5a4e-4066-89bc-8a32638d59ad")
-	)
-	(bus
-		(pts
-			(xy 45.72 116.84) (xy 45.72 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a17479ce-982e-439c-a142-20794fb28baf")
 	)
 	(wire
 		(pts
@@ -3475,7 +3475,7 @@
 		)
 		(uuid "2c4d06b0-a7f9-4147-8a2c-2cdebe14d7ab")
 	)
-	(label "A12"
+	(label "MA12"
 		(at 93.98 86.36 0)
 		(effects
 			(font
@@ -3685,6 +3685,16 @@
 		)
 		(uuid "65b0f104-0fe4-4242-a156-8aaeb9121636")
 	)
+	(label "MA12"
+		(at 57.15 44.45 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "6784f834-1587-4076-b8d4-76a1b622d7d6")
+	)
 	(label "A0"
 		(at 59.69 123.19 180)
 		(effects
@@ -3735,7 +3745,7 @@
 		)
 		(uuid "81c86459-6e38-4ca9-8b88-3a04cd1fd364")
 	)
-	(label "A12"
+	(label "MA12"
 		(at 177.8 86.36 0)
 		(effects
 			(font
@@ -3954,16 +3964,6 @@
 			(justify right bottom)
 		)
 		(uuid "e023fa9b-f0c8-449d-8d7a-462b20770629")
-	)
-	(label "A12"
-		(at 59.69 153.67 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "e0ef5b18-87ce-4fe1-a827-a330e2210c71")
 	)
 	(label "D6"
 		(at 57.15 87.63 180)
@@ -4216,7 +4216,7 @@
 		)
 		(uuid "15f40d8a-761e-40b3-9d2e-8a0cffd681a3")
 	)
-	(hierarchical_label "MA[13..25]"
+	(hierarchical_label "MA[12..24]"
 		(shape input)
 		(at 39.37 39.37 180)
 		(effects

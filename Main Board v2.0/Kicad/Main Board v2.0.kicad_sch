@@ -442,9 +442,9 @@
 				(justify left)
 			)
 		)
-		(pin "MA[13..25]" input
+		(pin "MA[12..24]" input
 			(at 199.39 54.61 180)
-			(uuid "4aa856bb-12c3-40be-8460-a733c2f880d7")
+			(uuid "0599b3a8-6016-4891-8b40-e1e95ddf814e")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -518,9 +518,9 @@
 				(justify left)
 			)
 		)
-		(pin "MA[13..25]" output
+		(pin "MA[12..24]" output
 			(at 165.1 54.61 0)
-			(uuid "a37770c2-eff0-449c-a3ce-3269b465d4c9")
+			(uuid "6fb4e63f-0371-449f-a021-ab834d6509cf")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -716,9 +716,9 @@
 				(justify left)
 			)
 		)
-		(pin "MA[13..25]" input
+		(pin "MA[12..24]" input
 			(at 208.28 104.14 180)
-			(uuid "aa0f7c99-698e-4e62-b2cc-babaed4f4696")
+			(uuid "7b18ebde-78ab-45ef-ba80-2a455214797d")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -792,9 +792,9 @@
 				(justify left)
 			)
 		)
-		(pin "MA[13..25]" input
+		(pin "MA[12..24]" input
 			(at 163.83 114.3 0)
-			(uuid "fd493285-3042-4b1b-b43f-070645784526")
+			(uuid "3e450f68-5f6b-4a86-94b4-2fd7d7c50d70")
 			(effects
 				(font
 					(size 1.27 1.27)
