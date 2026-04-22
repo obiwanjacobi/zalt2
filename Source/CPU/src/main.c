@@ -7,9 +7,14 @@
  * There is no return value - if main() returns, crt0.asm halts.
  */
 
+#include "sys/Stream.h"
+
 void main(void)
 {
     /* initialise subsystems here */
+    Stream stream;
+    uint8_t buf[32];
+    Stream_Construct(&stream, buf, sizeof(buf));
 
     /* main loop */
     for (;;)

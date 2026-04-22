@@ -1,4 +1,5 @@
 #include "Stream.h"
+#pragma codeseg sys
 
 void Stream_Construct(Stream *s, uint8_t *buf, uint8_t size)
 {

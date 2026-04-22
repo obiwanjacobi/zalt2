@@ -2,7 +2,7 @@
 ; Linked first. Sets up the stack then calls into C.
 ; Adjust STACK_TOP to match your hardware RAM.
 
-SECTION code
+SECTION code_crt_init
 
 PUBLIC _crt0
 
