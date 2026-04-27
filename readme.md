@@ -4,7 +4,7 @@ Version 2 of the Zalt homebrew Z80 computer.
 
 ## Memory Management Unit
 
-- `Page`: a block of 8k of  physical memory that can be freely mapped into the CPU address space.
+- `Page`: a block of 4k of  physical memory that can be freely mapped into the CPU address space.
 - `Page Id` (0-8192) an identifier for a memory page from physical memory.
 - `Page Index` (0-7) a location for each of the 8 (active) CPU memory pages.
 - `Bank`: A collection of assigned `Page Id`s for all `Page Index`es. Only one bank is active at a time and it defines what physical memory pages are visible to the CPU.
@@ -13,18 +13,26 @@ Version 2 of the Zalt homebrew Z80 computer.
 
 ### CPU Address Space
 
-There are 8 pages of 8k in CPU memory.
+There are 16 pages of 4k in CPU memory.
 
 | Idx | Start | End | Size |
 | -- | -- | -- | -- |
-| 7 | $E000 | $FFFF | 8k |
-| 6 | $C000 | $DFFF | 8k |
-| 5 | $A000 | $BFFF | 8k |
-| 4 | $8000 | $9FFF | 8k |
-| 3 | $6000 | $7FFF | 8k |
-| 2 | $4000 | $5FFF | 8k |
-| 1 | $2000 | $3FFF | 8k |
-| 0 | $0000 | $1FFF | 8k |
+| f | $F000 | $FFFF | 4k |
+| e | $E000 | $EFFF | 4k |
+| d | $D000 | $DFFF | 4k |
+| c | $C000 | $CFFF | 4k |
+| b | $B000 | $BFFF | 4k |
+| a | $A000 | $AFFF | 4k |
+| 9 | $9000 | $9FFF | 4k |
+| 8 | $8000 | $8FFF | 4k |
+| 7 | $7000 | $7FFF | 4k |
+| 6 | $6000 | $6FFF | 4k |
+| 5 | $5000 | $5FFF | 4k |
+| 4 | $4000 | $4FFF | 4k |
+| 3 | $3000 | $3FFF | 4k |
+| 2 | $2000 | $2FFF | 4k |
+| 1 | $1000 | $1FFF | 4k |
+| 0 | $0000 | $0FFF | 4k |
 
 The CPU memory address is mapped by the MMU to one of the memory pages in physical memory.
 

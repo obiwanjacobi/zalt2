@@ -13,9 +13,11 @@ Memory Protection:
 
 > triggers NMI for violation
 
-- M1 & MEMRQ + RD => MP_EXE
+- M1 & MEMRQ + RD => MP_EXE (implies MP_RD)
 - MEMRQ + RD => MP_RD
 - MEMRQ + WR => MP_WR
+
+> MP_RD is a bit redundant. Read access can be assumed as default (and non-destructive). MP_EXE implies read access (M1 is only active at the start of an instruction, which can have additional read cycles). MP_RD could perhaps be renamed/reused for an OS-flag, marking a memory page as locked to applications. See Repurpose MP_RD chat.
 
 Copy on write: mark a memory page as non-writable and keep separate flags in os-memory. When the NMI triggers, lookup the additional flags and allocate an empty memory page.
 Temporary put the two pages in the same memory bank and copy over the content.

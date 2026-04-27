@@ -31,6 +31,11 @@ Task API:
 The program loader reads in a binary file and loads it into the correct memory pages.
 The ultimate idea is for a program to be fully relocatable and to have segments defined that will be loaded into the memory pages (MMU). Ideal would be that each segment would also be relocatable so it can be reordered in the CPU address space. But that is probably too complex to manage (as a programmer of the application) and write.
 
+It would require an application programmer to output the program in 4k sections.
+These sections have to carfully chosen to minimize the need to switch memory pages/sections in and out when calls are made across sections.
+The problem of where (what memory page) the called function lives and if it is mapped into CPU address space are a burdon of the os and unclear (at this time) if it can be done. A jump/dispatch table for a program (or each section?) would make it easier to keep track of that.
+Note that each Task/Process has its own set of MMU banks and therefor application/task specific bookkeeping is pretty easy.
+
 ## Memory Allocation
 
 Memory allocations can be global (heap) - in a memory page shared (and fixed?) by all applications. Limited resource.
@@ -54,6 +59,7 @@ Normal Stack allocation (local vars) is done through the programming language.
 - Logical Devices: Point to physical devices - can be reassigned at runtime.
   - Null Device: does nothing - data writen is ignored, read is EOF.
   - StreamTap Device: duplicates an out-Stream to an additional device (copy). What to do with read?
+  - CharAdapt Device: adapts a block device to be a character device.
 
 Character Devices:
 
@@ -80,6 +86,8 @@ Each Device Driver implements at least the Stream-Provider API.
 |`TryStreamRead` (async)| Reads a block from the underlying device/file. |
 |`TryStreamWrite` (async)| Writes a block to the underlying device/file. |
 
+Block devices manage the size of the block and the memeroy required for block data exchange.
+
 ### Everything is File (Stream)
 
 Asynchronous Stream-based API interfacing with files and devices.
@@ -98,6 +106,7 @@ The 'uri' is very condensed and simplified to make parsing easy. The way device 
 - `con:def` / `con:dbg` default or debug console
 - `file:mynotes.txt` targets a file called mynotes.txt
 - `file:folder/dir/notes.txt` a file nested in folders.
+- `dev:con` information on the device itself.
 
 Basic Stream API.
 
@@ -134,6 +143,8 @@ Each device implements its own 'DMA' controller to effectively blast bytes over 
 ## Window Manager
 
 (Analog to a tiling window manager)
+
+See also video display.md
 
 To keep a GUI simple, responsive and light-weight:
 
@@ -185,6 +196,8 @@ This way the complexity is kept at a minimum and the user can still switch betwe
 
 - Focus on hover? Could be a setting that the user can turn on/off.
 
+> The RayLib graphics layout program can output .rlg files that contain control types and coordinates. Could be an easy way to design windows gui.
+
 ### Menu Bar
 
 There is one global top menu bar that displays the menu of the active application and starts at the left side of the screen.
@@ -226,14 +239,18 @@ Besides menus, several other re-usable, system-provided screen controls are avai
 
 - Push Button
 - Switch/Toggle
+- Radio Button (can be used to make tab-strip)
 - Selection/List Box  (popup overlay)
 - Text (formatted)
 - Picture (Image)
 - Drag Handle (sizing, splitter)
+- Panel (control grouping + text)
 
 Layout Controls:
 
-- Grid Layout
+- Grid Layout (column and row spanning)
+- Stack Layout (horizontal/vertical)
+- Well (Pile?) Layout (only one visible at a time)
 
 ### Dialogs
 
@@ -241,8 +258,9 @@ An application can use system calls to open predefined Dialogs:
 
 - Output Message
 - Input Message
-- Load / Save File
-- Font
-- Color
+- Load File
+- Save File
+- Fonts
+- Color Picker
 
 The dialogs are presented in the middle of the screen and are all Modal -you have to dismis the dialog before control is returned to the application.
