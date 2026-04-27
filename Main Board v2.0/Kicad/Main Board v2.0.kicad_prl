@@ -21,7 +21,7 @@
       "footprints": true,
       "graphics": true,
       "keepouts": true,
-      "lockedItems": false,
+      "lockedItems": true,
       "otherItems": true,
       "pads": true,
       "text": true,
@@ -51,7 +51,7 @@
       "conflict_shadows",
       "shapes"
     ],
-    "visible_layers": "ffffffff_ffffffff_fffffff5_55f75f05",
+    "visible_layers": "ffffffff_ffffffff_fffffff5_57f75f05",
     "zone_display_mode": 0
   },
   "git": {
@@ -105,7 +105,7 @@
       66,
       68,
       110,
-      1171
+      949
     ],
     "custom_group_rules": [],
     "expanded_rows": [],

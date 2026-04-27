@@ -4400,6 +4400,16 @@
 		)
 		(uuid "65db7866-405a-497c-870a-64a65e61d66a")
 	)
+	(label "TOSC2"
+		(at 91.44 125.73 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "672defdc-a5df-4e5d-bec0-565914e21fe5")
+	)
 	(label "D6"
 		(at 153.67 77.47 180)
 		(effects
@@ -4559,6 +4569,16 @@
 			(justify right bottom)
 		)
 		(uuid "a5ba4850-fa00-43f1-a051-8d772c3bc9f5")
+	)
+	(label "TOSC1"
+		(at 91.44 123.19 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a9564eab-71eb-42b0-b85f-6d958fdeac21")
 	)
 	(label "MISO"
 		(at 93.98 100.33 180)
@@ -5130,6 +5150,17 @@
 				)
 			)
 		)
+		(property "KiLib_Generator" "connector/pin_header_socket"
+			(at 205.74 85.09 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "28b6c64d-70d3-4c18-8427-0b9c90a1dc40")
 		)
@@ -5206,6 +5237,17 @@
 			)
 		)
 		(property "Description" "Two pin crystal"
+			(at 110.49 123.19 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KiLib_Generator" "crystal_resonator_oscillator"
 			(at 110.49 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -5767,6 +5809,17 @@
 				)
 			)
 		)
+		(property "KiLib_Generator" "package/DIP/legacy"
+			(at 66.04 105.41 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "5"
 			(uuid "41b8a5a3-e53a-434d-8908-5bdb9efff07e")
 		)
@@ -5963,6 +6016,17 @@
 				)
 			)
 		)
+		(property "KiLib_Generator" "connector/pin_header_socket"
+			(at 180.34 46.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "20d4d863-1a61-46a6-9051-444a42e3d433")
 		)
@@ -6059,6 +6123,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 205.74 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KiLib_Generator" "connector/pin_header_socket"
 			(at 205.74 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -6241,6 +6316,17 @@
 				)
 			)
 		)
+		(property "KiLib_Generator" "package/DIP/legacy"
+			(at 128.27 74.93 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "11"
 			(uuid "c99d08d0-4250-4d48-9f4b-0fedab2e694a")
 		)
@@ -6377,6 +6463,17 @@
 				)
 			)
 		)
+		(property "KiLib_Generator" "connector/pin_header_socket"
+			(at 205.74 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "68baf098-e9fc-4687-ad71-99d0e18ae375")
 		)
@@ -6455,6 +6552,17 @@
 			)
 		)
 		(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(at 205.74 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KiLib_Generator" "connector/pin_header_socket"
 			(at 205.74 100.33 0)
 			(hide yes)
 			(show_name no)
