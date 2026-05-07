@@ -41,6 +41,37 @@ The immediate mode produces simpler code for drawing the graphics elements as th
 
 Retained mode requires state management for each element between how the element did look and how it should look 'now'.
 
+> We choose Immediate Mode
+
+Data exchange with the application/CPU is done through a dedicated memory page (4k).
+This memory is basically a ring-buffer that the application writes to and the video device reads from.
+There might be a second (smaller) ringbuffer (in the same memory page?) for 'events' from the video device screen elements for the application to handle.
+
+The need to be a signaling method of letting the other party know new data is available.
+The fact that there is data in the ring-buffer is not sufficient because that data may be incomplete when it is just being written.
+
+The Stream API will also need a signal when it's done. Reuse the Stream for reading and writing.
+
+The Video device will request the CPU bus to read/write the ring-buffer data,
+so no contention can ever take place on that data because the CPU is not running at that time.
+
+### Window Manager
+
+For the Window manager the application would exchange a list of commands that define the window and it's screen elements and content.
+
+An hierarchical data structure is needed but that can be flattened by giving
+containers and id and referencing those ids as parents in the child elements.
+
+With any luck this list only has to be communicated once by the application and the Window Manager caches it for redraws and resizes.
+
+Opening dialogs can be send separately by the application.
+
+#### Layout
+
+Graphics layout requires two passes: one measure pass that determins sizes and positions of elements and then a drawing pass (top down).
+
+Explanation: Clay Layout: https://www.youtube.com/watch?v=by9lQvpvMIc
+
 ## UI Library Resources
 
 Some ideas:

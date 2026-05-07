@@ -8077,7 +8077,7 @@
 		)
 		(uuid "1141b24b-72a6-4103-9e0a-2fb8ca8b3452")
 	)
-	(label "A15"
+	(label "A13"
 		(at 137.16 215.9 0)
 		(effects
 			(font
@@ -8086,16 +8086,6 @@
 			(justify left bottom)
 		)
 		(uuid "182e83c1-c53d-4859-9937-99703df0bea6")
-	)
-	(label "A12"
-		(at 137.16 208.28 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1a5be5c3-a7bd-445d-9497-5358973f752f")
 	)
 	(label "A14"
 		(at 137.16 213.36 0)
@@ -8897,7 +8887,7 @@
 		)
 		(uuid "e3419d38-c353-4c11-b33a-4a764a48f7d3")
 	)
-	(label "A13"
+	(label "A15"
 		(at 137.16 210.82 0)
 		(effects
 			(font
@@ -9057,7 +9047,7 @@
 			)
 		)
 	)
-	(global_label "~{B8_MEM_WR}"
+	(global_label "BINTACK4"
 		(shape input)
 		(at 246.38 137.16 0)
 		(fields_autoplaced yes)
@@ -9081,7 +9071,7 @@
 			)
 		)
 	)
-	(global_label "SYSINT2"
+	(global_label "~{CPU_NMI}"
 		(shape input)
 		(at 137.16 190.5 180)
 		(fields_autoplaced yes)
@@ -9105,7 +9095,7 @@
 			)
 		)
 	)
-	(global_label "BCLK"
+	(global_label "SYSINT0"
 		(shape input)
 		(at 246.38 160.02 0)
 		(fields_autoplaced yes)
@@ -9129,7 +9119,7 @@
 			)
 		)
 	)
-	(global_label "SYSDDIR"
+	(global_label "~{CPU_INT}"
 		(shape input)
 		(at 246.38 121.92 0)
 		(fields_autoplaced yes)
@@ -9249,7 +9239,7 @@
 			)
 		)
 	)
-	(global_label "BIRQ4"
+	(global_label "~{BIO_RD}"
 		(shape input)
 		(at 246.38 170.18 0)
 		(fields_autoplaced yes)
@@ -9273,7 +9263,7 @@
 			)
 		)
 	)
-	(global_label "BIRQ1"
+	(global_label "BIRQ2"
 		(shape input)
 		(at 137.16 203.2 180)
 		(fields_autoplaced yes)
@@ -9345,6 +9335,30 @@
 			)
 		)
 	)
+	(global_label "BIRQ0"
+		(shape input)
+		(at 137.16 208.28 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "3db461f4-6298-4cca-82f4-9c4be04e8b46")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 128.49 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+	)
 	(global_label "BC16"
 		(shape input)
 		(at 137.16 121.92 180)
@@ -9369,7 +9383,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_RFSH}"
+	(global_label "SYSCMD"
 		(shape input)
 		(at 246.38 157.48 0)
 		(fields_autoplaced yes)
@@ -9441,7 +9455,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_NMI}"
+	(global_label "BINTACK1"
 		(shape input)
 		(at 137.16 193.04 180)
 		(fields_autoplaced yes)
@@ -9465,7 +9479,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_BUSRQ}"
+	(global_label "SYSINTACK"
 		(shape input)
 		(at 246.38 152.4 0)
 		(fields_autoplaced yes)
@@ -9585,7 +9599,7 @@
 			)
 		)
 	)
-	(global_label "SYSINT0"
+	(global_label "BCLK"
 		(shape input)
 		(at 137.16 185.42 180)
 		(fields_autoplaced yes)
@@ -9633,7 +9647,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_INT}"
+	(global_label "BINTACK2"
 		(shape input)
 		(at 137.16 195.58 180)
 		(fields_autoplaced yes)
@@ -9801,7 +9815,7 @@
 			)
 		)
 	)
-	(global_label "~{BIO_RD}"
+	(global_label "~{B8_MEM_RD}"
 		(shape input)
 		(at 246.38 144.78 0)
 		(fields_autoplaced yes)
@@ -9849,7 +9863,7 @@
 			)
 		)
 	)
-	(global_label "BINTACK1"
+	(global_label "BIRQ4"
 		(shape input)
 		(at 137.16 198.12 180)
 		(fields_autoplaced yes)
@@ -9873,7 +9887,7 @@
 			)
 		)
 	)
-	(global_label "SYSINTACK"
+	(global_label "~{CPU_BUSRQ}"
 		(shape input)
 		(at 246.38 129.54 0)
 		(fields_autoplaced yes)
@@ -9945,7 +9959,7 @@
 			)
 		)
 	)
-	(global_label "~{BIO_WR}"
+	(global_label "~{B8_MEM_WR}"
 		(shape input)
 		(at 246.38 142.24 0)
 		(fields_autoplaced yes)
@@ -9969,7 +9983,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_BUSACK}"
+	(global_label "SYSINT1"
 		(shape input)
 		(at 246.38 154.94 0)
 		(fields_autoplaced yes)
@@ -10089,7 +10103,7 @@
 			)
 		)
 	)
-	(global_label "BIRQ3"
+	(global_label "A12"
 		(shape input)
 		(at 137.16 218.44 180)
 		(fields_autoplaced yes)
@@ -10161,7 +10175,7 @@
 			)
 		)
 	)
-	(global_label "~{BIACK}"
+	(global_label "~{BIO_WR}"
 		(shape input)
 		(at 246.38 147.32 0)
 		(fields_autoplaced yes)
@@ -10233,7 +10247,7 @@
 			)
 		)
 	)
-	(global_label "~{B8_MEM_RD}"
+	(global_label "BINTACK3"
 		(shape input)
 		(at 246.38 139.7 0)
 		(fields_autoplaced yes)
@@ -10257,7 +10271,7 @@
 			)
 		)
 	)
-	(global_label "BINTACK4"
+	(global_label "~{SYSDEN}"
 		(shape input)
 		(at 246.38 167.64 0)
 		(fields_autoplaced yes)
@@ -10449,7 +10463,7 @@
 			)
 		)
 	)
-	(global_label "BINTACK3"
+	(global_label "SYSDDIR"
 		(shape input)
 		(at 246.38 165.1 0)
 		(fields_autoplaced yes)
@@ -10473,7 +10487,7 @@
 			)
 		)
 	)
-	(global_label "SYSCMD"
+	(global_label "~{CPU_RFSH}"
 		(shape input)
 		(at 246.38 127 0)
 		(fields_autoplaced yes)
@@ -10521,7 +10535,7 @@
 			)
 		)
 	)
-	(global_label "BIRQ0"
+	(global_label "BIRQ3"
 		(shape input)
 		(at 137.16 200.66 180)
 		(fields_autoplaced yes)
@@ -10617,7 +10631,7 @@
 			)
 		)
 	)
-	(global_label "~{SYSDEN}"
+	(global_label "~{BIACK}"
 		(shape input)
 		(at 246.38 124.46 0)
 		(fields_autoplaced yes)
@@ -10665,7 +10679,7 @@
 			)
 		)
 	)
-	(global_label "SYSINT1"
+	(global_label "~{CPU_BUSACK}"
 		(shape input)
 		(at 137.16 187.96 180)
 		(fields_autoplaced yes)
@@ -10689,7 +10703,7 @@
 			)
 		)
 	)
-	(global_label "BINTACK2"
+	(global_label "BINTEN"
 		(shape input)
 		(at 246.38 162.56 0)
 		(fields_autoplaced yes)
@@ -10713,7 +10727,7 @@
 			)
 		)
 	)
-	(global_label "BIRQ2"
+	(global_label "BIRQ1"
 		(shape input)
 		(at 137.16 205.74 180)
 		(fields_autoplaced yes)
@@ -10737,7 +10751,7 @@
 			)
 		)
 	)
-	(global_label "BINTEN"
+	(global_label "SYSINT2"
 		(shape input)
 		(at 246.38 149.86 0)
 		(fields_autoplaced yes)

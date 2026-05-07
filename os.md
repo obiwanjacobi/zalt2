@@ -26,6 +26,20 @@ Task API:
 - Inter Process (Task) Communication? Pipes, Shared Memory, Mapped File?
 - Atomic operations -prevent task switch for a short time.
 
+### Task Isolation / OS Protection
+
+Task are isolated from each other (as much as possible):
+
+- Have their own MMU Bank Map - no application memory is shared between tasks (except library code).
+- Have their MMU Pages marked with Writable and Executable bits.
+- The OS preemtively schedules Task execution. It is not possible for a Task to hijack the CPU.
+
+The OS protects its code from illegal access by:
+
+- Marking its MMU Pages with the OS bit. The CPLD monitors execution to manage a supervisor bit and will invalidate the memory access (read/write/execute) when illegal (MMU page has OS bit on but the supervisor FF is off).
+- OS functions (RSTs tracked by the CPLD) can switch to their private stack and MMU banks to pull-in additional data/code.
+- The CPLD can even track `IORQ` (+ address) to prevent illegal IO-requests (supervisor bit).
+
 ## Program Loader
 
 The program loader reads in a binary file and loads it into the correct memory pages.
@@ -75,8 +89,6 @@ Block Devices:
 - Audio
 - Video
 
-> Is there a Device hierarchy (parent-child)?
-
 Each Device Driver implements at least the Stream-Provider API.
 
 | API | Description |
@@ -89,6 +101,9 @@ Each Device Driver implements at least the Stream-Provider API.
 Block devices manage the size of the block and the memeroy required for block data exchange.
 
 ### Everything is File (Stream)
+
+> TBD: this is an old concept that may not be the best fit.
+It has issues in its (leaky) abstraction and should be async.
 
 Asynchronous Stream-based API interfacing with files and devices.
 
@@ -156,7 +171,7 @@ More than one application can be active.
 There is a stack of 'main screens' that can be active - one at a time.
 A layout definition for the stack slot defines what windows are displayed, where.
 
-The simplest is simply one main window, that fills the screen. Another could have two smaller windows to the side, or add a small window at the bottom.
+The simplest is simply one main window, that fills the screen. Another could have two smaller windows to the side, or add an additional small window at the bottom.
 
 This way the complexity is kept at a minimum and the user can still switch between applications.
 
@@ -186,7 +201,7 @@ This way the complexity is kept at a minimum and the user can still switch betwe
 |-----------------------------------|
 ```
 
-> It could be a good idea to implement the window manager inside the display interface card (smart device) an communicate with it using a higher-level protocol (no dragging windows over to another monitor then).
+> It could be a good idea to implement the window manager inside the display interface card (smart device) and communicate with it using a higher-level protocol (no mult- monitor).
 
 > Base the graphic representation on tiles and sprites (cursor) that can be (re)used for writing games?
 
@@ -201,14 +216,15 @@ This way the complexity is kept at a minimum and the user can still switch betwe
 ### Menu Bar
 
 There is one global top menu bar that displays the menu of the active application and starts at the left side of the screen.
-When more than one application is show on the same screen, the active application is the one that has the focus.
+When more than one application is shown on the same screen, the active application is the one that has the focus.
 
 The application menu bar can be:
 
 - Text: Sub-menus are text with optional small icon graphics and optional shortcut keys.
 - A simplified ribbon type: a combination of a menu and a toolbar. More advanced.
+- Something else? Text main menu's the fold-out onto toolbars?
 
-On the right of the Menu Bar there is a system-provided way to manage windows:
+On the right of the Menu Bar there is a system-provided way to manage Windows:
 
 - Open an application:
   - into a new window
@@ -264,3 +280,4 @@ An application can use system calls to open predefined Dialogs:
 - Color Picker
 
 The dialogs are presented in the middle of the screen and are all Modal -you have to dismis the dialog before control is returned to the application.
+

@@ -5539,12 +5539,12 @@
 		(uuid "c150dbc0-704c-4f21-8a8e-5d3a5be12ae9")
 	)
 	(label "A12"
-		(at 68.58 43.18 0)
+		(at 72.39 43.18 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
 		(uuid "c1a85fd2-45e9-427d-b168-d6792f219d5c")
 	)
@@ -6899,7 +6899,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+		(property "Footprint" "Library:DIP-20_W7.62mm_Socket_LongNarrowPads"
 			(at 194.31 123.19 0)
 			(hide yes)
 			(show_name no)
@@ -9826,7 +9826,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DIP:DIP-20_W7.62mm_Socket_LongPads"
+		(property "Footprint" "Library:DIP-20_W7.62mm_Socket_LongNarrowPads"
 			(at 194.31 55.88 0)
 			(hide yes)
 			(show_name no)
