@@ -597,7 +597,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
-					(page "6")
+					(page "2")
 				)
 			)
 		)
@@ -653,7 +653,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
-					(page "7")
+					(page "6")
 				)
 			)
 		)
@@ -729,7 +729,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9"
-					(page "2")
+					(page "7")
 				)
 			)
 		)

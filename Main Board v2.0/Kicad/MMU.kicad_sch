@@ -6289,7 +6289,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "081f9d63-7d6b-4cc8-b0a6-93d7abb8ba98")
-		(property "Reference" "R17"
+		(property "Reference" "R20"
 			(at 255.27 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6364,7 +6364,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R17")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -6629,7 +6629,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "105d2df3-2713-4715-bd92-72cc6c55a071")
-		(property "Reference" "R25"
+		(property "Reference" "R23"
 			(at 265.43 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6704,7 +6704,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R25")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -7023,7 +7023,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2e0b364c-929e-40a5-a327-a9b0ab462df9")
-		(property "Reference" "R2"
+		(property "Reference" "R4"
 			(at 246.38 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7098,7 +7098,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R2")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -7505,7 +7505,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "524d13a1-b29a-4c25-a122-ca86ca69e934")
-		(property "Reference" "R6"
+		(property "Reference" "R12"
 			(at 271.78 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7580,7 +7580,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R6")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -7597,7 +7597,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "53a90d08-89e6-4bdc-92b3-6c1892cc1d59")
-		(property "Reference" "R5"
+		(property "Reference" "R10"
 			(at 265.43 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7672,7 +7672,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R5")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -7689,7 +7689,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "59eb95f6-8d75-47fd-942b-560ad1962578")
-		(property "Reference" "R26"
+		(property "Reference" "R25"
 			(at 271.78 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7764,7 +7764,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R26")
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -7781,7 +7781,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5bdd63b7-b5af-4cde-873f-f183eccd7a60")
-		(property "Reference" "R10"
+		(property "Reference" "R7"
 			(at 255.27 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7856,7 +7856,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R10")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -8029,7 +8029,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "668fb10d-6417-40be-8650-5dda0b3fc537")
-		(property "Reference" "R20"
+		(property "Reference" "R26"
 			(at 274.32 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8104,7 +8104,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R20")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -8478,7 +8478,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "857847db-eac3-44a1-9df3-bbe386125008")
-		(property "Reference" "R4"
+		(property "Reference" "R8"
 			(at 259.08 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8553,7 +8553,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R4")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -8570,7 +8570,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8ac9b68b-f695-4037-a860-f2491a8a17f0")
-		(property "Reference" "R18"
+		(property "Reference" "R22"
 			(at 261.62 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8645,7 +8645,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R18")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -8662,7 +8662,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "907eefd1-7d37-4a5b-b9a8-1a6a6a00c6cc")
-		(property "Reference" "R9"
+		(property "Reference" "R5"
 			(at 248.92 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8737,7 +8737,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R9")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -8754,7 +8754,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "96d21985-edaf-4066-97a8-9aeb46c58bd0")
-		(property "Reference" "R22"
+		(property "Reference" "R17"
 			(at 246.38 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8829,7 +8829,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R22")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -8846,7 +8846,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "9eb3df70-9cf1-4607-a0d5-2a1477b45613")
-		(property "Reference" "R19"
+		(property "Reference" "R24"
 			(at 267.97 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8921,7 +8921,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R19")
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -8938,7 +8938,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a066907d-5964-42b1-b85f-e4ea457bcf02")
-		(property "Reference" "R7"
+		(property "Reference" "R1"
 			(at 236.22 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9013,7 +9013,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R7")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -9187,7 +9187,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "abfd199e-d41b-4170-97e7-d8636d8a12a8")
-		(property "Reference" "R12"
+		(property "Reference" "R11"
 			(at 267.97 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9262,7 +9262,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R12")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -9279,7 +9279,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b0e44762-e648-4ff3-9502-9bd80cc9e867")
-		(property "Reference" "R16"
+		(property "Reference" "R18"
 			(at 248.92 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9354,7 +9354,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R16")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -9371,7 +9371,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b632913c-a3b5-43d0-b548-91130f22f0a0")
-		(property "Reference" "R1"
+		(property "Reference" "R2"
 			(at 240.03 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9446,7 +9446,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R1")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -9463,7 +9463,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b8ef003d-e437-4bc7-acd0-88bed4ea03e7")
-		(property "Reference" "R24"
+		(property "Reference" "R21"
 			(at 259.08 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9538,7 +9538,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R24")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -10121,7 +10121,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d4c4364e-9fb6-4d4f-a833-a9aa921c92b7")
-		(property "Reference" "R15"
+		(property "Reference" "R16"
 			(at 242.57 95.25 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10196,7 +10196,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R15")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -10213,7 +10213,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d55ed4f4-189c-4580-9299-b44d5a1b716f")
-		(property "Reference" "R23"
+		(property "Reference" "R19"
 			(at 252.73 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10288,7 +10288,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R23")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -10305,7 +10305,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d7785ca6-40e9-41fd-bb45-4a16b21c5e6f")
-		(property "Reference" "R3"
+		(property "Reference" "R6"
 			(at 252.73 45.72 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10380,7 +10380,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R3")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -10645,7 +10645,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ea6ee60e-694a-47e4-b253-ac67a9b3daf7")
-		(property "Reference" "R8"
+		(property "Reference" "R3"
 			(at 242.57 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10720,7 +10720,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R8")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -10737,7 +10737,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ec039803-939f-40cb-80bf-a54cb6c6f993")
-		(property "Reference" "R21"
+		(property "Reference" "R15"
 			(at 240.03 101.6 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10812,7 +10812,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R21")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -10907,7 +10907,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ee227d56-809f-43de-8499-6c20c2bb8095")
-		(property "Reference" "R11"
+		(property "Reference" "R9"
 			(at 261.62 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10982,7 +10982,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/38464a8b-0df1-4971-a790-8d514365b55d"
-					(reference "R11")
+					(reference "R9")
 					(unit 1)
 				)
 			)

@@ -730,8 +730,8 @@
       "Main Board v2.0"
     ],
     [
-      "99986d84-8d01-4a1f-b315-e2163d64878e",
-      "Expansion Bus"
+      "5629c61f-0e25-4cd4-88fe-4b15ad7083f0",
+      "CPU"
     ],
     [
       "38464a8b-0df1-4971-a790-8d514365b55d",
@@ -746,12 +746,12 @@
       "Control Logic"
     ],
     [
-      "5629c61f-0e25-4cd4-88fe-4b15ad7083f0",
-      "CPU"
-    ],
-    [
       "8afc0c21-17c7-476a-8160-a21f573fa6ee",
       "SysIO"
+    ],
+    [
+      "99986d84-8d01-4a1f-b315-e2163d64878e",
+      "Expansion Bus"
     ]
   ],
   "text_variables": {},

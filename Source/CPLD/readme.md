@@ -30,6 +30,9 @@ Restore the original bank with the new mem-page copy instead of the old one.
 
 ## Memory Management Unit  (MMU)
 
+> Physical Memory is the total memory attached to the hardware.
+> Logical Memory is the memory addressed by the Z80 CPU (64k).
+
 Normal Operation:
 
 - Latch (6bit) for MMU-Bank
@@ -51,7 +54,7 @@ Startup sequence:
 At startup/powerup the MMU SRAMs are unitialized (assume garbage).
 The CPLD will not enable the SRAMs initially until a specific (IO) write is performed from the Z80 code, indicating initialization of the SRAMs is complete.
 
-When the SRAMs are disabled, the state of the MA13-MA25 lines is determined by weak pull-up/down resistors that map the bootup ROM code into address space $0000 of the Z80.
+When the SRAMs are disabled, the state of the MA13-MA25 lines is determined by weak pull-up/down resistors that map the bootstrap ROM code (4k) into address space $0000 of the Z80.
 
 When the Z80 ROM initialization code is writing values to the MMU SRAMs, they are enabled to receive the write (of course). When the write is done, the state of the SRAM CE line is set to the value of the initialization FlipFlop.
 

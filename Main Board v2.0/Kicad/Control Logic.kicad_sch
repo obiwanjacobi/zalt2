@@ -5439,16 +5439,6 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 149.86) (xy 158.75 149.86)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "16e0219d-3ea5-438a-a466-b4ce100f3e01")
-	)
-	(wire
-		(pts
 			(xy 224.79 101.6) (xy 246.38 101.6)
 		)
 		(stroke
@@ -5939,16 +5929,6 @@
 	)
 	(wire
 		(pts
-			(xy 137.16 142.24) (xy 158.75 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "416ad5cb-cce5-48d7-825b-7e22cf11134f")
-	)
-	(wire
-		(pts
 			(xy 43.18 168.91) (xy 55.88 168.91)
 		)
 		(stroke
@@ -6066,6 +6046,16 @@
 			(type default)
 		)
 		(uuid "4bc2cb73-7298-4a52-8adc-2949b1c6ba62")
+	)
+	(wire
+		(pts
+			(xy 129.54 149.86) (xy 158.75 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4c56401c-61bb-4bae-8191-0d229e59c4c0")
 	)
 	(wire
 		(pts
@@ -6709,6 +6699,16 @@
 	)
 	(wire
 		(pts
+			(xy 137.16 142.24) (xy 158.75 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "84eabcff-9000-46b9-93a0-74b04b2a9e48")
+	)
+	(wire
+		(pts
 			(xy 189.23 231.14) (xy 189.23 237.49)
 		)
 		(stroke
@@ -7226,6 +7226,16 @@
 			(type default)
 		)
 		(uuid "b7d9e4bc-6344-4266-834b-77aaac17fc08")
+	)
+	(wire
+		(pts
+			(xy 129.54 149.86) (xy 129.54 151.13)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b92136d8-be37-4a3c-abc7-8692cc41c1c1")
 	)
 	(wire
 		(pts
@@ -8037,7 +8047,17 @@
 		)
 		(uuid "ff600b64-1839-4afb-bd76-2ced28227f7d")
 	)
-	(label "A7"
+	(label "A2"
+		(at 137.16 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "02fcd3f9-afe4-499e-839a-918b3b0159ff")
+	)
+	(label "A6"
 		(at 137.16 152.4 0)
 		(effects
 			(font
@@ -8067,7 +8087,7 @@
 		)
 		(uuid "0b0988c7-69de-4f94-8404-0a69eec2c413")
 	)
-	(label "MA16"
+	(label "MA15"
 		(at 137.16 175.26 0)
 		(effects
 			(font
@@ -8107,7 +8127,7 @@
 		)
 		(uuid "21cd759d-b09b-4b41-a15f-9315c3ad8d53")
 	)
-	(label "A8"
+	(label "A7"
 		(at 137.16 154.94 0)
 		(effects
 			(font
@@ -8117,15 +8137,15 @@
 		)
 		(uuid "2369d54c-3d26-4af1-aa68-9bf89a0eacb0")
 	)
-	(label "A6"
-		(at 137.16 149.86 0)
+	(label "D7"
+		(at 246.38 91.44 180)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left bottom)
+			(justify right bottom)
 		)
-		(uuid "285fc038-42ba-4971-a1d3-70c0e9020bee")
+		(uuid "2944dbe7-1c00-4e8b-863b-ada2f8257ee1")
 	)
 	(label "A0"
 		(at 137.16 88.9 0)
@@ -8137,7 +8157,7 @@
 		)
 		(uuid "2a368efe-b998-446b-b151-bdc2df43e007")
 	)
-	(label "A11"
+	(label "A10"
 		(at 137.16 162.56 0)
 		(effects
 			(font
@@ -8147,7 +8167,7 @@
 		)
 		(uuid "30530ed4-3b3a-4e10-a031-b8ece8aa5ca2")
 	)
-	(label "D6"
+	(label "D5"
 		(at 246.38 86.36 180)
 		(effects
 			(font
@@ -8187,7 +8207,7 @@
 		)
 		(uuid "38eb1601-a451-4cb3-b79f-cc6aa5787a74")
 	)
-	(label "D0"
+	(label "MA21"
 		(at 246.38 71.12 180)
 		(effects
 			(font
@@ -8237,7 +8257,7 @@
 		)
 		(uuid "48513718-8e2b-4ef7-a1f7-80a431ef65c2")
 	)
-	(label "D7"
+	(label "D6"
 		(at 246.38 88.9 180)
 		(effects
 			(font
@@ -8247,7 +8267,7 @@
 		)
 		(uuid "48b0fad7-ecd1-4889-8d33-cca7915807ab")
 	)
-	(label "D5"
+	(label "TDI"
 		(at 55.88 186.69 180)
 		(effects
 			(font
@@ -8277,7 +8297,7 @@
 		)
 		(uuid "4b8830b3-4f94-42e5-97de-6f61c69980c6")
 	)
-	(label "D2"
+	(label "D1"
 		(at 246.38 76.2 180)
 		(effects
 			(font
@@ -8307,7 +8327,7 @@
 		)
 		(uuid "57c41f55-12b4-4ab4-b5be-d4891cf50c3a")
 	)
-	(label "MA13"
+	(label "MA12"
 		(at 137.16 167.64 0)
 		(effects
 			(font
@@ -8347,7 +8367,7 @@
 		)
 		(uuid "60e5b101-8823-4459-8a7b-00cba93ae39d")
 	)
-	(label "D4"
+	(label "D2"
 		(at 55.88 184.15 180)
 		(effects
 			(font
@@ -8367,7 +8387,7 @@
 		)
 		(uuid "6be38ec4-6c46-4e39-9e77-a142c790a65e")
 	)
-	(label "MA20"
+	(label "MA19"
 		(at 246.38 66.04 180)
 		(effects
 			(font
@@ -8407,7 +8427,7 @@
 		)
 		(uuid "72252849-2898-4779-9997-48492cff61cb")
 	)
-	(label "MA15"
+	(label "MA14"
 		(at 137.16 172.72 0)
 		(effects
 			(font
@@ -8477,7 +8497,7 @@
 		)
 		(uuid "82ccb010-63bd-444a-93e8-ca1575936e63")
 	)
-	(label "D3"
+	(label "D2"
 		(at 55.88 181.61 180)
 		(effects
 			(font
@@ -8487,7 +8507,7 @@
 		)
 		(uuid "83a1f018-afc9-4397-b5e5-4fbc3f10977e")
 	)
-	(label "D1"
+	(label "D0"
 		(at 246.38 73.66 180)
 		(effects
 			(font
@@ -8497,7 +8517,7 @@
 		)
 		(uuid "8546b65e-6af2-4354-b30c-1a09eaddab67")
 	)
-	(label "A10"
+	(label "A9"
 		(at 137.16 160.02 0)
 		(effects
 			(font
@@ -8517,7 +8537,7 @@
 		)
 		(uuid "86e7c411-49aa-46e5-b749-d442e5c23383")
 	)
-	(label "MA18"
+	(label "MA17"
 		(at 246.38 60.96 180)
 		(effects
 			(font
@@ -8537,7 +8557,7 @@
 		)
 		(uuid "8bb7ba3d-a76b-4e08-836d-0cd587863be1")
 	)
-	(label "D7"
+	(label "TCK"
 		(at 55.88 191.77 180)
 		(effects
 			(font
@@ -8567,7 +8587,7 @@
 		)
 		(uuid "95d59998-96a2-40c9-aed8-8f0b4502deea")
 	)
-	(label "D3"
+	(label "D2"
 		(at 246.38 78.74 180)
 		(effects
 			(font
@@ -8597,7 +8617,7 @@
 		)
 		(uuid "9caeb4d1-3c8c-45a0-a56c-7618f7c334cd")
 	)
-	(label "MA19"
+	(label "MA18"
 		(at 246.38 63.5 180)
 		(effects
 			(font
@@ -8607,7 +8627,7 @@
 		)
 		(uuid "9d212af4-b653-44dc-9563-7f3e7233dd1e")
 	)
-	(label "A2"
+	(label "BC15"
 		(at 55.88 135.89 180)
 		(effects
 			(font
@@ -8647,7 +8667,7 @@
 		)
 		(uuid "af9ea98a-fceb-4790-bd98-e726a4bb9b01")
 	)
-	(label "D5"
+	(label "D4"
 		(at 246.38 83.82 180)
 		(effects
 			(font
@@ -8687,7 +8707,17 @@
 		)
 		(uuid "b8a40d7c-fba3-4f39-9872-7034d57a28bc")
 	)
-	(label "MA21"
+	(label "A12"
+		(at 137.16 218.44 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b907f2f1-4f78-49f0-bf4b-2cc86c4ac54f")
+	)
+	(label "MA20"
 		(at 246.38 68.58 180)
 		(effects
 			(font
@@ -8697,7 +8727,7 @@
 		)
 		(uuid "ba8cbbbd-fe0f-4182-b062-c5168a53f5fc")
 	)
-	(label "MA12"
+	(label "A11"
 		(at 137.16 165.1 0)
 		(effects
 			(font
@@ -8717,7 +8747,7 @@
 		)
 		(uuid "bc274aee-b3cd-418c-bc40-251229e7fe99")
 	)
-	(label "A9"
+	(label "A8"
 		(at 137.16 157.48 0)
 		(effects
 			(font
@@ -8737,7 +8767,7 @@
 		)
 		(uuid "bfd92305-df9c-49ac-80f6-7efc06958d71")
 	)
-	(label "MA17"
+	(label "MA16"
 		(at 137.16 177.8 0)
 		(effects
 			(font
@@ -8777,16 +8807,6 @@
 		)
 		(uuid "c7bc567f-4510-46c3-a701-c318ae50d6b1")
 	)
-	(label "A2"
-		(at 137.16 142.24 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "ccd4cbef-b758-4d1f-b305-a3f0c0e2844a")
-	)
 	(label "MA22"
 		(at 137.16 68.58 0)
 		(effects
@@ -8817,7 +8837,7 @@
 		)
 		(uuid "d5249030-31d5-44db-8bde-6691478c71ff")
 	)
-	(label "D4"
+	(label "D3"
 		(at 246.38 81.28 180)
 		(effects
 			(font
@@ -8867,7 +8887,7 @@
 		)
 		(uuid "de2162cb-cd67-4bdf-b71f-f3646466144c")
 	)
-	(label "MA14"
+	(label "MA13"
 		(at 137.16 170.18 0)
 		(effects
 			(font
@@ -8951,7 +8971,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP2"
+	(global_label "MMU_MP_EXE"
 		(shape input)
 		(at 246.38 190.5 0)
 		(fields_autoplaced yes)
@@ -8999,9 +9019,9 @@
 			)
 		)
 	)
-	(global_label "BIRQ5"
+	(global_label "~{CPU_MREQ}"
 		(shape input)
-		(at 137.16 111.76 180)
+		(at 137.16 116.84 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9011,7 +9031,7 @@
 		)
 		(uuid "0a1eddd1-9087-4837-8022-3d05b347f667")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 125.1638 111.76 0)
+			(at 125.1638 116.84 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9023,7 +9043,7 @@
 			)
 		)
 	)
-	(global_label "~{MMU_RAM2_CE}"
+	(global_label "MMU_MAP5"
 		(shape input)
 		(at 246.38 99.06 0)
 		(fields_autoplaced yes)
@@ -9071,7 +9091,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_NMI}"
+	(global_label "~{CPU_HALT}"
 		(shape input)
 		(at 137.16 190.5 180)
 		(fields_autoplaced yes)
@@ -9143,7 +9163,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MP_EXE"
+	(global_label "MMU_MAP3"
 		(shape input)
 		(at 246.38 111.76 0)
 		(fields_autoplaced yes)
@@ -9191,9 +9211,9 @@
 			)
 		)
 	)
-	(global_label "BC18"
+	(global_label "BIRQ7"
 		(shape input)
-		(at 137.16 116.84 180)
+		(at 137.16 101.6 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9203,7 +9223,7 @@
 		)
 		(uuid "28f9d8ae-4491-402c-a880-e2bf08122b52")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 116.84 0)
+			(at 129.2158 101.6 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9215,7 +9235,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_M1}"
+	(global_label "~{CPU_WAIT}"
 		(shape input)
 		(at 246.38 93.98 0)
 		(fields_autoplaced yes)
@@ -9287,7 +9307,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP10"
+	(global_label "MMU_MAP4"
 		(shape input)
 		(at 246.38 210.82 0)
 		(fields_autoplaced yes)
@@ -9311,7 +9331,7 @@
 			)
 		)
 	)
-	(global_label "~{ROM_CE}"
+	(global_label "MMU_MAP10"
 		(shape input)
 		(at 246.38 116.84 0)
 		(fields_autoplaced yes)
@@ -9359,9 +9379,9 @@
 			)
 		)
 	)
-	(global_label "BC16"
+	(global_label "BINTACK6"
 		(shape input)
-		(at 137.16 121.92 180)
+		(at 137.16 109.22 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9371,7 +9391,7 @@
 		)
 		(uuid "43eef97b-8190-482b-a4aa-325e1a0a85d8")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 121.92 0)
+			(at 129.2158 109.22 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9407,7 +9427,7 @@
 			)
 		)
 	)
-	(global_label "MMU_RAM_DDIR"
+	(global_label "BINTACK0"
 		(shape input)
 		(at 246.38 177.8 0)
 		(fields_autoplaced yes)
@@ -9428,6 +9448,30 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+	)
+	(global_label "BC15"
+		(shape input)
+		(at 137.16 127 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "4bda0a96-5338-4a5a-9bf6-4545c070d63b")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 129.2158 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 	)
@@ -9503,9 +9547,9 @@
 			)
 		)
 	)
-	(global_label "~{CPU_MREQ}"
+	(global_label "BC13"
 		(shape input)
-		(at 137.16 137.16 180)
+		(at 137.16 132.08 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9515,7 +9559,7 @@
 		)
 		(uuid "56cced25-f4a3-4397-b387-ceadfc12a0aa")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 124.1358 137.16 0)
+			(at 124.1358 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9551,7 +9595,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP9"
+	(global_label "~{MMU_RAM1_CE}"
 		(shape input)
 		(at 246.38 208.28 0)
 		(fields_autoplaced yes)
@@ -9575,7 +9619,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP3"
+	(global_label "~{MMU_RAM2_CE}"
 		(shape input)
 		(at 246.38 193.04 0)
 		(fields_autoplaced yes)
@@ -9671,7 +9715,7 @@
 			)
 		)
 	)
-	(global_label "~{MMU_RAM1_CE}"
+	(global_label "MMU_MAP9"
 		(shape input)
 		(at 246.38 101.6 0)
 		(fields_autoplaced yes)
@@ -9695,9 +9739,9 @@
 			)
 		)
 	)
-	(global_label "BC15"
+	(global_label "BIRQ5"
 		(shape input)
-		(at 137.16 124.46 180)
+		(at 137.16 111.76 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -9707,7 +9751,7 @@
 		)
 		(uuid "6dfa2173-e7e2-4e62-a6af-f4cb241eb98c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 124.46 0)
+			(at 129.2158 111.76 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9719,7 +9763,7 @@
 			)
 		)
 	)
-	(global_label "~{MMU_RAM1_WE}"
+	(global_label "MMU_MAP0"
 		(shape input)
 		(at 246.38 104.14 0)
 		(fields_autoplaced yes)
@@ -9743,7 +9787,7 @@
 			)
 		)
 	)
-	(global_label "~{RAM_CE}"
+	(global_label "MMU_MAP8"
 		(shape input)
 		(at 246.38 114.3 0)
 		(fields_autoplaced yes)
@@ -9791,30 +9835,6 @@
 			)
 		)
 	)
-	(global_label "~{CPU_WAIT}"
-		(shape input)
-		(at 246.38 91.44 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "781ee913-932a-45f8-b42f-747e36381e99")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 258.3157 91.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
 	(global_label "~{B8_MEM_RD}"
 		(shape input)
 		(at 246.38 144.78 0)
@@ -9839,7 +9859,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MP_WR"
+	(global_label "MMU_MAP2"
 		(shape input)
 		(at 246.38 109.22 0)
 		(fields_autoplaced yes)
@@ -9935,7 +9955,31 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP8"
+	(global_label "~{CPU_M1}"
+		(shape input)
+		(at 246.38 134.62 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "8eda5a19-a5ef-43f2-b45f-6d92d50e4aff")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 254.3242 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+	)
+	(global_label "MMU_MAP7"
 		(shape input)
 		(at 246.38 205.74 0)
 		(fields_autoplaced yes)
@@ -10031,7 +10075,7 @@
 			)
 		)
 	)
-	(global_label "BC11"
+	(global_label "~{BBUSRQ}"
 		(shape input)
 		(at 137.16 60.96 180)
 		(fields_autoplaced yes)
@@ -10043,7 +10087,7 @@
 		)
 		(uuid "97c2ed9e-5ab4-4645-a6e3-a6624f678a28")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 60.96 0)
+			(at 126.4943 60.96 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10055,31 +10099,7 @@
 			)
 		)
 	)
-	(global_label "BC14"
-		(shape input)
-		(at 137.16 127 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "9b249465-e871-4f72-85f1-c0a8f2705ef1")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 127 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "BINTACK0"
+	(global_label "~{RAM_CE}"
 		(shape input)
 		(at 137.16 182.88 180)
 		(fields_autoplaced yes)
@@ -10103,31 +10123,7 @@
 			)
 		)
 	)
-	(global_label "A12"
-		(shape input)
-		(at 137.16 218.44 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "a12188fe-88c6-410c-801f-7ce55f6a6e09")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 128.49 218.44 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "~{MMU_RAM2_WE}"
+	(global_label "~{BIACK}"
 		(shape input)
 		(at 246.38 175.26 0)
 		(fields_autoplaced yes)
@@ -10151,7 +10147,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP4"
+	(global_label "MMU_MP_WR"
 		(shape input)
 		(at 246.38 195.58 0)
 		(fields_autoplaced yes)
@@ -10199,7 +10195,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP6"
+	(global_label "~{MMU_RAM2_WE}"
 		(shape input)
 		(at 246.38 200.66 0)
 		(fields_autoplaced yes)
@@ -10295,9 +10291,9 @@
 			)
 		)
 	)
-	(global_label "BINTACK6"
+	(global_label "BC18"
 		(shape input)
-		(at 137.16 109.22 180)
+		(at 137.16 119.38 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10307,7 +10303,7 @@
 		)
 		(uuid "b9840e71-6b61-43a7-9839-ebf9773ba47b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 125.1638 109.22 0)
+			(at 125.1638 119.38 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10319,7 +10315,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP7"
+	(global_label "MMU_MAP6"
 		(shape input)
 		(at 246.38 203.2 0)
 		(fields_autoplaced yes)
@@ -10343,7 +10339,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP1"
+	(global_label "MMU_MP_RD"
 		(shape input)
 		(at 246.38 187.96 0)
 		(fields_autoplaced yes)
@@ -10369,31 +10365,7 @@
 	)
 	(global_label "~{CPU_RST}"
 		(shape input)
-		(at 246.38 134.62 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c4edb636-9f5b-433b-bff1-c0f4294d4192")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 257.6504 134.62 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
-	(global_label "BC12"
-		(shape input)
-		(at 137.16 132.08 180)
+		(at 137.16 137.16 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10401,9 +10373,9 @@
 			)
 			(justify right)
 		)
-		(uuid "c5e86c6f-ac6b-4253-a30a-58ae906113f3")
+		(uuid "c4edb636-9f5b-433b-bff1-c0f4294d4192")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 132.08 0)
+			(at 125.8896 137.16 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10415,7 +10387,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP5"
+	(global_label "~{MMU_RAM1_WE}"
 		(shape input)
 		(at 246.38 198.12 0)
 		(fields_autoplaced yes)
@@ -10439,9 +10411,9 @@
 			)
 		)
 	)
-	(global_label "BC17"
+	(global_label "BINTACK7"
 		(shape input)
-		(at 137.16 119.38 180)
+		(at 137.16 104.14 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10451,7 +10423,7 @@
 		)
 		(uuid "ccbe539b-3efb-443d-883b-13410572987f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 119.38 0)
+			(at 129.2158 104.14 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10511,7 +10483,7 @@
 			)
 		)
 	)
-	(global_label "~{CPU_HALT}"
+	(global_label "~{CPU_NMI}"
 		(shape input)
 		(at 246.38 119.38 0)
 		(fields_autoplaced yes)
@@ -10559,7 +10531,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MP_RD"
+	(global_label "MMU_MAP1"
 		(shape input)
 		(at 246.38 106.68 0)
 		(fields_autoplaced yes)
@@ -10580,6 +10552,30 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+			)
+		)
+	)
+	(global_label "BC14"
+		(shape input)
+		(at 137.16 129.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e0f0d3af-2eee-4027-a268-9c12f52a90dc")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 129.2158 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 			)
 		)
 	)
@@ -10631,7 +10627,7 @@
 			)
 		)
 	)
-	(global_label "~{BIACK}"
+	(global_label "~{ROM_CE}"
 		(shape input)
 		(at 246.38 124.46 0)
 		(fields_autoplaced yes)
@@ -10775,7 +10771,7 @@
 			)
 		)
 	)
-	(global_label "MMU_MAP0"
+	(global_label "MMU_RAM_DDIR"
 		(shape input)
 		(at 246.38 185.42 0)
 		(fields_autoplaced yes)
@@ -10799,9 +10795,9 @@
 			)
 		)
 	)
-	(global_label "BINTACK7"
+	(global_label "BC16"
 		(shape input)
-		(at 137.16 104.14 180)
+		(at 137.16 124.46 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10811,7 +10807,7 @@
 		)
 		(uuid "f9770f94-022e-4f85-b335-86f6c68b3cbc")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 128.49 104.14 0)
+			(at 128.49 124.46 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10823,9 +10819,9 @@
 			)
 		)
 	)
-	(global_label "BIRQ7"
+	(global_label "BC17"
 		(shape input)
-		(at 137.16 101.6 180)
+		(at 137.16 121.92 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -10835,31 +10831,7 @@
 		)
 		(uuid "fae6fe16-a69f-409c-b0e4-d20e03aca504")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 128.49 101.6 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-	)
-	(global_label "BC13"
-		(shape input)
-		(at 137.16 129.54 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "ffdec34b-f6a9-4dba-a06f-bd276d68e09a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 129.2158 129.54 0)
+			(at 128.49 121.92 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11072,7 +11044,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1080b66d-b25c-4366-ba63-df552713fc97")
-		(property "Reference" "R34"
+		(property "Reference" "R37"
 			(at 97.79 245.1099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11147,7 +11119,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/bb4a9de7-d70e-4fb8-828d-baaabe316e47"
-					(reference "R34")
+					(reference "R37")
 					(unit 1)
 				)
 			)
@@ -11452,6 +11424,84 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 129.54 151.13 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "1d53f40f-a197-477b-aeab-b84dbc8ba4db")
+		(property "Reference" "#PWR088"
+			(at 129.54 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 129.54 156.21 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 129.54 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 129.54 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 129.54 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "5efb082b-e487-43fc-bf20-c1752aa9f78f")
+		)
+		(instances
+			(project "Main Board v2.0"
+				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/bb4a9de7-d70e-4fb8-828d-baaabe316e47"
+					(reference "#PWR088")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+3V3")
 		(at 148.59 24.13 0)
 		(unit 1)
@@ -11712,7 +11762,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e4430ee-cd28-4a84-9105-83d21d22855d")
-		(property "Reference" "R33"
+		(property "Reference" "R36"
 			(at 90.17 245.1099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11787,7 +11837,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/bb4a9de7-d70e-4fb8-828d-baaabe316e47"
-					(reference "R33")
+					(reference "R36")
 					(unit 1)
 				)
 			)
@@ -13314,7 +13364,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9c6c6eed-cc0c-423b-9ae4-e18c82e91c52")
-		(property "Reference" "R32"
+		(property "Reference" "R35"
 			(at 82.55 245.1099 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13389,7 +13439,7 @@
 		(instances
 			(project "Main Board v2.0"
 				(path "/91a97de0-fe3a-4a53-b587-b32edd62d6f9/bb4a9de7-d70e-4fb8-828d-baaabe316e47"
-					(reference "R32")
+					(reference "R35")
 					(unit 1)
 				)
 			)
