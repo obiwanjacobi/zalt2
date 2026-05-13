@@ -9,7 +9,7 @@ Decode address for:
 - ROM Enable
 - RAM Enable
 
-Memory Protection:
+## Memory Protection Unit (MPU)
 
 > triggers NMI for violation
 

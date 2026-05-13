@@ -1,0 +1,25 @@
+﻿Designator,Quantity,Value,Footprint,Package,MPN,DNP,Mount_Type,Description,KiLib_Generator
+"C1, C10, C11, C12, C13, C14, C15, C16, C17, C2, C21, C22, C23, C24, C25, C3, C4, C5, C6, C7, C8, C9",22,100n,C_0603_1608Metric_Pad1.08x0.95mm_HandSolder,,,,smt,"[C2,C21,C22,C23,C24,C25,C3,C4,C5,C6,C7,C8,C9]Unpolarized capacitor; [C17]Unpolarized capacitor, small symbol",SMD_2terminal_chip_molded
+"C18, C19, C20",3,100u,CP_Radial_D8.0mm_P3.80mm,,,,tht,"[C18,C19]Polarized capacitor, small symbol; [C20]Polarized capacitor",capacitor/THT/other
+J1,1,Bus_ISA_16bit,BUS_AT,,,,tht,16-bit ISA-AT bus connector,
+J2,1,+3V3 Supply,PinHeader_1x01_P2.54mm_Vertical,,,,tht,"Generic connector, single row, 01x01, script generated",connector/pin_header_socket
+J3,1,JTAG,IDC-Header_2x07_P2.54mm_Vertical,,,,tht,"Generic connector, double row, 02x07, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)",connector/pin_header_socket
+J4,1,AVR-JTAG-10,IDC-Header_2x05_P2.54mm_Vertical,,,,tht,Atmel 10-pin JTAG connector,connector/pin_header_socket
+J5,1,USART0,PinHeader_1x04_P2.54mm_Vertical,,,,tht,"Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)",connector/pin_header_socket
+J6,1,USART1,PinHeader_1x04_P2.54mm_Vertical,,,,tht,"Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)",connector/pin_header_socket
+J7,1,PS2KB,PinHeader_1x04_P2.54mm_Vertical,,,,tht,"Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)",connector/pin_header_socket
+J8,1,SPI-SDCard,PinSocket_1x06_P2.54mm_Vertical,,,,tht,"Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)",connector/pin_header_socket
+"R1, R10, R11, R12, R13, R14, R15, R16, R17, R18, R19, R2, R20, R21, R22, R23, R24, R25, R26, R27, R28, R29, R3, R30, R31, R33, R34, R4, R5, R6, R7, R8, R9",33,10k,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,,,,smt,"Resistor, small symbol",SMD_2terminal_chip_molded
+R32,1,100R,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,,,,smt,"Resistor, small symbol",SMD_2terminal_chip_molded
+"R35, R36, R37",3,4k7,R_0603_1608Metric_Pad0.98x0.95mm_HandSolder,,,,smt,"Resistor, small symbol",SMD_2terminal_chip_molded
+SW1,1,Reset,SW_Tactile_SPST_Angled_PTS645Vx83-2LFS,,,,tht,"Push button switch, generic, two pins",
+"U1, U10, U3",3,74HCT245,DIP-20_W7.62mm_Socket_LongNarrowPads,,,,tht,"Octal BUS Transceivers, 3-State outputs",package/DIP/legacy
+U11,1,ATmega1284-P,DIP-40_W15.24mm_Socket_LongPads,,,,tht,"20MHz, 128kB Flash, 16kB SRAM, 4kB EEPROM, JTAG, DIP-40",package/DIP/legacy
+"U2, U4",2,GLT725608,SOJ-28_7.62x18.415mm_P1.27mm,,,,smt,"32Kx8 bit Low Power CMOS Static RAM, 25/45ns, Automotive",package/gullwing
+U5,1,AS6C4008-55PCN,SOP-32_11.305x20.495mm_P1.27mm,,,,smt,"512K x 8 Low Power CMOS RAM, DIP-32",package/gullwing
+U6,1,AM29F040B,3M_Textool_232-1288-00-0602J_2x16_P2.54mm,,,,tht,"512K x 8 Low Power CMOS Flash, DIP-32",
+U7,1,XC95288XL-TQ144,TQFP-144_20x20mm_P0.5mm,,,,smt,"CPLD, 288 Macrocells, 6400 Usable Gates",package/gullwing
+U8,1,AP1117-33,SOT-223-3_TabPin2,,,,smt,"1A Low Dropout regulator, positive, 3.3V fixed output, SOT-223",
+U9,1,Z80CPU,3M_Textool_240-1288-00-0602J_2x20_P2.54mm,,,,tht,"8-bit General Purpose Microprocessor, DIP-40",
+Y1,1,20MHz,Oscillator_DIP-8_LargePads,,,,tht,"Crystal Clock Oscillator, DIP14-style metal package",
+Y2,1,32.768kHz,Crystal_C26-LF_D2.1mm_L6.5mm_Horizontal,,,,tht,Two pin crystal,crystal_resonator_oscillator
