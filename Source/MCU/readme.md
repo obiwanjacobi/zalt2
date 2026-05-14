@@ -51,7 +51,7 @@ Any state-machine that was active (but not finished?) is aborted/terminated.
 
 ## Interrupt Levels
 
-Iterrupts issued to the CPU:
+Interrupts issued to the CPU:
 
 | Level | Interrupt |
 | -- | -- |
