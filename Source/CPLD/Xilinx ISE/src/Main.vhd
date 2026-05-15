@@ -35,7 +35,7 @@ entity Main is
         CPU_WR_N     : in  std_logic;
         CPU_M1_N     : in  std_logic;
         CPU_RFSH_N   : in  std_logic;
-        CPU_HALT_N   : in  std_logic;
+        CPU_HALT_N   : in  std_logic;   -- TODO: add to interrupt controller
         CPU_WAIT_N   : out std_logic;
         CPU_INT_N    : out std_logic;
         CPU_NMI_N    : out std_logic;
