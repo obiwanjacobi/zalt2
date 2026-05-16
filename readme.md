@@ -25,11 +25,14 @@ The "motherboard" of the Zalt II computer, containing the 20MHz Z80 CPU, a CPLD 
 
 Currently being researched.
 
+We start of with a simple test on an (SSD1963) [LCD display](./Lcd%20display.md) I have.
+
 - command-based interaction
-- lots of graphic services
+- lots of graphic services (layers, sprites, transformations, animation, scrolling)
+- Additional memory for storing graphic assets
 - maybe even a built-in windowing system
 - VGA and HDMI using a CPLD to do the heavy lifting
-- MCU (STM32?) for 'accelerion' and additional memory
+- MCU (STM32?) for 'accelerion', additional memory and DMA
 
 ## Audio Interface Card
 
@@ -38,12 +41,15 @@ Currently being researched.
 Fague ideas on what to do here.
 
 - use MIDI (files) to drive the sound generator(s).
-- use a teensy and the audio library (design) capabilities as the processor.
+- use a teensy and the audio library (design) capabilities as the processor / sound generator.
+- Allow samples to be uploaded and played.
 - Prepare for recording audio samples (don't make it impossable), but no plans to use it.
-- 
 
 ## Network Card
 
 > TBD
 
 No idea yet how to do this, but seems like a good idea.
+
+- LAN + WIFI (+BLE?)
+- W5500 LAN module (AliExpress)
