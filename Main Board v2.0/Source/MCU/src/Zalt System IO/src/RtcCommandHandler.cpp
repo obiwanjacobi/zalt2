@@ -1,70 +1,80 @@
 #include "DataCommands.h"
-#include "Task.h"
+#include "ProtocolTask.h"
 
-class RtcCommandHandler
+/// @brief Task for handling the RtcDate command. This is a multi-step task that will read the date from the command buffer, set the RTC date, and then send a response back to the host.
+class RtcDateTask : public ProtocolTask
 {
 public:
-    bool CanHandleCommand(uint8_t command) const
+    RtcDateTask(DataPort& dataPort)
+        : ProtocolTask(dataPort)
+    {}
+
+    Task_Begin(Run)
     {
-        switch ((DataCommands)command)
+        // TODO: get Date from Rtc
+
+        Task_WaitUntil(SysDataPort.TryWrite(year));
+        Task_WaitUntil(SysDataPort.TryWrite(month));
+        Task_WaitUntil(SysDataPort.TryWrite(day));
+    }
+    Task_End;
+
+private:
+    uint8_t year = 0;
+    uint8_t month = 0;
+    uint8_t day = 0;
+};
+
+/// @brief Task for handling the RtcTime command. This is a multi-step task that will read the time from the command buffer, set the RTC time, and then send a response back to the host.
+class RtcTimeTask : public ProtocolTask
+{
+public:
+    RtcTimeTask(DataPort& dataPort)
+        : ProtocolTask(dataPort)
+    {}
+
+    Task_Begin(Run)
+    {
+        // TODO: get Time from Rtc
+        
+        Task_WaitUntil(SysDataPort.TryWrite(hour));
+        Task_WaitUntil(SysDataPort.TryWrite(minute));
+        Task_WaitUntil(SysDataPort.TryWrite(second));
+    }
+    Task_End;
+
+private:
+    uint8_t hour = 0;
+    uint8_t minute = 0;
+    uint8_t second = 0;
+};
+
+class RtcCommandHandler : public CommandHandler
+{
+public:
+    RtcCommandHandler(DataPort& dataPort) 
+        : _rtcDate(dataPort), _rtcTime(dataPort)
+    {}
+
+    bool HandleCommand(DataCommands command)
+    {
+        switch (command)
         {
         case DataCommands::RtcDate:
+            setCurrentTask(&_rtcDate);
+            break;
         case DataCommands::RtcTime:
-            return true;
+            setCurrentTask(&_rtcTime);
+            break;
         default:
+            setCurrentTask(nullptr);
             return false;
         }
-    }
 
-    void HandleCommand(uint8_t command)
-    {
-        switch ((DataCommands)command)
-        {
-        case DataCommands::RtcDate:
-            _current = &_rtcDateProgress;
-            break;
-        case DataCommands::RtcTime:
-            //_current = &_rtcTimeProgress;
-            break;
-        default:
-            _current = nullptr;
-            break;
-        }
-    }
-
-    bool Run()
-    {
-        if (_current)
-            return _current->Run();
-        
-        // signal end of function
         return true;
     }
 
 private:
-    Progress* _current;
-    RtcDateProgress _rtcDateProgress;
-    //RtcTimeProgress _rtcTimeProgress;
-};
-
-class Progress
-{
-public:
-    virtual bool Run() = 0;
-    virtual void Reset() { _task = 0; };
-
-protected:
-    uint16_t _task;
-};
-
-class RtcDateProgress : public Progress
-{
-public:
-
-    Task_Begin(Run)
-    {
-
-    }
-    Task_End;
-
+    RtcDateTask _rtcDate;
+    RtcTimeTask _rtcTime;
 };

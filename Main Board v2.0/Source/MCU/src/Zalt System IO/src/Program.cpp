@@ -11,7 +11,7 @@ public:
         Scheduler::Start();
 
         // open console port (usart)
-        if (!_console.Open(BaudRates::Baud115200))
+        if (!_userConsole.Open(BaudRates::Baud115200))
             Stop(1);
 
         // if (!_debugConsole.Open(BaudRates::Baud115200))
@@ -35,15 +35,15 @@ public:
         }
         else if (code > 1)
         {
-            _console.Transmit.Write("MCU Stopped with code: ");
-            _console.Transmit.WriteLine(code);
+            _userConsole.Transmit.Write("MCU Stopped with code: ");
+            _userConsole.Transmit.WriteLine(code);
         }
 
         while (true);
     }
 
 //private:
-    Console _console;
+    UserConsole _userConsole;
     DebugConsole _debugConsole;
     DataPort _dataPort;
 };
@@ -64,12 +64,12 @@ int main()
 // user console
 ISR(USART0_RX_vect)
 {
-    program._console.Receive.OnIsCompleteInterrupt();
+    program._userConsole.Receive.OnIsCompleteInterrupt();
 }
 
 ISR(USART0_UDRE_vect)
 {
-    program._console.Transmit.OnAcceptDataInterrupt();
+    program._userConsole.Transmit.OnAcceptDataInterrupt();
 }
 
 // debug console

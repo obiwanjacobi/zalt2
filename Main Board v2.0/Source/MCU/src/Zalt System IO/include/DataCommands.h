@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ProtocolTask.h"
 #include <stdint.h>
 
 enum class DataCommands : uint8_t
@@ -47,4 +48,32 @@ enum class StatusFlags : uint8_t
     Console1OutputEmpty = 0x20,
     Console1InputFull = 0x40,
     Busy = 0x80,
+};
+
+class CommandHandler
+{
+public:
+    virtual bool HandleCommand(DataCommands command) = 0;
+
+    bool Run()
+    {
+        if (_current)
+            return _current->Run();
+        
+        // signal end of function
+        return true;
+    }
+
+protected:
+    CommandHandler() : _current(nullptr) {}
+    
+    void setCurrentTask(ProtocolTask* task)
+    {
+        _current = task;
+        if (_current)
+            _current->ResetTask();
+    }
+
+private:
+    ProtocolTask* _current;
 };

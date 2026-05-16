@@ -66,10 +66,48 @@ public:
     }
 };
 
-class Console : public Serial<ConsoleUsartId>
+// Provides a generic interface for templated implementaion.
+class Console
 {
+public:
+    virtual bool TryRead(uint8_t* outData) = 0;
+    virtual bool TryWrite(uint8_t outData) = 0;
 };
 
-class DebugConsole : public Serial<DebugUsartId>
+class UserConsole : public Serial<ConsoleUsartId>, Console
 {
+    typedef Serial<ConsoleUsartId> BaseT;
+public:
+    bool TryRead(uint8_t* outData)
+    {
+        return BaseT::Receive.TryRead(outData);
+    }
+    bool TryWrite(uint8_t outData)
+    {
+        UsartTransmitResult result;
+        if (BaseT::Transmit.TryWrite(outData, result))
+        {
+            return result == UsartTransmitResult::Success;
+        }
+        return false;
+    }
+};
+
+class DebugConsole : public Serial<DebugUsartId>, Console
+{
+    typedef Serial<DebugUsartId> BaseT;
+public:
+    bool TryRead(uint8_t* outData)
+    {
+        return BaseT::Receive.TryRead(outData);
+    }
+    bool TryWrite(uint8_t outData)
+    {
+        UsartTransmitResult result;
+        if (BaseT::Transmit.TryWrite(outData, result))
+        {
+            return result == UsartTransmitResult::Success;
+        }
+        return false;
+    }
 };
