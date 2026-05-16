@@ -10,14 +10,15 @@ class DataPort
 public:
     DataPort() = default;
 
-    bool CanWrite() const { return _writeBuffer.getCount() < _writeBuffer.getCapacity(); }
-    bool TryWrite(uint8_t data) { return _writeBuffer.Write(data); }
-    bool CanRead() const { return !_readBuffer.getIsEmpty(); }
-    bool TryRead(uint8_t* data) { return _readBuffer.TryRead(data); }
+    bool CanWrite() const;
+    bool TryWrite(uint8_t data);
+    bool CanRead() const;
+    bool TryRead(uint8_t* data);
 
-    void setStatus(uint8_t status) { _status = status; }
-    bool hasNewCommand() const { return _command != _prevCommand; }
-    uint8_t getCommand() const { return _command; }
+    void setStatus(uint8_t status);
+    uint8_t getCommand() const;
+    
+    bool hasNewCommand() const { return getCommand() != _prevCommand; }
     uint8_t getPrevCommand() const { return _prevCommand; }
     void setPrevCommand(uint8_t command) { _prevCommand = command; }
 
