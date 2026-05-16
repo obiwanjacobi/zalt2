@@ -24,3 +24,10 @@ The module's resistive touch functionality provides a reliable and responsive us
 
 **Designed for Ease of Use and Integration**
 Designed with ease of use in mind, the 5 inch color display module is a breeze to integrate into your existing projects. The module's compact size and lightweight design make it an ideal choice for portable and space-constrained applications. The high-quality display and responsive touch functionality make it a standout component for any project that demands a professional and user-friendly interface. With its adaptability and compatibility with a range of microcontrollers, this module is a go-to solution for both hobbyists and professionals alike.
+
+---
+
+https://www.lcdwiki.com/7.0inch_16BIT_Module_SSD1963
+
+SSD1963 driver example:
+https://github.com/fbrausse/ssd1963
