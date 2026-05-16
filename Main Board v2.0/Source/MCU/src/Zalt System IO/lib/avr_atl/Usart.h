@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <avr/io.h>
+#include "PowerReduction.h"
 #include "UsartConfig.h"
 #include "UsartTransmit.h"
 #include "UsartReceive.h"

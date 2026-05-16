@@ -1,7 +1,8 @@
 #pragma once
 #include <stdint.h>
 
-void SpinWait(uint16_t spinDelay)
+template <typename T>
+void SpinWait(T spinDelay)
 {
     while (spinDelay-- > 0)
     {
