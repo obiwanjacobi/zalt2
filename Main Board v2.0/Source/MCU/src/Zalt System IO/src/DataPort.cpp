@@ -22,12 +22,12 @@ bool DataPort::TryRead(uint8_t* data)
     LockScope lock;
     return _readBuffer.TryRead(data);
 }
-void DataPort::setStatus(uint8_t status)
+void DataPort::setStatus(StatusFlags status)
 {
     LockScope lock;
     _status = status;
 }
-uint8_t DataPort::getCommand() const
+DataCommands DataPort::getCommand() const
 {
     LockScope lock;
     return _command;
@@ -44,11 +44,12 @@ void DataPort::OnDataInterrupt()
             if (_writeBuffer.TryRead(&data))
             {
                 if (_dataOrCmd.Read()) // 0=data/1=cmd
-                    Port<Ports::A>::WriteAll(_status);
+                    Port<Ports::A>::WriteAll((uint8_t)_status);
                 else
                     Port<Ports::A>::WriteAll(data);
 
-                Port<Ports::A>::SetDirection(0x00); // set all pins to input
+                // how long to wait?
+                //Port<Ports::A>::SetDirection(0x00); // set all pins to input
             }
         }
         else
@@ -58,7 +59,7 @@ void DataPort::OnDataInterrupt()
 
             if (_dataOrCmd.Read())  // 0=data/1=cmd
             {
-                _command = data;
+                _command = (DataCommands)data;
                 _readBuffer.Clear();
                 _writeBuffer.Clear();
             }

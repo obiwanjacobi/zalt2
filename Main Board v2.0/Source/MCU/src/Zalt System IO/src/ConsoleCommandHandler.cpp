@@ -1,6 +1,8 @@
+#include "CommandHandler.h"
 #include "DataCommands.h"
-#include "ProtocolTask.h"
+#include "DataPort.h"
 #include "Serial.h"
+#include "Task.h"
 
 /// @brief Task for handling the ConsoleRead-n command. This is a multi-step task that will read the console input from the command buffer, process it, and then send a response back to the host.
 class ConsoleReadTask : public ProtocolTask

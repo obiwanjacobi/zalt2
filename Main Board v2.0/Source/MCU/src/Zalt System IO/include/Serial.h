@@ -74,7 +74,7 @@ public:
     virtual bool TryWrite(uint8_t outData) = 0;
 };
 
-class UserConsole : public Serial<ConsoleUsartId>, Console
+class UserConsole : public Serial<ConsoleUsartId>, public Console
 {
     typedef Serial<ConsoleUsartId> BaseT;
 public:
@@ -93,7 +93,7 @@ public:
     }
 };
 
-class DebugConsole : public Serial<DebugUsartId>, Console
+class DebugConsole : public Serial<DebugUsartId>, public Console
 {
     typedef Serial<DebugUsartId> BaseT;
 public:

@@ -1,5 +1,7 @@
+#include "CommandHandler.h"
 #include "DataCommands.h"
-#include "ProtocolTask.h"
+#include "DataPort.h"
+#include "Task.h"
 
 /// @brief Task for handling the RtcDate command. This is a multi-step task that will read the date from the command buffer, set the RTC date, and then send a response back to the host.
 class RtcDateTask : public ProtocolTask

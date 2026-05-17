@@ -2,6 +2,7 @@
 
 #include "DigitalInputPin.h"
 #include "RingBuffer.h"
+#include "DataCommands.h"
 
 #include <stdint.h>
 
@@ -15,12 +16,8 @@ public:
     bool CanRead() const;
     bool TryRead(uint8_t* data);
 
-    void setStatus(uint8_t status);
-    uint8_t getCommand() const;
-    
-    bool hasNewCommand() const { return getCommand() != _prevCommand; }
-    uint8_t getPrevCommand() const { return _prevCommand; }
-    void setPrevCommand(uint8_t command) { _prevCommand = command; }
+    void setStatus(StatusFlags status);
+    DataCommands getCommand() const;
 
     void OnDataInterrupt();
 
@@ -29,10 +26,28 @@ private:
     DigitalInputPin<PortPins::B1> _dataOrCmd;   // 0=data/1=cmd
     DigitalInputPin<PortPins::B2> _dataEnable;  // 0=disable/1=enable
 
-    uint8_t _status;
-    uint8_t _prevCommand;
-    uint8_t _command;
+    StatusFlags _status;
+    DataCommands _command;
 
     RingBuffer<uint8_t, 8> _readBuffer;
     RingBuffer<uint8_t, 8> _writeBuffer;
+};
+
+class ProtocolTask
+{
+public:
+    // Task_Begin(Run) {...} Task_End;
+    /// @brief Runs the task. Returns true if the task is complete, false if it needs to be called again.
+    virtual bool Run() = 0;
+    
+    /// @brief Resets the task to its starting-state.
+    void ResetTask() { _task = 0; };
+
+protected:
+    ProtocolTask(DataPort& dataPort)
+        : SysDataPort(dataPort), _task(0)
+    {}
+
+    DataPort& SysDataPort;
+    uint16_t _task;
 };

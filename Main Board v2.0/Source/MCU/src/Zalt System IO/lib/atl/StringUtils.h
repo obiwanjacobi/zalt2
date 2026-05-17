@@ -20,4 +20,9 @@ public:
 template <const uint8_t MaxSize>
 class StringWriter : public TextWriter<StringStream<Collection<FixedString<MaxSize>>>>
 {
+public:
+    operator const char* () const
+    {
+        return (const char *)this;
+    }
 };
