@@ -18,10 +18,11 @@ $env:PATH = "$env:PATH;C:\z88dk\bin"
 
 $LibName    = 'bios'
 $BinName    = 'firmware'
-$ProjectRoot = $PWD.Path
+$ProjectRoot = Split-Path $PSScriptRoot -Parent
 $OutDir     = Join-Path $ProjectRoot '.build'
 $AsmOut     = Join-Path $OutDir 'asm'
 $ObjOut     = Join-Path $OutDir 'obj'
+$DispatchHeader = Join-Path $ProjectRoot 'src\ApiDispatch.h'
 
 # ---------------------------------------------------------------------------
 
@@ -47,6 +48,17 @@ function Build-Lib {
         (Split-Path $src -Leaf) | Add-Content $localLst
     }
 
+    $generatedAsmSources = @(
+        'bios\dispatch.asm'
+    )
+    foreach ($generatedAsm in $generatedAsmSources) {
+        $src = Join-Path $ProjectRoot $generatedAsm
+        if (-not (Test-Path $src)) { continue }
+
+        Copy-Item $src $AsmOut -Force
+        (Split-Path $src -Leaf) | Add-Content $localLst
+    }
+
     Push-Location $AsmOut
     try {
         Invoke-External z80asm, "-x$OutDir\$LibName.lib", '-m', '-s', "@$localLst"
@@ -59,26 +71,61 @@ function Build-Lib {
 function Build-Bin {
     Write-Host '[build_bin] Compiling and linking $($BinName) ...'
     New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+    New-Item -ItemType Directory -Path $AsmOut -Force | Out-Null
     New-Item -ItemType Directory -Path $ObjOut -Force | Out-Null
-    $localLst = Join-Path $ObjOut '_obj_local.lst'
-    Remove-Item $localLst -ErrorAction SilentlyContinue
-
-    foreach ($line in Get-Content (Join-Path $ProjectRoot '_src.lst')) {
-        $line = $line.Trim()
-        if (-not $line -or $line.StartsWith(';')) { continue }
-        $src  = Join-Path $ProjectRoot ($line -replace '/', '\')
-        $base = [System.IO.Path]::GetFileNameWithoutExtension($src)
-        $obj  = Join-Path $ObjOut "$base.o"
-
-        Invoke-External zcc, '+z80', '-SO2', '-nostdlib', '--no-crt', -compiler=sccz80, '-c', $src, '-o', $obj
-        $obj | Add-Content $localLst
+    if (-not (Test-Path $DispatchHeader)) {
+        @(
+            '/* AUTO-GENERATED bootstrap header. Updated by post_build.ps1. */',
+            '#ifndef __API_DISPATCH_H__',
+            '#define __API_DISPATCH_H__',
+            '',
+            '#endif /* __API_DISPATCH_H__ */'
+        ) | Set-Content $DispatchHeader
     }
+    Get-ChildItem -Path $OutDir -Filter "$BinName*" -File -ErrorAction SilentlyContinue | Remove-Item -Force
+    $localLst = Join-Path $ObjOut '_obj_local.lst'
+    $asmObjLst = Join-Path $AsmOut '_asm_obj_local.lst'
+    Remove-Item $localLst -ErrorAction SilentlyContinue
+    Remove-Item $asmObjLst -ErrorAction SilentlyContinue
 
-    # -reloc-info  : generate .reloc file with relocation records per section
-    # -split-bin   : generate one .bin per section for page-granular loading
-    #'-reloc-info', 
-    Invoke-External z80asm, '-b', '-split-bin', '-m', '-v',
-        "@$localLst", "-L$OutDir", "-l$LibName", "-o$OutDir\$BinName"
+    Push-Location $ProjectRoot
+    try {
+        foreach ($line in Get-Content (Join-Path $ProjectRoot '_asm.lst')) {
+            $line = $line.Trim()
+            if (-not $line -or $line.StartsWith(';')) { continue }
+            $asmBase = [System.IO.Path]::GetFileNameWithoutExtension($line)
+            ".build\asm\$asmBase.o" | Add-Content $asmObjLst
+        }
+
+        $generatedAsmSources = @(
+            'bios\dispatch.asm'
+        )
+        foreach ($generatedAsm in $generatedAsmSources) {
+            $src = Join-Path $ProjectRoot $generatedAsm
+            if (-not (Test-Path $src)) { continue }
+
+            $asmBase = [System.IO.Path]::GetFileNameWithoutExtension($generatedAsm)
+            ".build\asm\$asmBase.o" | Add-Content $asmObjLst
+        }
+
+        foreach ($line in Get-Content (Join-Path $ProjectRoot '_src.lst')) {
+            $line = $line.Trim()
+            if (-not $line -or $line.StartsWith(';')) { continue }
+            $src  = $line -replace '/', '\'
+            $base = [System.IO.Path]::GetFileNameWithoutExtension($src)
+            $obj  = ".build\obj\$base.o"
+
+            Invoke-External zcc, '+z80', '-SO2', '-nostdlib', '--no-crt', '-compiler=sccz80', '-c', $src, '-o', $obj
+            $obj | Add-Content $localLst
+        }
+
+        # -reloc-info  : generate .reloc file with relocation records per section
+        # -split-bin   : generate one .bin per section for page-granular loading
+        Invoke-External z80asm, '-b', '-split-bin', '-reloc-info', '-m', '-v',
+            "@$asmObjLst", "@$localLst", "-o=.build\$BinName"
+    } finally {
+        Pop-Location
+    }
 
     Write-Host '[build_bin] Done.'
 
@@ -91,7 +138,8 @@ function Build-Bin {
     & "$PSScriptRoot\post_build.ps1" `
         -OutDir     $OutDir `
         -BinName    $BinName `
-        -DispatchSrc (Join-Path $ProjectRoot 'bios\dispatch.asm')
+        -DispatchSrc (Join-Path $ProjectRoot 'bios\dispatch.asm') `
+        -DispatchHeader $DispatchHeader
     if ($LASTEXITCODE -ne 0) { throw 'post_build failed.' }
 }
 

@@ -30,28 +30,28 @@ typedef struct _stream
 /** Initialize a stream with an external buffer.
  *  size MUST be a power of 2: 8, 16, 32, 64, 128 ...
  */
-void Stream_Construct(Stream *s, uint8_t *buf, uint8_t size);
+void Api_Stream_Construct(Stream *s, uint8_t *buf, uint8_t size);
 
 /* --- Writer side --- */
 
 /** Returns true if there is space to write at least one byte. */
-bool_t  Stream_CanWrite(Stream *s);
+bool_t  Api_Stream_CanWrite(Stream *s);
 
 /** Write one byte. Only call when Stream_CanWrite() is true. */
-void    Stream_Write(Stream *s, uint8_t byte);
+void    Api_Stream_Write(Stream *s, uint8_t byte);
 
 /** Signal end of data. Reader will see Stream_IsDone() after draining. */
-void    Stream_Close(Stream *s);
+void    Api_Stream_Close(Stream *s);
 
 /* --- Reader side --- */
 
 /** Returns true if there is at least one byte to read. */
-bool_t  Stream_CanRead(Stream *s);
+bool_t  Api_Stream_CanRead(Stream *s);
 
 /** Read one byte. Only call when Stream_CanRead() is true. */
-uint8_t Stream_Read(Stream *s);
+uint8_t Api_Stream_Read(Stream *s);
 
 /** Returns true when the stream is closed AND all bytes have been read. */
-bool_t  Stream_IsDone(Stream *s);
+bool_t  Api_Stream_IsDone(Stream *s);
 
 #endif /* __STREAM_H__ */
