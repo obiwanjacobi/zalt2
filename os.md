@@ -36,14 +36,15 @@ Task are isolated from each other (as much as possible):
 
 The OS protects its code from illegal access by:
 
-- Marking its MMU Pages with the OS bit. The CPLD monitors execution to manage a supervisor bit and will invalidate the memory access (read/write/execute) when illegal (MMU page has OS bit on but the supervisor FF is off).
+- Marking its MMU Pages with the OS bit. The CPLD monitors execution to manage a supervisor bit and will invalidate the memory access (write/execute) when illegal (MMU page has OS bit on but the supervisor FF is off).
 - OS functions (RSTs tracked by the CPLD) can switch to their private stack and MMU banks to pull-in additional data/code.
 - The CPLD can even track `IORQ` (+ address) to prevent illegal IO-requests (supervisor bit).
+- THe CPLD only allows MMU IO-access when supervisor bit is on.
 
 ## Program Loader
 
 The program loader reads in a binary file and loads it into the correct memory pages.
-The ultimate idea is for a program to be fully relocatable and to have segments defined that will be loaded into the memory pages (MMU). Ideal would be that each segment would also be relocatable so it can be reordered in the CPU address space. But that is probably too complex to manage (as a programmer of the application) and write.
+The ultimate idea is for a program to be fully relocatable and to have segments defined that will be loaded into the memory pages (MMU). Ideal would be that each segment would also be relocatable so it can be reordered in the CPU address space. But that is probably too complex to manage and write (as a programmer of the application).
 
 It would require an application programmer to output the program in 4k sections.
 These sections have to carfully chosen to minimize the need to switch memory pages/sections in and out when calls are made across sections.
@@ -93,7 +94,7 @@ Each Device Driver implements at least the Stream-Provider API.
 
 | API | Description |
 | -- | -- |
-|`TryStreeamOpen` (async)| Establishes a connection with the stream source (hardware or file). May allocate memory. |
+|`TryStreamOpen` (async)| Establishes a connection with the stream source (hardware or file). May allocate memory. |
 |`TryStreamClose` (async)| Disconnects from stream source and cleanup (free memory). |
 |`TryStreamRead` (async)| Reads a block from the underlying device/file. |
 |`TryStreamWrite` (async)| Writes a block to the underlying device/file. |
@@ -247,7 +248,7 @@ The way VScode works with commands in a central drop list at the top of the scre
 
 The application registers commands at startup (or declarive in binary?). Command-state (enabled/disable) can be retrieved from the app through a standard interface.
 
-The application can use categories to group commands into a hierarchy. If a command-id is zero it registration represents a category and the category-id must be set. The system will pre-define several common categories.
+The application can use categories to group commands into a hierarchy. If a command-id is zero, its registration represents a category and the category-id must be set. The system will pre-define several common categories.
 
 ### Screen Controls
 
@@ -276,8 +277,9 @@ An application can use system calls to open predefined Dialogs:
 - Input Message
 - Load File
 - Save File
-- Fonts
-- Color Picker
+- Fonts*
+- Color Picker*
+
+*) Nice to Have
 
 The dialogs are presented in the middle of the screen and are all Modal -you have to dismis the dialog before control is returned to the application.
-
