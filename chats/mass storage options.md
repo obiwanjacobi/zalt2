@@ -557,3 +557,686 @@ Then separate latched registers for:
 That keeps the CPLD simple and the board reasonable.
 
 If you want, I can sketch a concrete signal list and a minimal MCU↔CPLD DMA protocol next.
+
+User: yes, please do
+
+GitHub Copilot: A workable first cut is to treat the MCU↔CPLD link as two planes:
+
+- a slow control plane for transfer setup
+- a narrow byte-stream plane for payload
+
+That keeps the CPLD simple. It only needs to know “copy N bytes to or from Z80 memory starting at address A,” while the MCU handles all higher-level storage logic.
+
+**Signals**
+
+I would start with 14 to 16 signals total, depending on how symmetric you want reads and writes to be.
+
+Minimal shared payload bus:
+- `MCD[7:0]` : 8-bit data bus between MCU and CPLD
+- `MDIR` : direction, `0 = MCU->CPLD`, `1 = CPLD->MCU`
+- `MSTB` : source says data is valid
+- `MACK` : sink accepted byte
+- `MSTART` : marks start of a transfer
+- `MDONE` : marks end of transfer / engine idle
+- `MIRQ` : optional interrupt from CPLD to MCU
+
+Control register interface:
+- `CREG[1:0]` : register select
+- `CWR` : write selected control register
+- `CRD` : read selected status register
+
+That is 8 + 8 = 16 pins if you count everything. You can trim it a bit if some signals are multiplexed.
+
+If you want the absolute simplest version, drop `CRD` and make status visible on a few dedicated pins. Then you are around 14 pins.
+
+**Register Set**
+
+The CPLD only needs a few registers:
+
+1. `ADDR0`
+Low 8 bits of Z80 address.
+
+2. `ADDR1`
+Middle 8 bits of Z80 address.
+
+3. `ADDR2`
+High bits / page / flags.
+Since your machine has paging, this should encode the physical destination context cleanly rather than pretending all RAM is flat.
+
+4. `LEN0`
+Low byte of transfer length.
+
+5. `LEN1`
+High byte of transfer length.
+
+6. `CTRL`
+Bits like:
+- direction: `0 = write to Z80 RAM`, `1 = read from Z80 RAM`
+- auto-increment enable
+- assert interrupt on completion
+- maybe memory cycle type if your bus distinguishes them
+
+7. `STATUS`
+Bits like:
+- busy
+- fifo empty
+- fifo full
+- done
+- bus granted
+- error / timeout
+
+That is enough for a first implementation.
+
+**Recommended Internal CPLD Structure**
+
+Do not try to implement the full 4 kB ring logic in the CPLD. Internally, keep only:
+
+- transfer registers
+- a tiny FIFO, ideally 16 to 64 bytes
+- a Z80 bus master state machine
+- a small MCU-side handshake state machine
+
+That is the right level of complexity for a CPLD.
+
+**How A Write-To-Z80 Transfer Works**
+
+This is the main storage-read case: MCU has read file data locally and wants it copied into Z80 RAM.
+
+1. MCU fills `ADDR`, `LEN`, and `CTRL`.
+2. MCU asserts `MSTART`.
+3. CPLD requests the Z80 bus.
+4. Once bus grant is active, CPLD begins consuming bytes from the MCU over `MCD[7:0]`.
+5. For each accepted byte, CPLD performs one Z80 memory write cycle and increments address.
+6. When `LEN` reaches zero, CPLD releases the bus and asserts `MDONE` or `MIRQ`.
+
+The payload handshake is simply:
+
+- MCU places byte on `MCD`
+- MCU asserts `MSTB`
+- CPLD latches byte when ready and pulses or asserts `MACK`
+- MCU moves to next byte
+
+That is easy to drive from firmware.
+
+**How A Read-From-Z80 Transfer Works**
+
+This is the storage-write case: device wants to fetch a block from Z80 RAM.
+
+1. MCU fills `ADDR`, `LEN`, and `CTRL` with direction set to read-from-Z80.
+2. MCU asserts `MSTART`.
+3. CPLD requests the Z80 bus.
+4. CPLD performs Z80 memory read cycles and pushes bytes toward MCU.
+5. MCU accepts bytes using the same `MSTB/MACK` handshake, but with `MDIR=1`.
+6. On completion, CPLD releases the bus and raises `MDONE`.
+
+This gives you symmetry without needing separate buses.
+
+**Recommended Handshake Semantics**
+
+Use a ready/valid style handshake, even if you name the signals differently.
+
+For `MCU -> CPLD`:
+- MCU drives byte and raises `MSTB`
+- CPLD raises `MACK` when consumed
+- MCU drops `MSTB` and advances
+
+For `CPLD -> MCU`:
+- CPLD drives byte and raises `MSTB`
+- MCU raises `MACK` when consumed
+- CPLD drops `MSTB` and advances
+
+That lets one pair of handshake lines work in both directions.
+
+**Why A Tiny FIFO Helps**
+
+Without any FIFO, the CPLD must wait on nearly every byte for the MCU. That still works, but bus hold time increases.
+
+Even a 16-byte FIFO helps because the sequence becomes:
+
+- MCU preloads a few bytes
+- CPLD takes the bus and writes a short burst
+- MCU refills while CPLD drains
+- if FIFO empties, CPLD pauses locally, not by losing state
+
+So the system behaves much better even with a very small amount of elasticity.
+
+**A Minimal Protocol Example**
+
+Write 512 bytes to Z80 RAM:
+
+1. MCU writes:
+- `ADDR = destination`
+- `LEN = 512`
+- `CTRL = write_to_z80 | autoinc | irq_on_done`
+
+2. MCU asserts `MSTART`.
+
+3. CPLD:
+- sets `busy`
+- requests bus
+- waits for grant
+- starts draining incoming bytes into memory writes
+
+4. MCU streams 512 bytes over `MCD` using `MSTB/MACK`.
+
+5. CPLD:
+- decrements internal count
+- releases bus at zero
+- sets `done`
+- optionally asserts `MIRQ`
+
+**What The CPLD State Machine Actually Does**
+
+The core states are simple:
+
+1. `IDLE`
+Wait for `MSTART`.
+
+2. `REQ_BUS`
+Assert bus request, wait for CPU release/grant.
+
+3. `TRANSFER`
+For each byte:
+- if direction is MCU->Z80, wait for input byte then issue memory write cycle
+- if direction is Z80->MCU, issue memory read cycle then present byte to MCU
+- increment address
+- decrement count
+
+4. `COMPLETE`
+Release bus, raise done/irq, return to idle.
+
+That is a good CPLD problem. It avoids parsing rings, file handles, or variable-sized descriptors.
+
+**Where The 4 kB Shared Page Fits**
+
+Your 4 kB page can still be the software-visible transport area, but the CPLD does not need to understand its internal structure.
+
+The MCU can interpret:
+- command ring
+- completion ring
+- data buffer ownership
+
+Then it tells the CPLD only:
+- move bytes from my local buffer to Z80 page offset X
+or
+- fetch bytes from Z80 page offset X into my local buffer
+
+That keeps the smart part in firmware and the deterministic part in logic.
+
+**My Recommendation For Rev 1**
+
+I would build rev 1 around:
+
+- 8-bit bidirectional data bus `MCD[7:0]`
+- `MDIR`
+- `MSTB`
+- `MACK`
+- `MSTART`
+- `MDONE`
+- optional `MIRQ`
+- 5 to 7 simple control/status registers
+- a 16-byte or 32-byte FIFO inside the CPLD if it fits
+
+That is small enough to be realistic and structured enough to grow.
+
+If you want, I can next turn this into one of two concrete artifacts:
+
+1. a pin-level signal table with exact direction and meaning for each pin
+2. a register map and step-by-step firmware/CPLD transaction sequence for `DMA write`, `DMA read`, and `status polling`
+
+User: The z80 program should tell the smart-device where it wants the data written, or where it has prepared the data to be read by the smart device/mcu. The command-plane of the protocol communicates what the operation is and for instance a file name etc.
+I am not sure if I want the commands to be just another DMA with predefined structures or some sort of IO driven mechanism where the CPLD implemens some IO ports and stores address, length and operation etc. Other metadata (file name) will then be a problem. But there should be a trigger that the z80 app can set/send that tells the smart-device that it can do its thing.
+Interrupt on done is a must.
+Ideally I would also want the z80 program to be able to setup a device-to-device exchange but that can wait.
+
+GitHub Copilot: The cleanest answer is a hybrid, not “all DMA” or “all I/O”.
+
+Use I/O for control and triggering, and use DMA-visible memory for everything variable-sized. That gives you a simple hardware model and avoids turning file names and long metadata into awkward port traffic.
+
+What I would recommend is:
+
+1. The Z80 builds a command descriptor in RAM.
+2. The descriptor contains:
+- operation
+- data buffer address
+- data length
+- metadata pointer
+- metadata length
+- flags
+- request id or tag
+
+3. The Z80 pokes one or two I/O registers in the smart-device:
+- descriptor address
+- `GO` / doorbell
+
+4. The smart-device raises DMA, fetches the descriptor, then fetches any extra metadata such as the filename from the pointer in the descriptor.
+
+5. When done, it writes status back to a completion area or updates the descriptor, then interrupts the Z80.
+
+That is the best fit for what you described.
+
+Why this is better than pure I/O commands:
+- filenames and paths stay in normal RAM, so they can be arbitrary length
+- you avoid designing a complicated port-streaming protocol for metadata
+- the CPLD only needs a few I/O registers, not a full command parser
+- the same mechanism scales later to device-to-device transfers
+
+Why this is better than “commands are just another DMA blob” with no I/O:
+- you still need a clean trigger
+- you still need status/ownership bits somewhere
+- a tiny I/O doorbell interface is much simpler than polling memory blindly
+- reset/error/abort becomes easier
+
+So I would make the command plane look like this:
+
+I/O registers:
+- `CMD_DESC_LO`
+- `CMD_DESC_HI`
+- `CMD_DESC_PAGE` or bank/page selector if needed
+- `CONTROL`
+- `STATUS`
+- `IRQ_ACK`
+
+And let `CONTROL` contain things like:
+- `GO`
+- `ABORT`
+- `RESET`
+
+Let `STATUS` contain:
+- `BUSY`
+- `DONE`
+- `ERROR`
+- maybe `IRQ_PENDING`
+
+Then put the real command payload in RAM.
+
+A good first descriptor could be fixed-size, something like:
+
+```c
+struct DeviceCommand {
+    uint8_t opcode;
+    uint8_t flags;
+    uint16_t request_id;
+
+    uint32_t data_addr;
+    uint16_t data_len;
+
+    uint32_t meta_addr;
+    uint16_t meta_len;
+
+    uint32_t result_addr;
+    uint16_t result_len;
+
+    uint8_t status;
+    uint8_t error;
+};
+```
+
+The exact widths depend on how your page/bank system is encoded, but the structure is the important part.
+
+That gives you a clean split:
+
+- `data_addr/data_len`: actual file payload buffer
+- `meta_addr/meta_len`: filename, path, open mode, seek info, whatever extra command data is needed
+- `result_addr/result_len`: optional return payload for things like directory listings or stat data
+
+For example:
+
+`OPEN`:
+- `opcode = OPEN`
+- `meta_addr -> "SYS/CONFIG.TXT\0"`
+- `meta_len = filename length`
+- `data_addr = 0`
+- result written into descriptor or result buffer
+
+`READ`:
+- `opcode = READ`
+- `data_addr = destination buffer in Z80 RAM`
+- `data_len = requested bytes`
+- metadata may be empty if using an already-open handle
+
+`WRITE`:
+- `opcode = WRITE`
+- `data_addr = source buffer in Z80 RAM`
+- `data_len = bytes to write`
+
+That avoids inventing separate special cases for “commands with strings” versus “commands with data”.
+
+The CPLD role then becomes much simpler:
+- expose a few I/O registers
+- latch the descriptor pointer when `GO` is written
+- notify the MCU
+- optionally help fetch the descriptor or perform DMA bursts
+- assert interrupt on completion
+
+The MCU role:
+- interpret the descriptor
+- fetch any extra metadata via DMA
+- do FAT/filesystem work
+- move file data to/from the specified buffer
+- update completion status
+- trigger interrupt
+
+That is a much cleaner partition than making the CPLD understand filenames or command syntax.
+
+For completion, I would strongly prefer:
+- interrupt on done
+- plus a completion status field in memory
+
+Do not rely on interrupt alone. The interrupt is the wakeup, but the descriptor/result area is the truth. That makes retries, debugging, and future multitasking much cleaner.
+
+On the “where should the operation be set” question: use the descriptor, not a port. The port should just be the trigger. In other words:
+
+- operation code lives in RAM descriptor
+- I/O port says only “command at address X is ready”
+
+That is the simplest model.
+
+For future device-to-device exchange, this same model extends nicely. Later you can define a descriptor whose source or target is not “CPU RAM” but “device endpoint”. For example:
+- source device id
+- destination device id
+- shared buffer descriptor
+- command chaining
+
+You do not need to solve that now, but this descriptor-based design does not block it.
+
+My recommendation for rev 1 is therefore:
+
+1. Use I/O only as doorbell/control/status.
+2. Put all real command content in a fixed-size command descriptor in RAM.
+3. Put variable-length metadata like filenames in separate RAM buffers referenced by the descriptor.
+4. Use DMA for descriptor fetch, metadata fetch, and payload transfer.
+5. Signal completion with both an interrupt and a status/result update in RAM.
+
+That gives you simple hardware, flexible commands, and a path to future device-to-device operations.
+
+If you want, I can next sketch a concrete rev-1 command descriptor and the minimum I/O register set for `OPEN`, `READ`, `WRITE`, and `CLOSE`.
+
+User: Good. That was the way I was thinking too. I just wanted to see if you came up with something new/different.
+Here is a document of the previous version/proof-of-concept on this. It is not how it is going to be persee, but the same ideas are in there, I think
+
+GitHub Copilot: The ideas in storage device.md are still good. The document is internally consistent around the core model:
+
+- Z80 sets up intent and buffer locations
+- smart device owns filesystem and media details
+- bulk data moves through DMA
+- interrupt-on-done is the synchronization point
+- sequential transfers can benefit from prefetch
+
+That is still the right architecture for your current bus concept.
+
+What I think is still strong in that document:
+
+- The split between command/control and bulk transfer is good.
+- Letting the Z80 provide source or destination buffer addresses is the right abstraction.
+- Keeping filesystem state inside the device is the right simplification.
+- The `Sequential` idea is useful. It gives the device permission to optimize without changing the programming model.
+- Returning metadata as a structured stream is also a good direction.
+
+What I would change for a new version:
+
+- I would move away from “command buffer registers” containing rich command content and instead put command descriptors in RAM, with I/O only used as the doorbell/control path.
+- I would avoid making `BlockIndex` the main trigger mechanism. It works, but it leaks the block-transfer implementation into the software contract too much.
+- I would not bake in IDE sector-size assumptions at the protocol level unless you know the device will always stay IDE/CF. The device abstraction should be file-oriented, not 512-byte-device-oriented.
+- I would separate “command metadata” from “payload buffer” more explicitly than the old document does.
+- I would treat status in RAM as authoritative, with the interrupt only as notification.
+
+So if I were evolving this design, I would keep the same idea but reframe it like this:
+
+- I/O registers:
+  - descriptor pointer
+  - `GO`
+  - `STATUS`
+  - `IRQ_ACK`
+  - maybe `ABORT`
+- RAM descriptor:
+  - opcode
+  - flags
+  - data buffer address/length
+  - metadata pointer/length
+  - result pointer/length
+  - status/error/request id
+
+That is basically the same architecture as your older proof-of-concept, just with a cleaner boundary between “tell device what to do” and “where the variable data lives”.
+
+The biggest conceptual improvement over the old version is this:
+the host should submit operations, not blocks.
+
+The device may internally process the operation in blocks, prefetch, double-buffer, or stall as needed, but the Z80-facing API should preferably be:
+- open
+- read into this buffer
+- write from this buffer
+- close
+- list
+- delete
+
+rather than:
+- here is block 0
+- here is block 1
+- here is block 2
+
+You can still support continuation under the hood, but if you expose block numbering too directly, the host starts managing device internals.
+
+So my read is: yes, the old document contains the right ideas, and it validates the direction you are now converging on. The main thing I would update is the interface shape, not the architecture.
+
+If you want, I can turn this into a cleaned-up rev-2 design note in storage device.md that keeps the good ideas but rewrites the protocol around:
+1. RAM-based command descriptors
+2. I/O doorbell/status registers
+3. interrupt-on-completion
+4. optional sequential/prefetch flags
+
+User: Yes, good points, thanks. Continuation will almost certainly be needed. I imagine there will always be a file bigger than the buffer in memory...
+If we keep all the state of a transfer in the descriptors than the operations can even be interleaved. That would be benificial because we can have multiple prgrams running. The IO interfacing will be very minimal: the address (2 byte) and a 'go' that also could double as an abort and anything else we might need (based on the value).
+The IRQ is a flag in the descriptor and the smart device updates the descriptor just before it raises the interrupt.
+something like that...
+
+GitHub Copilot: Yes, that is a strong direction.
+
+The key improvement is that the descriptor becomes the durable source of truth for an operation, not just a transient setup block. Once you do that, continuation and interleaving stop being special cases and become the normal model:
+
+1. Z80 fills a descriptor.
+2. Z80 writes the descriptor address to the device and sends a command value such as GO.
+3. The smart device owns execution from there.
+4. The device updates the descriptor state as progress is made.
+5. On completion or notable progress, it updates the descriptor first, then raises the interrupt if requested.
+
+That gives you a very clean contract.
+
+A few points I would lock in early:
+
+1. Descriptor address probably needs more than 2 bytes unless you guarantee the descriptor always lives in a fixed visible page.
+If the smart device DMA sees the current MMU mapping exactly as the Z80 does, then 16-bit may be enough.
+If descriptors may live in arbitrary physical pages, you likely want a page or bank field too.
+
+2. The I/O interface can stay extremely small.
+A very workable model is:
+- descriptor low
+- descriptor high
+- optional descriptor page
+- command register
+
+The command register values could be:
+- 0 = no-op
+- 1 = submit
+- 2 = abort current descriptor
+- 3 = acknowledge interrupt
+- 4 = reset device
+
+That is enough for a first version.
+
+3. The descriptor should have an explicit state machine.
+Not just busy and done.
+I would want states like:
+- free
+- submitted
+- accepted
+- active
+- waiting
+- partial
+- done
+- aborted
+- error
+
+That makes interleaving and recovery much easier.
+
+4. Continuation should be device-managed, but visible.
+In other words, the host submits a read or write request for some total length, and the device advances fields such as:
+- bytes completed
+- next data pointer
+- remaining length
+- current status
+
+The host should not have to manually count blocks unless you deliberately want a low-level mode.
+
+5. Abort should be descriptor-specific.
+That matters once operations can interleave.
+You do not want a vague global abort if multiple programs may have pending work.
+
+6. The interrupt flag in the descriptor is a good idea.
+I would still keep a device status bit too, because it helps with polling and debugging.
+The descriptor remains authoritative, but a tiny hardware status bit is useful.
+
+The biggest design choice still open is whether one descriptor represents:
+- one complete high-level operation, with the device internally continuing as needed
+or
+- one transfer slice, where the host resubmits continuations
+
+Given what you just said about multitasking and interleaving, I would choose the first one. Let one descriptor represent the whole operation. The device can then pause, resume, prefetch, and interleave internally. That is a much cleaner multitasking model.
+
+A practical descriptor shape would probably include:
+
+- opcode
+- flags
+- owner or task id
+- data address
+- data length requested
+- metadata address
+- metadata length
+- bytes completed
+- current phase
+- result code
+- interrupt-on-completion flag
+- maybe a request id or sequence number
+
+A sequence number is worth considering. It avoids ambiguity if software reuses a descriptor slot and an old interrupt arrives late.
+
+So overall: yes, this is converging well. Minimal I/O, descriptor-owned state, interrupt-after-descriptor-update, and device-managed continuation is the right combination. It gives you a small hardware surface and still leaves room for interleaving and later device-to-device work.
+
+If you want, I can next sketch a concrete descriptor layout and a small command/state enum set that fits this model.
+
+User: descriptors can have a type-id (command id). specific devices required specific descriptors all with a unique type-id. So we'll start with a high abstraction 'one file at a time'. If I need something lower level, I'll add additional descriptor-types that cover that.
+Yes for interleaving we need a work-id/tag for job that was submitted to be able to reference it later; for abort and perhaps interrupt. 
+Although the way interrupts work now, the device driver in the os probably has to poll the device for the tag that had an event (and the type of event if we're at it). We also might want the smart device to report progress...? Don't know yet.
+
+GitHub Copilot: Yes. That is the right way to generalize it.
+
+A common descriptor header plus a type-specific payload gives you three useful properties at once:
+
+- one submission mechanism for all smart devices
+- device-specific descriptor bodies where needed
+- room to add lower-level operations later without disturbing the higher-level file model
+
+I would make every descriptor start with the same small header, something like:
+
+- type-id
+- total descriptor length or version
+- work-id / tag
+- owner or task-id
+- flags
+- state
+- result / error
+- event mask
+- bytes done or progress field
+
+After that, the body is defined by the type-id. That keeps the hardware and OS driver generic while letting each device define its own command shape.
+
+For interrupts, I would not make the OS poll every live descriptor to discover which tag fired. That scales badly once interleaving starts. A better model is:
+
+- the device raises one IRQ line meaning “one or more events pending”
+- the OS driver reads a very small event source from the device
+- that event source returns at least:
+  - work-id / tag
+  - event type
+  - maybe descriptor address or type-id
+- then the driver looks at the descriptor if it needs more detail
+
+So the interrupt does not carry the whole meaning. It just says “go read the next event.” That event channel can be:
+
+1. a tiny I/O event register pair
+Simplest hardware. The driver reads the current event and acknowledges it.
+
+2. a small event FIFO inside the device
+Better if multiple completions can happen close together.
+
+3. an event queue in RAM
+Most flexible, but more moving parts.
+
+For rev 1, I would seriously consider option 1 or 2. One IRQ plus a tiny event FIFO is a good sweet spot.
+
+A useful event record would be:
+
+- tag
+- event kind
+- status / error
+- optional progress snapshot
+
+Event kinds could be:
+
+- accepted
+- progress
+- buffer-ready
+- completed
+- aborted
+- error
+
+That way your IRQ model becomes very clean:
+- descriptor is the authoritative state
+- IRQ means “events available”
+- event record tells the driver which work-id changed
+- driver inspects or updates the corresponding descriptor
+
+On progress: yes, I think you should allow for it, but make it optional and cheap.
+
+I would not force periodic progress interrupts. That can become noise quickly. Better to support:
+
+- a progress field in the descriptor, such as bytes completed
+- an optional progress event flag if the submitter asks for it
+- perhaps only generate progress events on meaningful boundaries, like every buffer filled, every 4 kB, or every phase change
+
+That gives you room for user feedback later without burdening the common path.
+
+One practical refinement: distinguish between state and event.
+
+State is persistent:
+- submitted
+- active
+- waiting
+- done
+- error
+- aborted
+
+Event is transient:
+- started
+- more data available
+- progress threshold reached
+- completed
+- faulted
+
+That distinction makes the driver logic much easier.
+
+So the model I would recommend is:
+
+- common descriptor header for all devices
+- type-id selects descriptor body
+- work-id/tag uniquely identifies the submission
+- single IRQ line means “pending event(s)”
+- device exposes an event readout path so the driver does not have to scan descriptors
+- descriptor contains durable state and optional progress counters
+- event stream contains the transient notifications
+
+That is a solid foundation for interleaving and later expansion.
+
+If you want, I can next sketch:
+1. a common descriptor header
+2. a minimal event record format
+3. a simple IRQ/event-handling flow for the OS driver

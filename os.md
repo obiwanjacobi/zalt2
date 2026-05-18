@@ -56,6 +56,8 @@ Note that each Task/Process has its own set of MMU banks and therefor applicatio
 Memory allocations can be global (heap) - in a memory page shared (and fixed?) by all applications. Limited resource.
 Memory Allocation can be local (heap) - in a memory page that is reserved for the application that made the allocation/reservation.
 
+> I would prefer not to have a generic 'malloc' but specific allocators for each specific scenario in an attempt to optimize it as much as possible.
+
 Memory Allocators:
 
 - Arena: Manages a big(ger) block of memory to satify smaller allocations. Typically freed after call tree returns.
@@ -65,6 +67,11 @@ Memory Allocators:
 Normal Stack allocation (local vars) is done through the programming language.
 
 > Can memory be reseverd? And is this then guarenteed?
+
+Dedicated memory pages can be allocated (per task) for smart-device interaction.
+These pages are mapped to both the specific device and the application in order for them to share data.
+
+A similar mechanism could be constructed to share data between applications.
 
 ## OS Devices
 

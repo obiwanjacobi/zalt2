@@ -14,9 +14,10 @@ A general solutions could look like:
   - manages/connects local buffer RAM
     - on-device storage where data is staged for interaction with MCU
     - mux between DMA runs and MCU access
+    - manages dual access to single RAM chip (DMA has prio)
   - Handshake/interfaces with MCU for reading/writing the buffer RAM
 - SRAM
-  - (multiple) buffers exchange buffers
+  - (multiple) exchange buffers
   - MCU stages data to be sent to CPU/application memory
   - CPLD dumps data that was read from CPU/application memory
 - MCU
