@@ -45,7 +45,7 @@ Select the MMU-map and the device-bank.
 That way each device has their 'shared' memory mapped in a location suitable for that device. Other page-indexes can be mapped to a null-page to make them unusable.
 The OS MMU-map (Task 0) will reserve the last 8 memory banks for the 8 smart-devices that the CPLD will use.
 
-Access to the MMU-IO registers (to change MMU configuration) is already blocked if not in supervisor mode - so no smart-device can not reconfigure MMU to gain access to other memory.
+Access to the MMU-IO registers (to change MMU configuration) is already blocked if not in supervisor mode - so a smart-device can not reconfigure the MMU to gain access to other memory.
 
 ## Memory Management Unit  (MMU)
 
