@@ -28,9 +28,12 @@ use ieee.numeric_std.all;
 --      BIRQ slot (if applicable), and drives BIACK_N low.
 --   4. The Z80 uses (I << 8 | vector) as the ISR pointer address.
 --
--- Vector map (word-aligned, 2 bytes per entry):
---   SYSINT 1 → 0x00,  SYSINT 2 → 0x02,  ...  SYSINT 7 → 0x0C
---   BIRQ0   → 0x0E,   BIRQ1   → 0x10,   ...  BIRQ7   → 0x1C
+-- Vector map (word-aligned, 2 bytes per entry; base 0x40 places all vectors
+--   in the free gap between RST $38 and NMI, avoiding RST slot conflicts):
+--   SYSINT 1 → 0x40,  SYSINT 2 → 0x42,  SYSINT 3 → 0x44,  SYSINT 4 → 0x46
+--   SYSINT 5 → 0x48,  SYSINT 6 → 0x4A,  SYSINT 7 → 0x4C
+--   BIRQ0   → 0x4E,   BIRQ1   → 0x50,   BIRQ2   → 0x52,   BIRQ3   → 0x54
+--   BIRQ4   → 0x56,   BIRQ5   → 0x58,   BIRQ6   → 0x5A,   BIRQ7   → 0x5C
 --
 -- DMA / bus-request arbitration:
 --   A card requests the bus by asserting its BIRQ line AND pulling the
@@ -100,8 +103,8 @@ architecture rtl of IntController is
 
     -- -------------------------------------------------------------------------
     -- Combined priority index:
-    --   0..6  → SYSINT level 1..7  (vector = index*2 → 0x00..0x0C)
-    --   7..14 → BIRQ0..7           (vector = index*2 → 0x0E..0x1C)
+    --   0..6  → SYSINT level 1..7  (vector = 0x40 + index*2 → 0x40..0x4C)
+    --   7..14 → BIRQ0..7           (vector = 0x40 + index*2 → 0x4E..0x5C)
     -- -------------------------------------------------------------------------
     -- Interrupt arbitration
     signal irq_any    : std_logic;
@@ -260,9 +263,10 @@ begin
     SYSINTACK <= '1' when intack_cycle = '1' and irq_latched < 7 else '0';
 
     -- -------------------------------------------------------------------------
-    -- IM2 vector byte: index * 2 (word-aligned entries in the vector table)
+    -- IM2 vector byte: 0x40 + index * 2
+    -- Base offset 0x40 places all vectors in the free gap above RST $38.
     -- -------------------------------------------------------------------------
-    irq_vector <= std_logic_vector(to_unsigned(irq_latched * 2, 8));
+    irq_vector <= std_logic_vector(to_unsigned(16#40# + irq_latched * 2, 8));
 
     D_OUT <= irq_vector when intack_cycle = '1' else (others => '0');
     D_OE  <= intack_cycle;
