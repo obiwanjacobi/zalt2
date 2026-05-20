@@ -10,17 +10,17 @@
 ;   $005E–$0065  (free)
 ;   $0066–$0069  NMI: JP handler + NOP
 
-SECTION code_crt_init
+section code_crt_init
 
 ; RST dispatch targets (defined in dispatch.asm)
-EXTERN rst_00, rst_08, rst_10, rst_18
-EXTERN rst_20, rst_28, rst_30, rst_38
+extern rst_00, rst_08, rst_10, rst_18
+extern rst_20, rst_28, rst_30, rst_38
 
 ; IM2 interrupt service routines (SYSINT sourced by MCU, BIRQ by expansion bus)
-EXTERN isr_sysint_1, isr_sysint_2, isr_sysint_3, isr_sysint_4
-EXTERN isr_sysint_5, isr_sysint_6, isr_sysint_7
-EXTERN isr_birq_0, isr_birq_1, isr_birq_2, isr_birq_3
-EXTERN isr_birq_4, isr_birq_5, isr_birq_6, isr_birq_7
+extern isr_sysint_1, isr_sysint_2, isr_sysint_3, isr_sysint_4
+extern isr_sysint_5, isr_sysint_6, isr_sysint_7
+extern isr_birq_0, isr_birq_1, isr_birq_2, isr_birq_3
+extern isr_birq_4, isr_birq_5, isr_birq_6, isr_birq_7
 
 ; =============================================================================
 ; RST vectors [$0000–$003F]
@@ -28,97 +28,87 @@ EXTERN isr_birq_4, isr_birq_5, isr_birq_6, isr_birq_7
 ; The 4 unused bytes fall in the IM2 table but are never assigned a vector.
 ; =============================================================================
 
-PUBLIC rst_00
-rst_00:                     ; $0000 — also Z80 reset entry
+rst00:                     ; $0000 — also Z80 reset entry
     di
     jp   rst_00
 
-    DEFW isr_null_handler   ; $04
-    DEFW isr_null_handler   ; $06
+    defw isr_null_handler   ; $04
+    defw isr_null_handler   ; $06
 
-PUBLIC rst_08
-rst_08:                     ; $0008
+rst08:                     ; $0008
     nop
     jp   rst_08
 
-    DEFW isr_null_handler   ; $0C
-    DEFW isr_null_handler   ; $0E
+    defw isr_null_handler   ; $0C
+    defw isr_null_handler   ; $0E
 
-PUBLIC rst_10
-rst_10:                     ; $0010
+rst10:                     ; $0010
     nop
     jp   rst_10
 
-    DEFW isr_null_handler   ; $14
-    DEFW isr_null_handler   ; $16
+    defw isr_null_handler   ; $14
+    defw isr_null_handler   ; $16
 
-PUBLIC rst_18
-rst_18:                     ; $0018
+rst18:                     ; $0018
     nop
     jp   rst_18
 
-    DEFW isr_null_handler   ; $1C
-    DEFW isr_null_handler   ; $1E
+    defw isr_null_handler   ; $1C
+    defw isr_null_handler   ; $1E
 
-PUBLIC rst_20
-rst_20:                     ; $0020
+rst20:                     ; $0020
     nop
     jp   rst_20
 
-    DEFW isr_null_handler   ; $24
-    DEFW isr_null_handler   ; $26
+    defw isr_null_handler   ; $24
+    defw isr_null_handler   ; $26
 
-PUBLIC rst_28
-rst_28:                     ; $0028
+rst28:                     ; $0028
     nop
     jp   rst_28
 
-    DEFW isr_null_handler   ; $2C
-    DEFW isr_null_handler   ; $2E
+    defw isr_null_handler   ; $2C
+    defw isr_null_handler   ; $2E
 
-PUBLIC rst_30
-rst_30:                     ; $0030
+rst30:                     ; $0030
     nop
     jp   rst_30
 
-    DEFW isr_null_handler   ; $34
-    DEFW isr_null_handler   ; $36
+    defw isr_null_handler   ; $34
+    defw isr_null_handler   ; $36
 
-PUBLIC rst_38
-rst_38:                     ; $0038
+rst38:                     ; $0038
     nop
     jp   rst_38
 
-    DEFW isr_null_handler   ; $3C
-    DEFW isr_null_handler   ; $3E
+    defw isr_null_handler   ; $3C
+    defw isr_null_handler   ; $3E
 
 ; =============================================================================
 ; IM2 vector table [$0040–$005D]
 ; I = $00; CPLD drives vector byte = $40 + irq_index * 2.
 ; =============================================================================
 
-PUBLIC im2_vectors
-im2_vectors:                ; $0040
-    DEFW isr_sysint_1      ; $40  SYSINT level 1 (highest priority)
-    DEFW isr_sysint_2      ; $42  SYSINT level 2
-    DEFW isr_sysint_3      ; $44  SYSINT level 3
-    DEFW isr_sysint_4      ; $46  SYSINT level 4
-    DEFW isr_sysint_5      ; $48  SYSINT level 5
-    DEFW isr_sysint_6      ; $4A  SYSINT level 6
-    DEFW isr_sysint_7      ; $4C  SYSINT level 7
-    DEFW isr_birq_0        ; $4E  BIRQ0 (highest expansion IRQ)
-    DEFW isr_birq_1        ; $50  BIRQ1
-    DEFW isr_birq_2        ; $52  BIRQ2
-    DEFW isr_birq_3        ; $54  BIRQ3
-    DEFW isr_birq_4        ; $56  BIRQ4
-    DEFW isr_birq_5        ; $58  BIRQ5
-    DEFW isr_birq_6        ; $5A  BIRQ6
-    DEFW isr_birq_7        ; $5C  BIRQ7 (lowest expansion IRQ)
+    defw isr_sysint_1      ; $40  SYSINT level 1 (highest priority)
+    defw isr_sysint_2      ; $42  SYSINT level 2
+    defw isr_sysint_3      ; $44  SYSINT level 3
+    defw isr_sysint_4      ; $46  SYSINT level 4
+    defw isr_sysint_5      ; $48  SYSINT level 5
+    defw isr_sysint_6      ; $4A  SYSINT level 6
+    defw isr_sysint_7      ; $4C  SYSINT level 7
+    defw isr_birq_0        ; $4E  BIRQ0 (highest expansion IRQ)
+    defw isr_birq_1        ; $50  BIRQ1
+    defw isr_birq_2        ; $52  BIRQ2
+    defw isr_birq_3        ; $54  BIRQ3
+    defw isr_birq_4        ; $56  BIRQ4
+    defw isr_birq_5        ; $58  BIRQ5
+    defw isr_birq_6        ; $5A  BIRQ6
+    defw isr_birq_7        ; $5C  BIRQ7 (lowest expansion IRQ)
     
-    DEFW isr_null_handler   ; $5E
-    DEFW isr_null_handler   ; $60
-    DEFW isr_null_handler   ; $62
-    DEFW isr_null_handler   ; $64
+    defw isr_null_handler   ; $5E
+    defw isr_null_handler   ; $60
+    defw isr_null_handler   ; $62
+    defw isr_null_handler   ; $64
 
 ; =============================================================================
 ; NMI handler [$0066] — memory protection fault (see mmu.asm)
@@ -132,15 +122,14 @@ nmi_handler:                ; $0066
 ; Null ISR — default handler for unassigned IM2 vector slots
 ; =============================================================================
 
-PUBLIC isr_null_handler
 isr_null_handler:
     ; todo: trap
     reti
 
 ; $C300: for the interrupt vectors that land on NOP (00) + JP (C3)
-defs 0xC300 - ASMPC ; will error when we overwrite this marker
-DEFW isr_null_handler
+;defs 0xC300 - ASMPC ; will error when we overwrite this marker
+;defw isr_null_handler
 
 ; $C3F3: for the interrupt vectors that land on DI (F3) + JP (C3)
-defs 0xC3F3 - ASMPC ; will error when we overwrite this marker
-DEFW isr_null_handler   ; vector $00
+;defs 0xC3F3 - ASMPC ; will error when we overwrite this marker
+;defw isr_null_handler   ; vector $00

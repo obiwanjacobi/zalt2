@@ -3,6 +3,11 @@
 ; =============================================================================
 ; NOTE: the RETI is required for the CPLD to track return from supervisor mode.
 
+section code_crt_init
+
+public rst_00, rst_08, rst_10, rst_18
+public rst_20, rst_28, rst_30, rst_38
+
 ; boot (warm/cold)
 rst_00:
     xor a

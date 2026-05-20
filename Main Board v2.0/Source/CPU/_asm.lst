@@ -1,4 +1,6 @@
 ; List of ASM source files to compile into bios.lib
 ; One file per line, relative to the project root
 bios/crt0.asm
+bios/os_rst.asm
+bios/os_int.asm
 bios/mmu.asm

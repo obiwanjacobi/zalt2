@@ -13,17 +13,17 @@
 ;   page_frame  - 16-bit value stored in the map for a (task_id, bank, page_index)
 ;                cell; drives MA24..MA12 to form the physical address
 
-SECTION bios
+section code_crt_init
 
-PUBLIC _mmu_map_enable
-PUBLIC _mmu_map_disable
-PUBLIC _mmu_map_read
-PUBLIC _mmu_map_write
-PUBLIC _mmu_bank_read
-PUBLIC _mmu_bank_write
-PUBLIC _mmu_map_bank_read
-PUBLIC _mmu_map_bank_write
-PUBLIC _mmu_prot_write
+public _mmu_map_enable
+public _mmu_map_disable
+public _mmu_map_read
+public _mmu_map_write
+public _mmu_bank_read
+public _mmu_bank_write
+public _mmu_map_bank_read
+public _mmu_map_bank_write
+public _mmu_prot_write
 
 ; =============================================================================
 ; IO Port Constants
