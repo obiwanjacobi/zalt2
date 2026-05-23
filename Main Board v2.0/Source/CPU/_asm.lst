@@ -3,4 +3,5 @@
 bios/crt0.asm
 bios/os_rst.asm
 bios/os_int.asm
+bios/os_func_tables.asm
 bios/mmu.asm

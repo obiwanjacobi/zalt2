@@ -24,7 +24,11 @@ When the NMI triggers, lookup the additional flags and allocate an empty memory 
 Temporary put the two pages in the same memory bank and copy over the content.
 Restore the original bank with the new mem-page copy instead of the old one.
 
-> NMI: two uses arrise.
+Debug Breakpoint: add an address register to the CPLD and when the CPLD detects an execution (M1) at that address, it raises the NMI. The NMI-handler can then enters the debugger using the debug-console. That would mean a loooong interrupt.
+
+Detect `HALT` stalls: when DI and HALT both active, the code will never run. Could count Refresh to detect HALT being active for too long.
+
+> NMI: multiple uses arrise.
 
 - NMI triggers on an actual violation. The program should be killed. Adjust the return address on the stack to handle what to do after that.
 - NMI triggers but some function has to be performed and after that execution can continue.

@@ -15,14 +15,10 @@
 
 section code_crt_init
 
-public _mmu_map_enable
-public _mmu_map_disable
-public _mmu_map_read
-public _mmu_map_write
-public _mmu_bank_read
-public _mmu_bank_write
-public _mmu_map_bank_read
-public _mmu_map_bank_write
+public _mmu_map_enable, _mmu_map_disable
+public _mmu_map_read, _mmu_map_write
+public _mmu_bank_read, _mmu_bank_write
+public _mmu_map_bank_read, _mmu_map_bank_write
 public _mmu_prot_write
 
 ; =============================================================================

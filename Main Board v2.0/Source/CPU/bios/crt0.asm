@@ -36,49 +36,49 @@ rst00:                     ; $0000 — also Z80 reset entry
     defw isr_null_handler   ; $06
 
 rst08:                     ; $0008
-    nop
+    di
     jp   rst_08
 
     defw isr_null_handler   ; $0C
     defw isr_null_handler   ; $0E
 
 rst10:                     ; $0010
-    nop
+    di
     jp   rst_10
 
     defw isr_null_handler   ; $14
     defw isr_null_handler   ; $16
 
 rst18:                     ; $0018
-    nop
+    di
     jp   rst_18
 
     defw isr_null_handler   ; $1C
     defw isr_null_handler   ; $1E
 
 rst20:                     ; $0020
-    nop
+    di
     jp   rst_20
 
     defw isr_null_handler   ; $24
     defw isr_null_handler   ; $26
 
 rst28:                     ; $0028
-    nop
+    di
     jp   rst_28
 
     defw isr_null_handler   ; $2C
     defw isr_null_handler   ; $2E
 
 rst30:                     ; $0030
-    nop
+    di
     jp   rst_30
 
     defw isr_null_handler   ; $34
     defw isr_null_handler   ; $36
 
 rst38:                     ; $0038
-    nop
+    di
     jp   rst_38
 
     defw isr_null_handler   ; $3C

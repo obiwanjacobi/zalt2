@@ -26,6 +26,8 @@ Task API:
 - Inter Process (Task) Communication? Pipes, Shared Memory, Mapped File?
 - Atomic operations -prevent task switch for a short time.
 
+> We can reserve `HALT` as a yield+idle and wait for next scheduling interrupt. Although it would not be used often? If a task yields and we do not have to perform other (OS) tasks...
+
 ### Task Isolation / OS Protection
 
 Task are isolated from each other (as much as possible):

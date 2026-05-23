@@ -31,3 +31,85 @@ https://www.lcdwiki.com/7.0inch_16BIT_Module_SSD1963
 
 SSD1963 driver example:
 https://github.com/fbrausse/ssd1963
+https://github.com/Bodmer/TFT_eSPI
+
+```c
+TFT_CS = 0;
+TFT_Set_Index_Ptr(0x26);//    Set Gamma Curve
+//  TFT_Write_Command_Ptr(0x01); // Gamma curve selection =0
+// TFT_Write_Command_Ptr(0x02);   // Gamma curve selection =1
+// TFT_Write_Command_Ptr(0x04);  // Gamma curve selection =2
+TFT_Write_Command_Ptr(0x08);  // Gamma curve selection =3
+
+TFT_Set_Index_Ptr(0x0B);          //SET SCAN MODE
+TFT_Write_Command_Ptr(0x00);      //SET TFT MODE   top to bottom, left to right normal etc
+
+TFT_Set_Index_Ptr(0x0A);
+TFT_Write_Command_Ptr(0x1C);         //Power Mode
+
+TFT_Set_Index_Ptr(0x3A);          //SET Pixel Format
+// TFT_Write_Command_Ptr(0x50);       //16 bit pixel
+TFT_Write_Command_Ptr(0x60);       //18 bit pixel
+// TFT_Write_Command_Ptr(0x70);       //24 bit pixel
+
+TFT_Set_Index_Ptr(0xF0);      //  Set Pixel Data Interface
+TFT_Write_Command_Ptr(0x03);   // 16-bit (565 format)   011 16-bit (565 format)
+
+TFT_Set_Index_Ptr(0xBC);   //Set Post Proc
+TFT_Write_Command_Ptr(0x40); //40 Set the contrast value
+TFT_Write_Command_Ptr(0x80); //80 Set the brightness value
+TFT_Write_Command_Ptr(0x40); //40 Set the saturation value
+TFT_Write_Command_Ptr(0x01);  //1 Enable the postprocessor
+
+TFT_Set_Index_Ptr(0xE2);
+TFT_Write_Command_Ptr(60);    //35 PLLclk = REFclk * 36 (360MHz)
+TFT_Write_Command_Ptr(5);     // SYSclk = PLLclk / 3  (120MHz)
+TFT_Write_Command_Ptr(0x54);  // validate M and N      dec 84
+
+TFT_Set_Index_Ptr(0xe0);
+TFT_Write_Command_Ptr(0x01); // START PLL
+Delay_50us(); Delay_50us(); // Wait 100us 
+
+TFT_Set_Index_Ptr(0xe0);
+TFT_Write_Command_Ptr(0x03); // LOCK PLL
+
+TFT_Set_Index_Ptr(0xB0);          //SET LCD MODE   SIZE !!
+TFT_Write_Command_Ptr(0x19);       //19 TFT panel data width - Enable FRC or dithering for color depth enhancement
+TFT_Write_Command_Ptr(0x20);       //SET TFT MODE & hsync+Vsync+DEN MODE   20  or 00
+TFT_Write_Command_Ptr(0x03);      //SET horizontal size=800+1 HightByte   !
+TFT_Write_Command_Ptr(0x21);      //SET horizontal size=800+1 LowByte
+TFT_Write_Command_Ptr(0x01);      //SET vertical size=480+1 HightByte
+TFT_Write_Command_Ptr(0xE1);      //SET vertical size=480+1 LowByte
+TFT_Write_Command_Ptr(0x00);      //Even line RGB sequence / Odd line RGB sequence RGB
+
+TFT_Set_Index_Ptr(0xe6);       // pixel clock frequency
+TFT_Write_Command_Ptr(0x04);   // LCD_FPR = 290985 = 33.300 Mhz Result for 7" Display
+TFT_Write_Command_Ptr(0x70);
+TFT_Write_Command_Ptr(0xA9);
+
+TFT_Set_Index_Ptr(0xB4);            // Set Horizontal Period   (Front Porch)
+TFT_Write_Command_Ptr(0x03);        // High byte of horizontal total period (display + non-display)
+TFT_Write_Command_Ptr(0x5E);       // Low byte of the horizontal total period (display + non-display)
+TFT_Write_Command_Ptr(0x00);        //High byte of the non-display period between the start of the horizontal sync (LLINE) signal and the first display data.
+TFT_Write_Command_Ptr(0x46); //**   // 46 Low byte of the non-display period between the start of the horizontal sync (LLINE) signal and the first display data
+TFT_Write_Command_Ptr(0x09);       //Set the vertical sync pulse width 
+TFT_Write_Command_Ptr(0x00);       //SET Hsync pulse start position //00
+TFT_Write_Command_Ptr(0x00);
+TFT_Write_Command_Ptr(0x00);       //SET Hsync pulse subpixel start position 
+
+//   ** too small will give you half a PICTURE !!
+
+TFT_Set_Index_Ptr(0xB6);          //Set Vertical Period
+TFT_Write_Command_Ptr(0x01);      //01 High byte of the vertical total (display + non-display) period in lines was 1F5
+TFT_Write_Command_Ptr(0xFE);      //F4 Low byte F5 INCREASES SYNC TIME AND BACK PORCH 1D WAS 00 OR f5
+TFT_Write_Command_Ptr(0x00);      // 00
+TFT_Write_Command_Ptr(0x0C);      //0C =12 The non-display period in lines between the start of the frame and the first display data in line.
+TFT_Write_Command_Ptr(0x00);      //Set the vertical sync pulse width (LFRAME) in lines.
+TFT_Write_Command_Ptr(0x00);      //SET Vsync pulse start position
+TFT_Write_Command_Ptr(0x00);
+
+// flip
+TFT_Set_Index_Ptr(0x36);      //  Flip left to right      REQUIRED FOR ??
+TFT_Write_Command_Ptr(0x02);
+TFT_CS = 1;
+```
