@@ -150,13 +150,16 @@ See also Interrupt Controller for System IO interrupts.
 
 ## TODO
 
-[ ] detect RETI - to know when interrupt/and RST returns
-[ ] detect all RST variants (11xxx111).
-[x] detect INT by CPU int-ack (IORQ+M1)
-[ ] add supervisor FF. Set on RST or INT and cleared on RETI. Track nesting of INT in RST - requires 2x RETI. Can check MMU_MP_OS bit for transition from user to supervisor mode.
-[ ] prohibit MMU IO when supervisor is not set.
-[ ] MMU_MP_OS bit (instead of MMU_MP_RD) that is set for os data and code. Fault if MMU_MP_OS is set and supervisor FF is not on during a read or write.
+- [ ] detect RETI - to know when interrupt/and RST returns. Assume DI for RSTs also.
+  - [ ] Enable `BINTEN` when RETI returns (from an interrupt).
+- [ ] detect all RST variants (11xxx111).
+- [x] detect INT by CPU int-ack (IORQ+M1)
+- [ ] add supervisor FF. Set on RST or INT and cleared on RETI. Track nesting of INT in RST - requires 2x RETI. Can check MMU_MP_OS bit for transition from user to supervisor mode.
+- [ ] prohibit MMU IO when supervisor is not set.
+- [ ] MMU_MP_OS bit (instead of MMU_MP_RD) that is set for os data and code. Fault if MMU_MP_OS is set and supervisor FF is not on during a read or write.
 
-[x] detect a bus-req interrupt from a smart device.
-  [ ] auto-select the OS-task (0) MMU-map.
-  [ ] select the memory bank for the device requesting the interrupt.
+- [x] detect a bus-req interrupt from a smart device.
+  - [ ] auto-select the OS-task (0) MMU-map.
+  - [ ] select the memory bank for the device requesting the interrupt.
+
+- [ ] BINTACK is not really used. Each BIRQn has its own ACK.

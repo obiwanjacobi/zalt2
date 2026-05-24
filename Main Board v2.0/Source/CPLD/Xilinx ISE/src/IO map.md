@@ -76,26 +76,3 @@ the CPLD does not decode A[15:12] for these ports.
 |-------|---------|----------|-----|------------------------------------------|
 | 0xXEFF | E      | MAP[3:0] | r/w | MMU RAM1 — low  byte of 16-bit mapping entry |
 | 0xXFFF | F      | MAP[3:0] | r/w | MMU RAM2 — high byte of 16-bit mapping entry |
-
-### Example — read mapping entry at cell 0x5A3
-
-```
-; Cell address: MAP[10:8]=5, MAP[7:0]=A3, MAP[3:0]=3 (hardwired via A[15:12])
-; io_latch covers MAP[10:4] = 0x5A >> upper nibble ignored for [3:0]
-
-LD  A, 0x05
-OUT (0x03FF), A     ; io_latch_hi = 5  →  MAP[10:8]
-
-LD  A, 0xA0         ; MAP[7:0] = 0xA3, but MAP[3:0] come from A[15:12]
-OUT (0x02FF), A     ; io_latch_lo = 0xA0  →  MAP[7:0] (lower nibble overridden by PCB)
-
-LD  B, 0x3E         ; A[15:12]=3 (MAP[3:0]), A[11:8]=E (RAM1)
-LD  C, 0xFF
-IN  A, (C)          ; read RAM1 low  byte of cell 0x5A3
-LD  D, A
-
-LD  B, 0x3F         ; A[11:8]=F (RAM2)
-IN  A, (C)          ; read RAM2 high byte of cell 0x5A3
-LD  E, A
-; DE now holds the full 16-bit mapping entry
-```

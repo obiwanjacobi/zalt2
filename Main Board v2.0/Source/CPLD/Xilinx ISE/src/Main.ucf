@@ -13,7 +13,7 @@
 #
 # Power/GND pins (no constraints needed):
 #   VCC (+3V3): P1  P8  P37 P42 P55 P73 P84 P109 P127 P141
-#   GND:        P18 P29 P36 P38 P47 P62 P72 P89  P90  P99 P108 P114 P123 P144
+#   GND:        P18 P29 P36 P47 P62 P72 P89  P90  P99 P108 P114 P123 P144
 
 # ----------------------------------------------------------------------------
 # Clocks
@@ -187,6 +187,9 @@ NET "BC15"  LOC = "P13" ;
 NET "BC16"  LOC = "P12" ;
 NET "BC17"  LOC = "P11" ;
 NET "BC18"  LOC = "P10" ;
+
+# IO/GCK3 to GND (big mistake!)
+NET "GNDPIN"  LOC = "P38" ;
 
 # ----------------------------------------------------------------------------
 # System Interface (MCU <-> CPLD)

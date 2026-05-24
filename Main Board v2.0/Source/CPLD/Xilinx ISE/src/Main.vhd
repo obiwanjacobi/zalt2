@@ -51,7 +51,7 @@ entity Main is
 
         -- --------------------------------------------------------------------
         -- MMU - Physical Memory Address Extension (outputs to SRAM)
-        -- MA12..MA24 are the extended physical address bits driven by the CPLD.
+        -- MA12..MA24 are the extended physical address bits driven by the MMU.
         -- --------------------------------------------------------------------
         MA          : in std_logic_vector(24 downto 12);
 
@@ -114,6 +114,9 @@ entity Main is
         BC16        : in std_logic;
         BC17        : in std_logic;
         BC18        : in std_logic;
+
+        -- Unused
+        GNDPIN      : in std_logic;  -- P38
 
         -- --------------------------------------------------------------------
         -- System Interface (MCU <-> CPLD)
