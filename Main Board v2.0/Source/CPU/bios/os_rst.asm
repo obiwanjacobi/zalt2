@@ -85,6 +85,9 @@ rst_dispatch:
     exx                     ; save caller's HL/BC/DE (incl. table ptr) to alt set
     ex af, af'              ; save caller's A
 
+    ; TODO: Switch to OS Task/Bank memory layout and reassign SP
+    ; switch back after dispatching and executing the function.
+
     ; SP+0 = ret_to_rst, SP+2 = inline_byte_addr
     ld hl, 2
     add hl, sp              ; HL -> stack slot holding inline_byte_addr
