@@ -4,8 +4,6 @@ To the best of my knowledge I uploaded the [13-05 gerbers](./Kicad/_production/2
 
 Upon receiving the PCBs (which was pretty quick) I noticed that all my ground vias were not present on the PCB manufactured by JLCPCB.
 
-> Later I noticed that the 3V3 plane was not entirely connected, too. There are no errors in Kicad that indicate that they were not connected so is this another production issue?
-
 I contacted them and they (after sales) were pretty adament that my original gerbers did not include any ground vias.
 
 JLCPCB
@@ -60,3 +58,17 @@ Thank you for your patience.
 Best regards,
 Nick
 ```
+
+There followed some more emails offering me a $3 coupon!
+I just left it at that.
+
+## 3V3 inner layer plane.
+
+> Later I noticed that the 3V3 plane was not entirely connected, too. There are no errors in Kicad that indicate that they were not connected so is this another production issue?
+
+It turns out that in my design I had two separate fills touching in Kicad.
+In their gerbers these do not touch anymore and cause the 3V3 plane to be interrupted.
+
+So if you're using separate fills for the same net, overlap them generously.
+
+Another part that was also a separate fill overlapped, and did connect ok on the production gerbers.
