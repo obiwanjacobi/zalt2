@@ -4562,6 +4562,26 @@
 		)
 		(uuid "cda0a15f-ccf9-418d-8be1-351504ae2d17")
 	)
+	(text "This is the layout of the Xilinx USB Cable header,\nas depicted on the case.\nI should have connected the TDI to the chip's TDO\nand the TDO to the chip's TDI.\n\nYou will need to make a cross-cable when connecting the\nXilinx programmer to the board."
+		(exclude_from_sim no)
+		(at 71.12 274.828 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d5c42c7a-301f-4259-98b4-adfb163cfcbb")
+	)
+	(text "Currently using 3x 10k"
+		(exclude_from_sim no)
+		(at 114.046 246.126 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "d8b4b920-f380-4573-9b55-ae1de40060f1")
+	)
 	(junction
 		(at 179.07 237.49)
 		(diameter 0)
