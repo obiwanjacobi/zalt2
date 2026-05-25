@@ -155,11 +155,14 @@ See also Interrupt Controller for System IO interrupts.
 - [ ] detect all RST variants (11xxx111).
 - [x] detect INT by CPU int-ack (IORQ+M1)
 - [ ] add supervisor FF. Set on RST or INT and cleared on RETI. Track nesting of INT in RST - requires 2x RETI. Can check MMU_MP_OS bit for transition from user to supervisor mode.
+- [ ] when coming out of reset the supervisor bit must be on
 - [ ] prohibit MMU IO when supervisor is not set.
 - [ ] MMU_MP_OS bit (instead of MMU_MP_RD) that is set for os data and code. Fault if MMU_MP_OS is set and supervisor FF is not on during a read or write.
+- [ ] Perform no other checks when MMU_MP_OS bit is on. The os mixes code and data in memory pages.
 
 - [x] detect a bus-req interrupt from a smart device.
   - [ ] auto-select the OS-task (0) MMU-map.
   - [ ] select the memory bank for the device requesting the interrupt.
 
 - [ ] BINTACK is not really used. Each BIRQn has its own ACK.
+- [ ] MMU-enable needs to be active when data is being written or read using IO - even when the FF is off.

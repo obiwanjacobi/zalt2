@@ -1,4 +1,4 @@
-; crt0.asm — Z80 page 0 layout: RST vectors, IM2 vector table, NMI handler,
+; os_page0.asm — Z80 page 0 layout: RST vectors, IM2 vector table, NMI handler,
 ;             and system startup.
 ;
 ; This file must be linked first and placed at $0000 by the linker.
@@ -13,8 +13,8 @@
 section code_crt_init
 
 ; RST dispatch targets (defined in dispatch.asm)
-extern rst_00, rst_08, rst_10, rst_18
-extern rst_20, rst_28, rst_30, rst_38
+extern os_rst_00, os_rst_08, os_rst_10, os_rst_18
+extern os_rst_20, os_rst_28, os_rst_30, os_rst_38
 
 ; IM2 interrupt service routines (SYSINT sourced by MCU, BIRQ by expansion bus)
 extern isr_sysint_1, isr_sysint_2, isr_sysint_3, isr_sysint_4
@@ -30,56 +30,56 @@ extern isr_birq_4, isr_birq_5, isr_birq_6, isr_birq_7
 
 rst00:                     ; $0000 — also Z80 reset entry
     di
-    jp   rst_00
+    jp   os_rst_00
 
     defw isr_null_handler   ; $04
     defw isr_null_handler   ; $06
 
 rst08:                     ; $0008
     di
-    jp   rst_08
+    jp   os_rst_08
 
     defw isr_null_handler   ; $0C
     defw isr_null_handler   ; $0E
 
 rst10:                     ; $0010
     di
-    jp   rst_10
+    jp   os_rst_10
 
     defw isr_null_handler   ; $14
     defw isr_null_handler   ; $16
 
 rst18:                     ; $0018
     di
-    jp   rst_18
+    jp   os_rst_18
 
     defw isr_null_handler   ; $1C
     defw isr_null_handler   ; $1E
 
 rst20:                     ; $0020
     di
-    jp   rst_20
+    jp   os_rst_20
 
     defw isr_null_handler   ; $24
     defw isr_null_handler   ; $26
 
 rst28:                     ; $0028
     di
-    jp   rst_28
+    jp   os_rst_28
 
     defw isr_null_handler   ; $2C
     defw isr_null_handler   ; $2E
 
 rst30:                     ; $0030
     di
-    jp   rst_30
+    jp   os_rst_30
 
     defw isr_null_handler   ; $34
     defw isr_null_handler   ; $36
 
 rst38:                     ; $0038
     di
-    jp   rst_38
+    jp   os_rst_38
 
     defw isr_null_handler   ; $3C
     defw isr_null_handler   ; $3E
@@ -96,6 +96,7 @@ rst38:                     ; $0038
     defw isr_sysint_5      ; $48  SYSINT level 5
     defw isr_sysint_6      ; $4A  SYSINT level 6
     defw isr_sysint_7      ; $4C  SYSINT level 7
+
     defw isr_birq_0        ; $4E  BIRQ0 (highest expansion IRQ)
     defw isr_birq_1        ; $50  BIRQ1
     defw isr_birq_2        ; $52  BIRQ2
@@ -113,15 +114,13 @@ rst38:                     ; $0038
 ; =============================================================================
 ; NMI handler [$0066] — memory protection fault (see mmu.asm)
 ; =============================================================================
-
 nmi_handler:                ; $0066
-    ; todo
+    ; todo: memory protection fault handler
     retn
 
 ; =============================================================================
 ; Null ISR — default handler for unassigned IM2 vector slots
 ; =============================================================================
-
 isr_null_handler:
     ; todo: trap
     reti

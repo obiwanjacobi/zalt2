@@ -58,6 +58,14 @@ Any parameters are either passed in registers or put in a dedicated memory block
 | $30 | Reserved | debug / trap hook or future |
 | $38 | Stray trap | All memory is filled with $FF (RST38) |
 
+## OS Initialization
+
+Initialize Memory:
+
+- copy page0 from ROM (currenly executing) to RAM and put that memory page on index 0 (this tranfers execution instantly).
+- layout the other OS-pages (code from ROM) in the MMU (64k max)
+- initialize OS data-page (RAM) and init stack (OS-specific)
+
 ## Memory Management
 
 - MMU operations: map page into address space / change bank configuration
@@ -92,4 +100,15 @@ CPLD Breakpoint register:
 
 For handling interrupts and performing os-functions (RSTs) a light form of task-switching is required. The idea is that upon entering an ISR or RST, the OS switches to it's own private Task memory layout, including it's own stack.
 
+If not already in OS-task:
+
+- stash current (app) SP
+- stash current MMU active Task/Bank
+- switch to OS-task
+
 For RSTs this requires bringing over the parameters (registers) that acompanied the RST call, which may introduce some additional complexity. If the OS-Task is already active, nothing happens and it is not switched back (to what?) after the ISR or RST is finished.
+
+Just before the INT or RST returns (from page0):
+
+- activate stashed Task/Bank
+- reinstate the SP (clear var to indicate no task/bank to switch back to)
