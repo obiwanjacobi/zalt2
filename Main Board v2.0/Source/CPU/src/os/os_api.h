@@ -14,4 +14,7 @@ typedef struct
 } os_func_args;
 uint16_t os_struct_func(const os_func_args* args) __z88dk_fastcall;
 
+void Memory_Fill(void* dest, uint16_t size, uint8_t value) __z88dk_callee;
+void Memory_Clear(void* dest, uint16_t size) __z88dk_callee;
+
 #endif /* __OS_API_H__ */

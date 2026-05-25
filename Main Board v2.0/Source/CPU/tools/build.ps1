@@ -112,7 +112,7 @@ function Build-Bin {
 
         Push-Location $AsmOut
         try {
-            Invoke-External z80asm, '-m', '-s', "@$asmSrcLst"
+            Invoke-External z80asm, '-m', '-s', "@$asmSrcLst", "-I$ProjectRoot\asm"
         } finally {
             Pop-Location
         }
@@ -124,7 +124,7 @@ function Build-Bin {
             $base = [System.IO.Path]::GetFileNameWithoutExtension($src)
             $obj  = "$ObjOut\$base.o"
 
-            Invoke-External zcc, '+z80', '-SO2', '-nostdlib', '--no-crt', '-compiler=sccz80', '-c', $src, '-o', $obj
+            Invoke-External zcc, '+z80', '-SO2', '-nostdlib', '--no-crt', '-compiler=sccz80', '-c', $src, '-o', $obj '-I', (Join-Path $ProjectRoot 'src'), '-I', (Join-Path $ProjectRoot 'src\os')
             $obj | Add-Content $localLst
         }
 

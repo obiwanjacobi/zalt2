@@ -12,16 +12,11 @@ extern var_os_caller_mmu, var_os_caller_sp
 
 extern os_func_table, fs_func_table, video_func_table
 extern audio_func_table, reserved_func_table, debug_func_table
-extern os_init
+extern os_init, OS_TASK_STACK_TOP
 extern mmu_bank_read, mmu_bank_write
-
-; keep os-stack on page0 ($0000-$0FFF)
-defc OS_TASK_STACK_TOP = $0F00
 
 ; boot (warm/cold)
 os_rst_00:
-    xor a
-    ; init registers
     
     call os_init
     

@@ -1,15 +1,19 @@
 section data_os
 
+include "os_defs.asm"
 ;
 ; OS Data page
 ;
 
-public var_os_caller_mmu
-var_os_caller_mmu: defs 2                  ; calling task's MMU bank
+; 0: task-id (byte)
+; Do we also need bank and page-index?
 
-public var_os_caller_sp
-var_os_caller_sp: defs 2                  ; calling task's SP
+public var_os_mem_page_table
+; memory page table keeps track of which pages are allocated to which tasks.
+; one entry per page, value is task-id of owning task (0 if free).
+var_os_mem_page_table: defs OS_MEM_PAGE_TABLE_SIZE
 
+; I dont understand how to use defvars in assembly...
 ; os_task struct
 defvars 0
 {

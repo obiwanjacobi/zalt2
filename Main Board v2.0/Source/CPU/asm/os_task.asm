@@ -6,25 +6,29 @@ section code_crt_init
 defc ROM_START = 0x1F80000
 defc RAM_START = 0x1F00000
 
-public os_init
-
 extern mmu_map_enable
 extern mmu_map_write
 extern mmu_bank_read
 extern mmu_bank_write
+extern os_mem_init
 
+public os_init
 ; =============================================================================
 ; os_init
-; Initializes the OS startup code.
-;
-; Destroys: 
+; Initializes OS startup code.
 ; =============================================================================
 os_init:
+    xor a
+    ld i, a     ; set interupt vector table base to $00 (vectors at $0000 / page0)
+
     ; - copy page0 from ROM to RAM (not now)
     ;    assuming we need data in page0 - perhaps not if we always switch task
 
     ; - set up MMU mapping for os
     call mmu_init
+
+    ; can run in os-task context
+    call os_mem_init
     ret
 
 ; Identity-map the first 16 Z80 pages (full 64KB) to task 0, bank 0 in RAM.
