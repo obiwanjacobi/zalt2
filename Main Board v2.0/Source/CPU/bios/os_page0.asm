@@ -11,6 +11,7 @@
 ;   $0066–$0069  NMI: JP handler + NOP
 
 section code_crt_init
+org $0000
 
 ; RST dispatch targets (defined in dispatch.asm)
 extern os_rst_00, os_rst_08, os_rst_10, os_rst_18

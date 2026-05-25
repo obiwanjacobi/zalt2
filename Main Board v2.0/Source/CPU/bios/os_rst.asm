@@ -15,7 +15,7 @@ extern audio_func_table, reserved_func_table, debug_func_table
 extern os_init
 extern mmu_bank_read, mmu_bank_write
 
-; keep os-stack on page0
+; keep os-stack on page0 ($0000-$0FFF)
 defc OS_TASK_STACK_TOP = $0F00
 
 ; boot (warm/cold)
@@ -126,7 +126,7 @@ os_rst_dispatch:
     ld l, a                 ; HL = target function address
 
     ; push os_rst_kern_return then func_addr; RET jumps to func_addr
-    ld bc, os_rst_kern_return
+    ld bc, os_rst_return
     push bc
     push hl                 ; func_addr on top of stack
     ; restore all caller arguments
@@ -134,7 +134,7 @@ os_rst_dispatch:
     exx
     ret                     ; jump to function; its RET -> os_rst_kern_return
 
-os_rst_kern_return:
+.os_rst_return
     ; switch back to caller's context
     ld   hl, (var_os_caller_mmu)
     call mmu_bank_write

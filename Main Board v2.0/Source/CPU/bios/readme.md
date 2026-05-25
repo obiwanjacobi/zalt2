@@ -4,6 +4,16 @@ Basic IO System
 
 Contains routines to initialize and access the primary IO devices.
 
+## Conventions
+
+### Registers
+
+`BC`, `DE`, `HL` and `AF` are used as OS-arguments and return values, filled and received by the calling application. Assume (as caller) these registers are not preserved when the call returns (except return values of course).
+
+`BC'`, `DE'`, `HL'` and `AF'` are used by OS and are not preserved.
+
+`IX` and `IY` are not used by the OS at all and are reserved for C-lang application code.
+
 ## Page 0
 
 Page zero is the first 4k memory page that will live in all banks (except device specific banks). The page0 contains the necessary data and routines for the OS to operate and interact with (as an application).

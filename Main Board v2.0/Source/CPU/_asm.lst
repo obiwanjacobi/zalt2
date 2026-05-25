@@ -7,3 +7,4 @@ bios/os_task.asm
 bios/os_func_tables.asm
 bios/os_data.asm
 bios/os_mmu.asm
+bios/os_api.asm
