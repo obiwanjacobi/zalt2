@@ -3,8 +3,8 @@
     Build script for the Zalt2 CPU firmware.
 
 .PARAMETER Target
-    build_lib  - assemble ASM files listed in _asm.lst into bios.lib
-    build_bin  - compile C files listed in _src.lst and link against bios.lib
+    build_lib  - assemble ASM files listed in _asm.lst into osapi.lib
+    build_bin  - compile C files listed in _src.lst and link against osapi.lib
     all        - build_lib then build_bin (default)
     clean      - remove build artefacts
 #>
@@ -16,13 +16,15 @@ param(
 $ErrorActionPreference = 'Stop'
 $env:PATH = "$env:PATH;C:\z88dk\bin"
 
-$LibName    = 'bios'
+$LibName    = 'osapi'
 $BinName    = 'firmware'
+$AsmName     = 'asm'
+
 $ProjectRoot = Split-Path $PSScriptRoot -Parent
 $OutDir     = Join-Path $ProjectRoot '.build'
 $AsmOut     = Join-Path $OutDir 'asm'
 $ObjOut     = Join-Path $OutDir 'obj'
-$DispatchHeader = Join-Path $ProjectRoot 'src\ApiDispatch.h'
+$DispatchHeader = Join-Path $ProjectRoot 'src' 'ApiDispatch.h'
 
 # ---------------------------------------------------------------------------
 
@@ -37,10 +39,10 @@ function Invoke-External {
 function Build-Lib {
     Write-Host '[build_lib] Assembling $LibName.lib ...'
     New-Item -ItemType Directory -Path $AsmOut -Force | Out-Null
-    $localLst = Join-Path $AsmOut '_asm_local.lst'
+    $localLst = Join-Path $AsmOut '_lib_local.lst'
     Remove-Item $localLst -ErrorAction SilentlyContinue
 
-    foreach ($line in Get-Content (Join-Path $ProjectRoot '_asm.lst')) {
+    foreach ($line in Get-Content (Join-Path $ProjectRoot '_lib.lst')) {
         $line = $line.Trim()
         if (-not $line -or $line.StartsWith(';')) { continue }
         $src = Join-Path $ProjectRoot ($line -replace '/', '\')
@@ -48,20 +50,13 @@ function Build-Lib {
         (Split-Path $src -Leaf) | Add-Content $localLst
     }
 
-    $generatedAsmSources = @(
-        'bios\dispatch.asm'
-    )
-    foreach ($generatedAsm in $generatedAsmSources) {
-        $src = Join-Path $ProjectRoot $generatedAsm
-        if (-not (Test-Path $src)) { continue }
-
-        Copy-Item $src $AsmOut -Force
-        (Split-Path $src -Leaf) | Add-Content $localLst
-    }
-
     Push-Location $AsmOut
     try {
-        Invoke-External z80asm, "-x$OutDir\$LibName.lib", '-m', '-s', "@$localLst"
+        if (Test-Path $localLst) {
+            Invoke-External z80asm, "-x$OutDir\$LibName.lib", '-m', '-s', "@$localLst"
+        } else {
+            Write-Host '[build_lib] No sources in _lib.lst — skipping library creation.'
+        }
     } finally {
         Pop-Location
     }
@@ -85,27 +80,41 @@ function Build-Bin {
     Get-ChildItem -Path $OutDir -Filter "$BinName*" -File -ErrorAction SilentlyContinue | Remove-Item -Force
     $localLst = Join-Path $ObjOut '_obj_local.lst'
     $asmObjLst = Join-Path $AsmOut '_asm_obj_local.lst'
+    $asmSrcLst = Join-Path $AsmOut '_asm_src_local.lst'
     Remove-Item $localLst -ErrorAction SilentlyContinue
     Remove-Item $asmObjLst -ErrorAction SilentlyContinue
+    Remove-Item $asmSrcLst -ErrorAction SilentlyContinue
 
     Push-Location $ProjectRoot
     try {
         foreach ($line in Get-Content (Join-Path $ProjectRoot '_asm.lst')) {
             $line = $line.Trim()
             if (-not $line -or $line.StartsWith(';')) { continue }
+            $src = Join-Path $ProjectRoot ($line -replace '/', '\')
+            Copy-Item $src $AsmOut -Force
+            (Split-Path $src -Leaf) | Add-Content $asmSrcLst
             $asmBase = [System.IO.Path]::GetFileNameWithoutExtension($line)
-            ".build\asm\$asmBase.o" | Add-Content $asmObjLst
+            "$AsmOut\$asmBase.o" | Add-Content $asmObjLst
         }
 
         $generatedAsmSources = @(
-            'bios\dispatch.asm'
+            "$AsmName\dispatch.asm"
         )
         foreach ($generatedAsm in $generatedAsmSources) {
             $src = Join-Path $ProjectRoot $generatedAsm
             if (-not (Test-Path $src)) { continue }
 
+            Copy-Item $src $AsmOut -Force
+            (Split-Path $src -Leaf) | Add-Content $asmSrcLst
             $asmBase = [System.IO.Path]::GetFileNameWithoutExtension($generatedAsm)
-            ".build\asm\$asmBase.o" | Add-Content $asmObjLst
+            "$AsmOut\$asmBase.o" | Add-Content $asmObjLst
+        }
+
+        Push-Location $AsmOut
+        try {
+            Invoke-External z80asm, '-m', '-s', "@$asmSrcLst"
+        } finally {
+            Pop-Location
         }
 
         foreach ($line in Get-Content (Join-Path $ProjectRoot '_src.lst')) {
@@ -113,7 +122,7 @@ function Build-Bin {
             if (-not $line -or $line.StartsWith(';')) { continue }
             $src  = $line -replace '/', '\'
             $base = [System.IO.Path]::GetFileNameWithoutExtension($src)
-            $obj  = ".build\obj\$base.o"
+            $obj  = "$ObjOut\$base.o"
 
             Invoke-External zcc, '+z80', '-SO2', '-nostdlib', '--no-crt', '-compiler=sccz80', '-c', $src, '-o', $obj
             $obj | Add-Content $localLst
@@ -122,7 +131,7 @@ function Build-Bin {
         # -reloc-info  : generate .reloc file with relocation records per section
         # -split-bin   : generate one .bin per section for page-granular loading
         Invoke-External z80asm, '-b', '-split-bin', '-reloc-info', '-m', '-v',
-            "@$asmObjLst", "@$localLst", "-o=.build\$BinName"
+            "@$asmObjLst", "@$localLst", "-o=$OutDir\$BinName"
     } finally {
         Pop-Location
     }
@@ -138,7 +147,7 @@ function Build-Bin {
     & "$PSScriptRoot\post_build.ps1" `
         -OutDir     $OutDir `
         -BinName    $BinName `
-        -DispatchSrc (Join-Path $ProjectRoot 'bios\dispatch.asm') `
+        -DispatchSrc (Join-Path $ProjectRoot "$AsmName\dispatch.asm") `
         -DispatchHeader $DispatchHeader
     if ($LASTEXITCODE -ne 0) { throw 'post_build failed.' }
 }

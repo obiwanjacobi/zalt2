@@ -1,0 +1,4 @@
+; List of ASM source files to compile into bios.lib
+; One file per line, relative to the project root
+; These files are NOT included in the OS binary
+asm/os_api.asm
