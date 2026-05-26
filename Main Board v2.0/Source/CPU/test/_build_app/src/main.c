@@ -1,12 +1,16 @@
+#pragma codeseg app
+//#pragma constseg xxx
+//#pragma dataseg xxx
+//#pragma bssseg xxx
+//#pragma bank 1
+
 /* main.c - application entry point
  * if function returns, the app is deleted.
  */
 
-// #include "ApiDispatch.h"
+  // #include "ApiDispatch.h"
 // #include "sys/Stream.h"
-#include "os/os_api.h"
-
-#pragma section code_app_main
+//#include "os/os_api.h"
 
 int main(void)
 {
@@ -15,8 +19,8 @@ int main(void)
     // uint8_t buf[32];
     // Api_Stream_Construct(&stream, buf, sizeof(buf));
 
-    os_func_args args = { .arg1 = 42, .arg2 = 12345 };
-    uint16_t result = os_struct_func(&args);
+    // os_func_args args = { .arg1 = 42, .arg2 = 12345 };
+    // uint16_t result = os_struct_func(&args);
 
     /* main loop */
     for (;;)
