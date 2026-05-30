@@ -66,7 +66,9 @@ function Build-Lib {
 function Build-Bin {
     Write-Host '[build_bin] Compiling and linking $($BinName) ...'
     New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
+    if (Test-Path $AsmOut) { Remove-Item $AsmOut -Recurse -Force }
     New-Item -ItemType Directory -Path $AsmOut -Force | Out-Null
+    Copy-Item -Path (Join-Path $ProjectRoot "$AsmName\*") -Destination $AsmOut -Recurse -Force
     New-Item -ItemType Directory -Path $ObjOut -Force | Out-Null
     if (-not (Test-Path $DispatchHeader)) {
         @(

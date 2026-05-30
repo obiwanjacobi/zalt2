@@ -1,7 +1,7 @@
 ; List of ASM source files to compile into the os
 ; One file per line, relative to the project root
 asm/os_page0.asm
-asm/os_stack.asm
+asm/os_data0.asm
 asm/os_rst.asm
 asm/os_int.asm
 asm/os_task.asm
@@ -10,3 +10,5 @@ asm/os_data.asm
 asm/os_mmu.asm
 asm/os_mem.asm
 asm/os_sys.asm
+
+asm/lib_mem.asm

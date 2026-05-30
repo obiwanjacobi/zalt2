@@ -223,6 +223,8 @@ This way the complexity is kept at a minimum and the user can still switch betwe
 
 > The RayLib graphics layout program can output .rlg files that contain control types and coordinates. Could be an easy way to design windows gui.
 
+- Have a single line of console entry on the bottom of the screen? Enter a command line quickly. If large output needs to be read (by the user) it can be folded open/extended (upward).
+
 ### Menu Bar
 
 There is one global top menu bar that displays the menu of the active application and starts at the left side of the screen.

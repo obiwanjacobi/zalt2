@@ -1,6 +1,6 @@
 section data_os
 
-include "os_defs.asm"
+include "os_defs.inc"
 ;
 ; OS Data page
 ;

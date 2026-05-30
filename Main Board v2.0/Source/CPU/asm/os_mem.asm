@@ -2,10 +2,11 @@
 
 section code_os
 
-#include "./os_defs.asm"
+#include "os_defs.inc"
 
-public os_mem_init, os_mem_alloc_page, os_mem_free_page, os_mem_clear, os_mem_fill
+public os_mem_init, os_mem_alloc_page, os_mem_free_page
 
+extern mem_clear
 extern var_os_mem_page_table
 
 ; initializes the memory management subsystem.
@@ -15,8 +16,7 @@ os_mem_init:
     ; clear page table
     ld hl, var_os_mem_page_table
     ld bc, OS_MEM_PAGE_TABLE_SIZE
-    call os_mem_clear
-
+    call mem_clear
     ret
 
 ; Claims a 4k memory page for a task.
@@ -34,25 +34,4 @@ os_mem_alloc_page:
 ; Destroys:
 os_mem_free_page:
     ; TODO: or pass-in a bank and page-index that is to be freed?
-    ret
-
-; Clears memory to zeros.
-; HL = start address
-; BC = length in bytes (4096 for full page)
-; Destroys: de, a
-os_mem_clear:
-    xor a
-    jr os_mem_fill
-
-; Fills memory with a specific value.
-; HL = start address
-; BC = length in bytes (4096 for full page)
-; A = value to fill
-; Destroys: de
-os_mem_fill:
-    ld d, h
-    ld e, l
-    inc de      ; de points to next byte
-    ld (hl), a  ; fill first byte
-    ldir        ; HL=Source, DE=Destination, BC=Count
     ret

@@ -1,4 +1,4 @@
-; os_stack.asm  - page0 data
+; os_data0.asm  - page0 data
 
 section code_crt_init
 
@@ -7,6 +7,6 @@ public var_os_caller_mmu, var_os_caller_sp
 var_os_caller_mmu: defs 2       ; mmu taskid:bank
 var_os_caller_sp: defs 2        ; stack pointer
 
-public OS_TASK_STACK_TOP
-; keep os-stack on page0 ($0000-$0FFF)
-defc OS_TASK_STACK_TOP = $1000
+; system IO status byte (bitfield)
+public var_os_sys_io_status
+var_os_sys_io_status: defb 0

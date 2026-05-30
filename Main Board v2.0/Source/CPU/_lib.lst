@@ -2,3 +2,9 @@
 ; One file per line, relative to the project root
 ; These files are NOT included in the OS binary
 asm/os_api.asm
+asm/lib_api.asm
+asm/lib_mem.asm
+
+asm/lib_ring_buffer.asm
+asm/lib_ring_buffer8.asm
+asm/lib_ring_buffer16.asm

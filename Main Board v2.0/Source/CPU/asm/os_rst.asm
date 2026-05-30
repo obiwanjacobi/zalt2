@@ -2,6 +2,7 @@
 ; System Entry Functions
 ; =============================================================================
 ; NOTE: the RETI is required for the CPLD to track return from supervisor mode.
+#include "os_defs.inc"
 
 section code_crt_init
 
@@ -12,7 +13,7 @@ extern var_os_caller_mmu, var_os_caller_sp
 
 extern os_func_table, fs_func_table, video_func_table
 extern audio_func_table, reserved_func_table, debug_func_table
-extern os_init, OS_TASK_STACK_TOP
+extern os_init
 extern mmu_bank_read, mmu_bank_write
 
 ; boot (warm/cold)
@@ -70,7 +71,7 @@ os_rst_30:
     ld bc, debug_func_table
     jp os_rst_dispatch
 
-; stray code execution
+; stray code execution or panic
 os_rst_38:
     ; TODO: kill task and restore os task
     ei

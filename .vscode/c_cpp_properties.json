@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Z88DK",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/z88dk/include/**"
+            ],
+            "defines": [
+                "__SCCZ80",
+                "DEBUG"
+            ],
+            "compilerPath": "C:/z88dk/bin/zcc.exe",
+            "cStandard": "c89",
+            "intelliSenseMode": "gcc-x86",
+            "compilerArgs": [
+                "-I${workspaceFolder}",
+                "-IC:/z88dk/include"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "C:/z88dk/include"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}

@@ -1,10 +1,6 @@
 section code_crt_init
 
-; Memory map:
-;   ROM 512 kB : 0x1F80000 .. 0x1FFFFFF  MA[24:19] = "111111"
-;   RAM 512 kB : 0x1F00000 .. 0x1F7FFFF  MA[24:19] = "111110"
-defc ROM_START = 0x1F80000
-defc RAM_START = 0x1F00000
+#include "os_defs.inc"
 
 extern mmu_map_enable
 extern mmu_map_write

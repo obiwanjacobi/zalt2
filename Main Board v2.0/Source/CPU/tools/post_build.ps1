@@ -124,7 +124,8 @@ foreach ($kvp in $sectionSizes.GetEnumerator()) {
     # Skip empty and z88dk internal pseudo-sections
     if ($size -eq 0) { continue }
     $status = if ($size -le $PageSize) { 'OK' } else { 'OVERFLOW'; $overflow = $true }
-    Write-Host ("  {0,-24} {1,5} bytes / {2} bytes  [{3}]" -f $name, $size, $PageSize, $status)
+    $percent = [math]::Round(($size / $PageSize) * 100, 1)
+    Write-Host ("  {0,-24} {1,5} / {2} bytes ({3}%) [{4}]" -f $name, $size, $PageSize, $percent, $status)
 }
 if ($overflow) {
     Write-Error "One or more sections exceed the page size of $PageSize bytes."

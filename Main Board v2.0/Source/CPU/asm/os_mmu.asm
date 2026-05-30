@@ -66,9 +66,10 @@ defc MMU_MMP_EXECUTE    = 0x04  ; Execute
 ; Destroys: A, BC
 ; =============================================================================
 mmu_map_enable:
-    ld   bc, (MMU_B_MAP_CE << 8) | MMU_PORT
-    ld   a, 1
-    out  (c), a
+    ld a, 1
+    ld b, MMU_B_MAP_CE
+    ld c, MMU_PORT
+    out (c), a
     ret
 
 ; =============================================================================
@@ -78,9 +79,10 @@ mmu_map_enable:
 ; Destroys: A, BC
 ; =============================================================================
 mmu_map_disable:
-    ld   bc, (MMU_B_MAP_CE << 8) | MMU_PORT
-    xor a, a        ; a=0
-    out  (c), a
+    xor a           ; a=0
+    ld b, MMU_B_MAP_CE
+    ld c, MMU_PORT
+    out (c), a
     ret
 
 ; =============================================================================
