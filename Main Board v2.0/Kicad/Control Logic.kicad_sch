@@ -4541,6 +4541,36 @@
 		)
 		(uuid "185a6457-39ce-4245-9ab5-339e13551487")
 	)
+	(text "I have added another 10k pull-up on TDO\nduring testing / trying to get it to work."
+		(exclude_from_sim no)
+		(at 117.348 256.032 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "57f1f6b6-e0b2-45ff-a0ae-0c4ee1814167")
+	)
+	(text "Although JTAG devices are chained (TDO=>TDI),\nthe programmer connections must NOT be crossed.\nThe programmer's TDO connects to the (1st) device's\nTDO and same for TDI (and all other signals)."
+		(exclude_from_sim no)
+		(at 43.434 231.648 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "5c414d64-b2e5-4674-bb9c-bcded1f3e54e")
+	)
+	(text "X"
+		(exclude_from_sim no)
+		(at 36.068 264.414 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "700a2180-08dc-4d2e-ad51-4a7428871717")
+	)
 	(text "Pin assignments are flexible.\nCLK20 must go on a GCKn pin."
 		(exclude_from_sim no)
 		(at 152.654 48.514 0)
@@ -4562,7 +4592,7 @@
 		)
 		(uuid "cda0a15f-ccf9-418d-8be1-351504ae2d17")
 	)
-	(text "This is the layout of the Xilinx USB Cable header,\nas depicted on the case.\nI should have connected the TDI to the chip's TDO\nand the TDO to the chip's TDI.\n\nYou will need to make a cross-cable when connecting the\nXilinx programmer to the board."
+	(text "This is the layout of the Xilinx USB Cable header,\nas depicted on the case.\n\nI could not reach the CPLD over JTAG until I disconnected\nthe programmer's Pseudo-GND (PGND) pin from GND - pin 13 on J3."
 		(exclude_from_sim no)
 		(at 71.12 274.828 0)
 		(effects
