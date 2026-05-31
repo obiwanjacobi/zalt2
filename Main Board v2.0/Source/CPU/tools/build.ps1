@@ -9,7 +9,7 @@
     clean      - remove build artefacts
 #>
 param(
-    [ValidateSet('all', 'build_lib', 'build_bin', 'clean')]
+    [ValidateSet('all', 'build_lib', 'build_bin', 'docs', 'clean')]
     [string]$Target = 'all'
 )
 
@@ -25,6 +25,7 @@ $OutDir     = Join-Path $ProjectRoot '.build'
 $AsmOut     = Join-Path $OutDir 'asm'
 $ObjOut     = Join-Path $OutDir 'obj'
 $DispatchHeader = Join-Path $ProjectRoot 'src' 'ApiDispatch.h'
+$Doxyfile   = Join-Path $ProjectRoot 'Doxyfile'
 
 # ---------------------------------------------------------------------------
 
@@ -34,6 +35,28 @@ function Invoke-External {
     if ($LASTEXITCODE -ne 0) {
         throw "Command failed (exit $LASTEXITCODE): $($CmdArgs -join ' ')"
     }
+}
+
+function Build-Docs {
+    if (-not (Test-Path $Doxyfile)) {
+        Write-Warning '[docs] Doxyfile not found; skipping documentation generation.'
+        return
+    }
+
+    $doxygenCmd = Get-Command doxygen -ErrorAction SilentlyContinue
+    if (-not $doxygenCmd) {
+        Write-Warning '[docs] Doxygen not installed; skipping documentation generation.'
+        return
+    }
+
+    Write-Host '[docs] Generating documentation into docs/ ...'
+    Push-Location $ProjectRoot
+    try {
+        Invoke-External doxygen, $Doxyfile
+    } finally {
+        Pop-Location
+    }
+    Write-Host '[docs] Done.'
 }
 
 function Build-Lib {
@@ -166,8 +189,9 @@ try {
     switch ($Target) {
         'build_lib' { Build-Lib }
         'build_bin' { Build-Bin }
+        'docs'      { Build-Docs }
         'clean'     { Invoke-Clean }
-        'all'       { Build-Lib; Build-Bin }
+        'all'       { Build-Lib; Build-Bin; Build-Docs }
     }
     Write-Host 'All done.'
 } catch {

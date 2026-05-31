@@ -1,0 +1,36 @@
+# Doxygen configuration for Zalt2 CPU documentation
+
+PROJECT_NAME           = "Zalt2 CPU"
+PROJECT_BRIEF          = "Zalt2 CPU firmware and API documentation"
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = YES
+
+# Inputs
+INPUT                  = src readme.md "File Stream.md" "Program Loader.md"
+FILE_PATTERNS          = *.h *.md
+RECURSIVE              = YES
+
+# Parsing / extraction
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+HIDE_UNDOC_RELATIONS   = NO
+WARN_IF_UNDOCUMENTED   = NO
+WARN_IF_DOC_ERROR      = YES
+QUIET                  = YES
+
+# Markdown / output
+MARKDOWN_SUPPORT       = YES
+AUTOLINK_SUPPORT       = YES
+USE_MDFILE_AS_MAINPAGE = readme.md
+GENERATE_HTML          = YES
+HTML_OUTPUT            = _html
+GENERATE_LATEX         = NO
+GENERATE_TREEVIEW      = YES
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+
+# Keep output manageable for embedded sources
+OPTIMIZE_OUTPUT_FOR_C  = YES
