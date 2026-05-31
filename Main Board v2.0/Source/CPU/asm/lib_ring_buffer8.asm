@@ -21,8 +21,8 @@ public lib_ring_buffer8_push, lib_ring_buffer8_pop
 
 ; Initializes the ring buffer at the given address.
 ; HL = address of ring buffer struct
-; BC = total reserved bytes for this object: header=3 + data=^2
-; Destroys: HL, DE, BC, A
+; C = total reserved bytes for this object: header=3 + data=^2
+; Destroys: HL, A
 lib_ring_buffer8_construct:
 	mem_clear_dbg
 
@@ -41,9 +41,8 @@ lib_ring_buffer8_construct:
 ; Indicates whether the ring buffer has room to push.
 ; HL = address of ring buffer struct
 ; Returns: Z=0 if push is possible, Z=1 if full
-; Destroys: BC, DE, A
+; Destroys: HL, BC, E, A
 lib_ring_buffer8_canpush:
-	push hl
 	ld b, (hl)              ; head
 	inc hl
 	ld c, (hl)              ; tail
@@ -55,20 +54,17 @@ lib_ring_buffer8_canpush:
 	and e                   ; next_head = (head + 1) & mask
 	cp c
 	; cp c sets Z directly for the return contract
-	pop hl
 	ret
 
 ; Indicates whether the ring buffer has data to pop.
 ; HL = address of ring buffer struct
 ; Returns: Z=0 if pop is possible, Z=1 if empty
-; Destroys: BC, A
+; Destroys: HL, C, A
 lib_ring_buffer8_canpop:
-	push hl
 	ld a, (hl)              ; head
 	inc hl
 	ld c, (hl)              ; tail
 	cp c                    ; Z set when empty
-	pop hl
 	ret
 
 ; Pushes one byte into the ring buffer.

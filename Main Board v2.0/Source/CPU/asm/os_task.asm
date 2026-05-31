@@ -16,12 +16,13 @@ public os_init
 os_init:
     xor a
     ld i, a     ; set interupt vector table base to $00 (vectors at $0000 / page0)
+    im 2
 
     ; - copy page0 from ROM to RAM (not now)
     ;    assuming we need data in page0 - perhaps not if we always switch task
 
     ; - set up MMU mapping for os
-    call mmu_init
+    call os_mmu_init
 
     ; can run in os-task context
     call os_mem_init
@@ -33,7 +34,7 @@ os_init:
 ;   D = 0x1F  (page_frame high byte, constant: MA[24:20] = 11111b, RAM region)
 ;   E = N     (page_frame low byte for page N: MA[19:12] = N)
 ; Conveniently, page_index = N = E, so A = E each iteration.
-mmu_init:
+os_mmu_init:
     ; TODO: we should enable after initialization is done (change CPLD).
     call mmu_map_enable         ; enable mapping SRAMs before any access
 
