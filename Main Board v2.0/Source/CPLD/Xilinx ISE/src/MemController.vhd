@@ -249,3 +249,32 @@ begin
     MMU_RAM_DDIR  <= io_write;
 
 end architecture rtl;
+
+-- =============================================================================
+-- Test architecture: disables the mapping RAMs.
+--
+-- Use from top-level with:
+--   entity work.MemController(rtl_null)
+-- =============================================================================
+architecture rtl_null of MemController is
+begin
+
+    -- Force the mapping SRAM address to 0x000 so both bytes feeding MA lines
+    -- come from the first MMU cell.
+    MMU_MAP <= (others => '0');
+
+    -- Keep both SRAMs disabled at all times in this test mode.
+    MMU_RAM1_CE_N <= '1';
+    MMU_RAM2_CE_N <= '1';
+
+    -- Disable SRAM programming and CPU data-bus path in this mode.
+    MMU_RAM1_WE_N <= '1';
+    MMU_RAM2_WE_N <= '1';
+    MMU_RAM1_DE_N <= '1';
+    MMU_RAM2_DE_N <= '1';
+    MMU_RAM_DDIR  <= '0';
+
+    D_OUT <= (others => '0');
+    D_OE  <= '0';
+
+end architecture rtl_null;

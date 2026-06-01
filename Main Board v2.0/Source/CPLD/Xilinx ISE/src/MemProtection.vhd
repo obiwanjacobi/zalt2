@@ -133,3 +133,22 @@ begin
     D_OE  <= io_sel;
 
 end architecture rtl;
+
+-- =============================================================================
+-- Null implementation for test builds.
+--
+-- This module intentionally does nothing:
+-- - Never asserts NMI.
+-- - Never drives the CPU data bus.
+-- - Ignores all protection inputs.
+--
+-- Use when MPU behaviour must be bypassed during bring-up.
+-- =============================================================================
+architecture rtl_null of MemProtection is
+begin
+    -- Hold NMI inactive and never drive the shared data bus.
+    CPU_NMI_N <= '1';
+    D_OUT     <= (others => '0');
+    D_OE      <= '0';
+
+end architecture rtl_null;

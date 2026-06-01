@@ -272,3 +272,24 @@ begin
     D_OE  <= intack_cycle;
 
 end architecture rtl;
+
+-- =============================================================================
+-- Null implementation for test builds.
+--
+-- This architecture intentionally does nothing and keeps all outputs inactive.
+-- Use from top-level with:
+--   entity work.IntController(rtl_null)
+-- =============================================================================
+architecture rtl_null of IntController is
+begin
+    SYSINTACK   <= '0';
+    CPU_INT_N   <= '1';
+    BINTACK     <= (others => '0');
+    BINTEN      <= '0';
+    BIACK_N     <= '1';
+    CPU_BUSRQ_N <= '1';
+    D_OUT       <= (others => '0');
+    D_OE        <= '0';
+
+end architecture rtl_null;
+

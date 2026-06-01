@@ -109,3 +109,19 @@ begin
     SYSDEN_N <= not sys_port;    -- enable buffer only on a matched port
 
 end architecture rtl;
+
+-- =============================================================================
+-- Null implementation for test builds.
+--
+-- This architecture intentionally does nothing and keeps outputs inactive.
+-- Use from top-level with:
+--   entity work.SysBridge(rtl_null)
+-- =============================================================================
+architecture rtl_null of SysBridge is
+begin
+    CPU_WAIT_N <= '1';
+    SYSCMD     <= '0';
+    SYSDDIR    <= '0';
+    SYSDEN_N   <= '1';
+end architecture rtl_null;
+
