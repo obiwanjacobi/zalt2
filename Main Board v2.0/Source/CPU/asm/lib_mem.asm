@@ -18,6 +18,7 @@ mem_fill:
     ld d, h
     ld e, l
     inc de      ; de points to next byte
+    dec bc      ; bc counts remaining bytes
     ld (hl), a  ; fill first byte
     ldir        ; HL=Source, DE=Destination, BC=Count
     ret

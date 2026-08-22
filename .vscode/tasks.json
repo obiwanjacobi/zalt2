@@ -4,8 +4,18 @@
     {
       "label": "Generate Docs",
       "type": "shell",
-      "command": "${workspaceFolder}/Main Board v2.0/Source/CPU/tools/build.ps1",
+      "command": "& '${workspaceFolder}/Main Board v2.0/Source/CPU/tools/build.ps1'",
       "args": ["-Target", "docs"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "Build Unit Tests",
+      "type": "shell",
+      "command": "& '${workspaceFolder}/Main Board v2.0/Source/CPU/tools/build_test.ps1'",
       "options": {
         "cwd": "${workspaceFolder}"
       },

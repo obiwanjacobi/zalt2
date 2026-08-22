@@ -5,11 +5,12 @@
 .PARAMETER Target
     build_lib  - assemble ASM files listed in _asm.lst into osapi.lib
     build_bin  - compile C files listed in _src.lst and link against osapi.lib
+    test       - assemble the DeZog unit test binary from _test.lst
     all        - build_lib then build_bin (default)
     clean      - remove build artefacts
 #>
 param(
-    [ValidateSet('all', 'build_lib', 'build_bin', 'docs', 'clean')]
+    [ValidateSet('all', 'build_lib', 'build_bin', 'test', 'docs', 'clean')]
     [string]$Target = 'all'
 )
 
@@ -189,6 +190,7 @@ try {
     switch ($Target) {
         'build_lib' { Build-Lib }
         'build_bin' { Build-Bin }
+        'test'      { & "$PSScriptRoot\build_test.ps1" }
         'docs'      { Build-Docs }
         'clean'     { Invoke-Clean }
         'all'       { Build-Lib; Build-Bin; Build-Docs }

@@ -1,0 +1,10 @@
+; Sources linked into the DeZog unit test binary.
+; One file per line, relative to the project root.
+; The unit test runtime must stay first - it defines the load address entry.
+test/asm/unit_tests.asm
+
+; --- modules under test ---
+asm/lib_mem.asm
+
+; --- test cases ---
+test/asm/test_lib_mem.asm

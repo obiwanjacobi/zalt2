@@ -1,0 +1,42 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "dezog",
+      "request": "launch",
+      "name": "Z80 Unit Tests (zsim)",
+      "unitTests": true,
+      "presentation": {
+        "hidden": false
+      },
+      "preLaunchTask": "Build Unit Tests",
+      "remoteType": "zsim",
+      "zsim": {
+        "memoryModel": "RAM",
+        "visualMemory": true,
+        "cpuFrequency": 8000000
+      },
+      "z88dkv2": [
+        {
+          "path": "Main Board v2.0/Source/CPU/.build/test/**/*.lis",
+          "mapFile": "Main Board v2.0/Source/CPU/.build/test/unittests.map",
+          "srcDirs": [
+            "Main Board v2.0/Source/CPU"
+          ]
+        }
+      ],
+      "loadObjs": [
+        {
+          "path": "Main Board v2.0/Source/CPU/.build/test/unittests.bin",
+          "start": "0x8000"
+        }
+      ],
+      "rootFolder": "${workspaceFolder}",
+      "startAutomatically": false,
+      "history": {
+        "codeCoverageEnabled": true
+      },
+      "unitTestTimeout": 5
+    }
+  ]
+}
