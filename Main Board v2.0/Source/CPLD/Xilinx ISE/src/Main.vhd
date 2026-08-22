@@ -23,7 +23,8 @@ entity Main is
         -- --------------------------------------------------------------------
         -- CPU Bus - Data (bidirectional with Z80)
         -- --------------------------------------------------------------------
-        D           : inout std_logic_vector(7 downto 0);
+        --D           : inout std_logic_vector(7 downto 0);
+        D           : in std_logic_vector(7 downto 0);
 
         -- --------------------------------------------------------------------
         -- CPU Control Signals
@@ -59,7 +60,7 @@ entity Main is
         -- MMU - Mapping RAM Control
         -- --------------------------------------------------------------------
         MMU_MAP     : out std_logic_vector(10 downto 0);  -- MAP10..MAP0
-
+        
         MMU_RAM1_CE_N : out std_logic;
         MMU_RAM2_CE_N : out std_logic;
         MMU_RAM1_WE_N : out std_logic;
@@ -76,12 +77,12 @@ entity Main is
         MMU_MP_WR   : in std_logic;   -- write access   (MREQ + WR)
 
         -- --------------------------------------------------------------------
-        -- Expansion Bus - IRQ inputs (from cards, wired-or)
+        -- Expansion Bus - IRQ inputs (from cards)
         -- --------------------------------------------------------------------
         BIRQ        : in  std_logic_vector(7 downto 0);
 
         -- --------------------------------------------------------------------
-        -- Expansion Bus - INTACK daisy-chain outputs
+        -- Expansion Bus - INTACK outputs
         -- --------------------------------------------------------------------
         BINTACK     : out std_logic_vector(7 downto 0);
 
@@ -124,7 +125,7 @@ entity Main is
         BC17        : in std_logic;
         BC18        : in std_logic;
 
-        -- Unused
+        -- Unused but fixed
         GNDPIN      : in std_logic  -- P38
     );
 end entity Main;
@@ -175,28 +176,7 @@ begin
     -- -------------------------------------------------------------------------
     -- MMU - Mapping RAM Control
     -- -------------------------------------------------------------------------
-    -- u_MemController : entity work.MemController(rtl)
-    --     port map (
-    --         CLK20         => CLK20,
-    --         CPU_RST_N     => CPU_RST_N,
-    --         A             => A,
-    --         D_IN          => D,
-    --         CPU_IORQ_N    => CPU_IORQ_N,
-    --         CPU_RD_N      => CPU_RD_N,
-    --         CPU_WR_N      => CPU_WR_N,
-    --         CPU_M1_N      => CPU_M1_N,
-    --         MMU_MAP       => MMU_MAP,
-    --         MMU_RAM1_CE_N => MMU_RAM1_CE_N,
-    --         MMU_RAM2_CE_N => MMU_RAM2_CE_N,
-    --         MMU_RAM1_WE_N => MMU_RAM1_WE_N,
-    --         MMU_RAM2_WE_N => MMU_RAM2_WE_N,
-    --         MMU_RAM1_DE_N => MMU_RAM1_DE_N,
-    --         MMU_RAM2_DE_N => MMU_RAM2_DE_N,
-    --         MMU_RAM_DDIR  => MMU_RAM_DDIR,
-    --         D_OUT         => mmc_d_out,
-    --         D_OE          => mmc_d_oe
-    --     );
-
+    --u_MemController : entity work.MemController(rtl)
     u_MemController : entity work.MemController(rtl_null)
         port map (
             CLK20         => CLK20,
@@ -222,22 +202,7 @@ begin
     -- -------------------------------------------------------------------------
     -- Memory Protection Unit (MPU)
     -- -------------------------------------------------------------------------
-    -- u_MemProtection : entity work.MemProtection(rtl)
-    --     port map (
-    --         CLK20      => CLK20,
-    --         CPU_RST_N  => CPU_RST_N,
-    --         MMU_MP_EXE => MMU_MP_EXE,
-    --         MMU_MP_RD  => MMU_MP_RD,
-    --         MMU_MP_WR  => MMU_MP_WR,
-    --         CPU_NMI_N  => CPU_NMI_N,
-    --         A          => A,
-    --         CPU_IORQ_N => CPU_IORQ_N,
-    --         CPU_RD_N   => CPU_RD_N,
-    --         CPU_M1_N   => CPU_M1_N,
-    --         D_OUT      => mpu_d_out,
-    --         D_OE       => mpu_d_oe
-    --     );
-
+    --u_MemProtection : entity work.MemProtection(rtl)
     u_MemProtection : entity work.MemProtection(rtl_null)
         port map (
             CLK20      => CLK20,
@@ -258,34 +223,15 @@ begin
     -- Priority: IntController (INTACK vector) > MemController (latch read)
     --           > MemProtection (cause register).
     -- Only one module asserts D_OE at a time in normal operation.
-    D <= int_d_out when int_d_oe = '1' else
-         mmc_d_out when mmc_d_oe = '1' else
-         mpu_d_out when mpu_d_oe = '1' else
-         (others => 'Z');
+    -- D <= int_d_out when int_d_oe = '1' else
+    --      mmc_d_out when mmc_d_oe = '1' else
+    --      mpu_d_out when mpu_d_oe = '1' else
+    --      (others => 'Z');
 
     -- -------------------------------------------------------------------------
     -- Expansion Bus - IRQ / INTACK
     -- -------------------------------------------------------------------------
-    -- u_IntController : entity work.IntController(rtl)
-    --     port map (
-    --         CLK20      => CLK20,
-    --         CPU_RST_N  => CPU_RST_N,
-    --         SYSINT     => SYSINT,
-    --         SYSINTACK  => SYSINTACK,
-    --         BIRQ       => BIRQ,
-    --         CPU_IORQ_N => CPU_IORQ_N,
-    --         CPU_M1_N   => CPU_M1_N,
-    --         CPU_INT_N  => CPU_INT_N,
-    --         BINTACK      => BINTACK,
-    --         BINTEN       => BINTEN,
-    --         BIACK_N      => BIACK_N,
-    --         BBUSRQ_N     => BBUSRQ_N,
-    --         CPU_BUSACK_N => CPU_BUSACK_N,
-    --         CPU_BUSRQ_N  => CPU_BUSRQ_N,
-    --         D_OUT        => int_d_out,
-    --         D_OE         => int_d_oe
-    --     );
-
+    --u_IntController : entity work.IntController(rtl)
     u_IntController : entity work.IntController(rtl_null)
         port map (
             CLK20      => CLK20,
@@ -306,6 +252,8 @@ begin
             D_OE         => int_d_oe
         );
 
+    -- CPU_BUSRQ_N and CPU_BUSACK_N are handled by IntController (DMA arbitration)
+    
     -- -------------------------------------------------------------------------
     -- Expansion Bus - Strobes
     -- -------------------------------------------------------------------------
@@ -317,21 +265,7 @@ begin
     -- -------------------------------------------------------------------------
     -- System Interface - CPU <-> MCU bridge
     -- -------------------------------------------------------------------------
-    -- u_SysBridge : entity work.SysBridge(rtl)
-    --     port map (
-    --         CLK20      => CLK20,
-    --         CPU_RST_N  => CPU_RST_N,
-    --         A          => A,
-    --         CPU_IORQ_N => CPU_IORQ_N,
-    --         CPU_RD_N   => CPU_RD_N,
-    --         CPU_WR_N   => CPU_WR_N,
-    --         CPU_M1_N   => CPU_M1_N,
-    --         CPU_WAIT_N => CPU_WAIT_N,
-    --         SYSCMD     => SYSCMD,
-    --         SYSDDIR    => SYSDDIR,
-    --         SYSDEN_N   => SYSDEN_N
-    --     );
-
+    --u_SysBridge : entity work.SysBridge(rtl)
     u_SysBridge : entity work.SysBridge(rtl_null)
         port map (
             CLK20      => CLK20,
@@ -346,7 +280,5 @@ begin
             SYSDDIR    => SYSDDIR,
             SYSDEN_N   => SYSDEN_N
         );
-
-    -- CPU_BUSRQ_N and CPU_BUSACK_N are handled by IntController (DMA arbitration)
 
 end architecture rtl;

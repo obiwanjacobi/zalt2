@@ -2,6 +2,11 @@
 
 section code_crt_init
 
+public var_os_task_current
+; Current active task id (0 = os)
+var_os_task_current: defs 1
+
+; TEMP
 public var_os_caller_mmu, var_os_caller_sp
 ; stores caller context when calling into the OS.
 var_os_caller_mmu: defs 2       ; mmu taskid:bank

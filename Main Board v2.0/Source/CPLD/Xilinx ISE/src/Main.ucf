@@ -19,186 +19,186 @@
 # Clocks
 # ----------------------------------------------------------------------------
 
-NET "CLK20"   LOC = "P30" ;
-NET "BCLK"    LOC = "P126" ;
+NET "CLK20" LOC = "P30" | BUFG = "CLK" ;
+NET "BCLK" LOC = "P126" | SLEW = "FAST" | DRIVE = "8" ;
 
-NET "CLK20"   TNM_NET = "CLK20" ;
+NET "CLK20" TNM_NET = "CLK20" | CLOCK_DEDICATED_ROUTE = TRUE;
 TIMESPEC "TS_CLK20" = PERIOD "CLK20" 50 ns HIGH 50 % ;
 
-NET "BCLK"    TNM_NET = "BCLK" ;
-TIMESPEC "TS_BCLK" = PERIOD "BCLK" 100 ns HIGH 50 % ;
+#NET "BCLK"    TNM_NET = "BCLK" ;
+#TIMESPEC "TS_BCLK" = PERIOD "BCLK" 100 ns HIGH 50 % ;
 
 # ----------------------------------------------------------------------------
 # CPU Bus - Address (inputs from Z80)
 # ----------------------------------------------------------------------------
 
-NET "A<0>"      LOC = "P28" ;
-NET "A<1>"      LOC = "P31" ;
-NET "A<2>"      LOC = "P32" ;
-NET "A<3>"      LOC = "P33" ;
-NET "A<4>"      LOC = "P34" ;
-NET "A<5>"      LOC = "P35" ;
-NET "A<6>"      LOC = "P39" ;
-NET "A<7>"      LOC = "P40" ;
-NET "A<8>"      LOC = "P41" ;
-NET "A<9>"      LOC = "P43" ;
-NET "A<10>"     LOC = "P44" ;
-NET "A<11>"     LOC = "P45" ;
-NET "A<12>"     LOC = "P140" ;
-NET "A<13>"     LOC = "P139" ;
-NET "A<14>"     LOC = "P138" ;
-NET "A<15>"     LOC = "P137" ;
+NET "A<0>" LOC = "P28" ;
+NET "A<1>" LOC = "P31" ;
+NET "A<2>" LOC = "P32" ;
+NET "A<3>" LOC = "P33" ;
+NET "A<4>" LOC = "P34" ;
+NET "A<5>" LOC = "P35" ;
+NET "A<6>" LOC = "P39" ;
+NET "A<7>" LOC = "P40" ;
+NET "A<8>" LOC = "P41" ;
+NET "A<9>" LOC = "P43" ;
+NET "A<10>" LOC = "P44" ;
+NET "A<11>" LOC = "P45" ;
+NET "A<12>" LOC = "P140" ;
+NET "A<13>" LOC = "P139" ;
+NET "A<14>" LOC = "P138" ;
+NET "A<15>" LOC = "P137" ;
 
 # ----------------------------------------------------------------------------
 # CPU Bus - Data (bidirectional with Z80)
 # ----------------------------------------------------------------------------
 
-NET "D<0>"      LOC = "P58" ;
-NET "D<1>"      LOC = "P59" ;
-NET "D<2>"      LOC = "P60" ;
-NET "D<3>"      LOC = "P61" ;
-NET "D<4>"      LOC = "P64" ;
-NET "D<5>"      LOC = "P66" ;
-NET "D<6>"      LOC = "P68" ;
-NET "D<7>"      LOC = "P69" ;
+NET "D<0>" LOC = "P58"  ;
+NET "D<1>" LOC = "P59"  ;
+NET "D<2>" LOC = "P60"  ;
+NET "D<3>" LOC = "P61"  ;
+NET "D<4>" LOC = "P64"  ;
+NET "D<5>" LOC = "P66"  ;
+NET "D<6>" LOC = "P68"  ;
+NET "D<7>" LOC = "P69"  ;
 
 # ----------------------------------------------------------------------------
 # CPU Control Signals (active-low signals use _N suffix)
 # ----------------------------------------------------------------------------
 
-NET "CPU_MREQ_N"   LOC = "P9"  ;   # ~{CPU_MREQ}
-NET "CPU_IORQ_N"   LOC = "P142" ;   # ~{CPU_IORQ}
-NET "CPU_RD_N"     LOC = "P19" ;   # ~{CPU_RD}
-NET "CPU_WR_N"     LOC = "P17" ;   # ~{CPU_WR}
-NET "CPU_M1_N"     LOC = "P71" ;   # ~{CPU_M1}
-NET "CPU_RFSH_N"   LOC = "P124" ;   # ~{CPU_RFSH}
-NET "CPU_HALT_N"   LOC = "P129" ;   # ~{CPU_HALT}
-NET "CPU_WAIT_N"   LOC = "P70" ;   # ~{CPU_WAIT}
-NET "CPU_INT_N"    LOC = "P120" ;   # ~{CPU_INT}
-NET "CPU_NMI_N"    LOC = "P119" ;   # ~{CPU_NMI}
-NET "CPU_RST_N"    LOC = "P143" ;   # ~{CPU_RST}
-NET "CPU_BUSRQ_N"  LOC = "P125" ;   # ~{CPU_BUSRQ}
-NET "CPU_BUSACK_N" LOC = "P128" ;   # ~{CPU_BUSACK}
+NET "CPU_MREQ_N" LOC = "P9" ;
+NET "CPU_IORQ_N" LOC = "P142" ;
+NET "CPU_RD_N" LOC = "P19" ;
+NET "CPU_WR_N" LOC = "P17" ;
+NET "CPU_M1_N" LOC = "P71" ;
+NET "CPU_RFSH_N" LOC = "P124" ;
+NET "CPU_HALT_N" LOC = "P129" ;
+NET "CPU_WAIT_N" LOC = "P70" ;
+NET "CPU_INT_N" LOC = "P120" ;
+NET "CPU_NMI_N" LOC = "P119" ;
+NET "CPU_RST_N" LOC = "P143" | BUFG = "SR" ;
+NET "CPU_BUSRQ_N" LOC = "P125" ;
+NET "CPU_BUSACK_N" LOC = "P128" ;
 
 # ----------------------------------------------------------------------------
 # Memory Chip Selects (outputs from CPLD)
 # ----------------------------------------------------------------------------
 
-NET "ROM_CE_N"     LOC = "P121" ;   # ~{ROM_CE}
-NET "RAM_CE_N"     LOC = "P118" ;   # ~{RAM_CE}
+NET "ROM_CE_N" LOC = "P121" ;
+NET "RAM_CE_N" LOC = "P118" ;
 
 # ----------------------------------------------------------------------------
-# MMU - Physical Memory Address Extension (outputs to SRAM address lines)
+# MMU - Physical Memory Address Extension (inputs from MMU address lines)
 # ----------------------------------------------------------------------------
 
-NET "MA<12>"    LOC = "P46" ;
-NET "MA<13>"    LOC = "P48" ;
-NET "MA<14>"    LOC = "P49" ;
-NET "MA<15>"    LOC = "P50" ;
-NET "MA<16>"    LOC = "P51" ;
-NET "MA<17>"    LOC = "P52" ;
-NET "MA<18>"    LOC = "P53" ;
-NET "MA<19>"    LOC = "P54" ;
-NET "MA<20>"    LOC = "P56" ;
-NET "MA<21>"    LOC = "P57" ;
-NET "MA<22>"    LOC = "P20" ;
-NET "MA<23>"    LOC = "P21" ;
-NET "MA<24>"    LOC = "P22" ;
+NET "MA<12>" LOC = "P46" ;
+NET "MA<13>" LOC = "P48" ;
+NET "MA<14>" LOC = "P49" ;
+NET "MA<15>" LOC = "P50" ;
+NET "MA<16>" LOC = "P51" ;
+NET "MA<17>" LOC = "P52" ;
+NET "MA<18>" LOC = "P53" ;
+NET "MA<19>" LOC = "P54" ;
+NET "MA<20>" LOC = "P56" ;
+NET "MA<21>" LOC = "P57" ;
+NET "MA<22>" LOC = "P20" ;
+NET "MA<23>" LOC = "P21" ;
+NET "MA<24>" LOC = "P22" ;
 
 # ----------------------------------------------------------------------------
 # MMU - Mapping RAM Control
 # ----------------------------------------------------------------------------
 
-NET "MMU_MAP<0>"       LOC = "P111" ;
-NET "MMU_MAP<1>"       LOC = "P112" ;
-NET "MMU_MAP<2>"       LOC = "P113" ;
-NET "MMU_MAP<3>"       LOC = "P115" ;
-NET "MMU_MAP<4>"       LOC = "P107" ;
-NET "MMU_MAP<5>"       LOC = "P106" ;
-NET "MMU_MAP<6>"       LOC = "P103" ;
-NET "MMU_MAP<7>"       LOC = "P104" ;
-NET "MMU_MAP<8>"       LOC = "P116" ;
-NET "MMU_MAP<9>"       LOC = "P110" ;
-NET "MMU_MAP<10>"      LOC = "P117" ;
+NET "MMU_MAP<0>" LOC = "P111" ;
+NET "MMU_MAP<1>" LOC = "P112" ;
+NET "MMU_MAP<2>" LOC = "P113" ;
+NET "MMU_MAP<3>" LOC = "P115" ;
+NET "MMU_MAP<4>" LOC = "P107" ;
+NET "MMU_MAP<5>" LOC = "P106" ;
+NET "MMU_MAP<6>" LOC = "P103" ;
+NET "MMU_MAP<7>" LOC = "P104" ;
+NET "MMU_MAP<8>" LOC = "P116" ;
+NET "MMU_MAP<9>" LOC = "P110" ;
+NET "MMU_MAP<10>" LOC = "P117" ;
 
-NET "MMU_RAM1_CE_N"  LOC = "P105" ;  # ~{MMU_RAM1_CE}
-NET "MMU_RAM2_CE_N"  LOC = "P98" ;  # ~{MMU_RAM2_CE}
-NET "MMU_RAM1_WE_N"  LOC = "P101" ;  # ~{MMU_RAM1_WE}
-NET "MMU_RAM2_WE_N"  LOC = "P102" ;  # ~{MMU_RAM2_WE}
-NET "MMU_RAM1_DE_N"  LOC = "P93" ;  # ~{MMU_RAM1_DE} (data buffer enable)
-NET "MMU_RAM2_DE_N"  LOC = "P94" ;  # ~{MMU_RAM2_DE}
-NET "MMU_RAM_DDIR"   LOC = "P95" ;  # data buffer direction
+NET "MMU_RAM1_CE_N" LOC = "P105" ;
+NET "MMU_RAM2_CE_N" LOC = "P98" ;
+NET "MMU_RAM1_WE_N" LOC = "P101" ;
+NET "MMU_RAM2_WE_N" LOC = "P102" ;
+NET "MMU_RAM1_DE_N" LOC = "P93" ;
+NET "MMU_RAM2_DE_N" LOC = "P94" ;
+NET "MMU_RAM_DDIR" LOC = "P95" ;
 
 # ----------------------------------------------------------------------------
 # MMU - Memory Protection Unit signals
 # ----------------------------------------------------------------------------
 
-NET "MMU_MP_EXE"  LOC = "P97" ;
-NET "MMU_MP_RD"   LOC = "P96" ;
-NET "MMU_MP_WR"   LOC = "P100" ;
+NET "MMU_MP_EXE" LOC = "P97"  ;
+NET "MMU_MP_RD" LOC = "P96"  ;
+NET "MMU_MP_WR" LOC = "P100"  ;
 
 # ----------------------------------------------------------------------------
 # Expansion Bus - IRQ / INTACK daisy-chain
 # ----------------------------------------------------------------------------
 
-NET "BIRQ<0>"     LOC = "P136" ;
-NET "BIRQ<1>"     LOC = "P135" ;
-NET "BIRQ<2>"     LOC = "P134" ;
-NET "BIRQ<3>"     LOC = "P133" ;
-NET "BIRQ<4>"     LOC = "P132" ;
-NET "BIRQ<5>"     LOC = "P6"  ;
-NET "BIRQ<6>"     LOC = "P4"  ;
-NET "BIRQ<7>"     LOC = "P2"  ;
+NET "BIRQ<0>" LOC = "P136"  ;
+NET "BIRQ<1>" LOC = "P135"  ;
+NET "BIRQ<2>" LOC = "P134"  ;
+NET "BIRQ<3>" LOC = "P133"  ;
+NET "BIRQ<4>" LOC = "P132"  ;
+NET "BIRQ<5>" LOC = "P6"   ;
+NET "BIRQ<6>" LOC = "P4"   ;
+NET "BIRQ<7>" LOC = "P2"   ;
 
-NET "BINTACK<0>"  LOC = "P92" ;
-NET "BINTACK<1>"  LOC = "P130" ;
-NET "BINTACK<2>"  LOC = "P131" ;
-NET "BINTACK<3>"  LOC = "P75" ;
-NET "BINTACK<4>"  LOC = "P74" ;
-NET "BINTACK<5>"  LOC = "P7"  ;
-NET "BINTACK<6>"  LOC = "P5"  ;
-NET "BINTACK<7>"  LOC = "P3"  ;
+NET "BINTACK<0>" LOC = "P92" ;
+NET "BINTACK<1>" LOC = "P130" ;
+NET "BINTACK<2>" LOC = "P131" ;
+NET "BINTACK<3>" LOC = "P75" ;
+NET "BINTACK<4>" LOC = "P74" ;
+NET "BINTACK<5>" LOC = "P7"  ;
+NET "BINTACK<6>" LOC = "P5"  ;
+NET "BINTACK<7>" LOC = "P3"  ;
 
-NET "BINTEN"       LOC = "P85" ;
-NET "BIACK_N"      LOC = "P91" ;  # ~{BIACK}
-NET "BBUSRQ_N"     LOC = "P16" ;  # ~{BBUSRQ}
+NET "BINTEN" LOC = "P85" ;
+NET "BIACK_N" LOC = "P91" ;
+NET "BBUSRQ_N" LOC = "P16" ;
 
 # ----------------------------------------------------------------------------
 # Expansion Bus - Memory / IO Strobes (outputs to expansion bus)
 # ----------------------------------------------------------------------------
 
-NET "B8_MEM_WR_N"  LOC = "P76" ;  # ~{B8_MEM_WR}
-NET "B8_MEM_RD_N"  LOC = "P77" ;  # ~{B8_MEM_RD}
-NET "BIO_WR_N"     LOC = "P78" ;  # ~{BIO_WR}
-NET "BIO_RD_N"     LOC = "P88" ;  # ~{BIO_RD}
+NET "B8_MEM_WR_N" LOC = "P76" ;
+NET "B8_MEM_RD_N" LOC = "P77" ;
+NET "BIO_WR_N" LOC = "P78" ;
+NET "BIO_RD_N" LOC = "P88" ;
 
 # ----------------------------------------------------------------------------
 # Expansion Bus - Bus Control Lines
 # ----------------------------------------------------------------------------
 
-NET "BC1"   LOC = "P27" ;
-NET "BC2"   LOC = "P26" ;
-NET "BC3"   LOC = "P25" ;
-NET "BC4"   LOC = "P24" ;
-NET "BC5"   LOC = "P23" ;
-NET "BC13"  LOC = "P15" ;
-NET "BC14"  LOC = "P14" ;
-NET "BC15"  LOC = "P13" ;
-NET "BC16"  LOC = "P12" ;
-NET "BC17"  LOC = "P11" ;
-NET "BC18"  LOC = "P10" ;
+NET "BC1" LOC = "P27"  ;
+NET "BC2" LOC = "P26"  ;
+NET "BC3" LOC = "P25"  ;
+NET "BC4" LOC = "P24"  ;
+NET "BC5" LOC = "P23"  ;
+NET "BC13" LOC = "P15"  ;
+NET "BC14" LOC = "P14"  ;
+NET "BC15" LOC = "P13"  ;
+NET "BC16" LOC = "P12"  ;
+NET "BC17" LOC = "P11"  ;
+NET "BC18" LOC = "P10"  ;
 
 # IO/GCK3 to GND (big mistake!)
-NET "GNDPIN"  LOC = "P38" ;
+NET "GNDPIN" LOC = "P38" ;
 
 # ----------------------------------------------------------------------------
 # System Interface (MCU <-> CPLD)
 # ----------------------------------------------------------------------------
 
-NET "SYSINT<0>"    LOC = "P83" ;
-NET "SYSINT<1>"    LOC = "P81" ;
-NET "SYSINT<2>"    LOC = "P79" ;
-NET "SYSINTACK"  LOC = "P80" ;
-NET "SYSCMD"     LOC = "P82" ;
-NET "SYSDDIR"    LOC = "P86" ;
-NET "SYSDEN_N"   LOC = "P87" ;  # ~{SYSDEN}
+NET "SYSINT<0>" LOC = "P83"  ;
+NET "SYSINT<1>" LOC = "P81"  ;
+NET "SYSINT<2>" LOC = "P79"  ;
+NET "SYSINTACK" LOC = "P80" ;
+NET "SYSCMD" LOC = "P82" ;
+NET "SYSDDIR" LOC = "P86" ;
+NET "SYSDEN_N" LOC = "P87" ;

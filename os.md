@@ -225,6 +225,10 @@ This way the complexity is kept at a minimum and the user can still switch betwe
 
 - Have a single line of console entry on the bottom of the screen? Enter a command line quickly. If large output needs to be read (by the user) it can be folded open/extended (upward).
 
+- Have a Taskbar that gives quick access to all open applications.
+
+- Have a default windows that serves like a start-menu, but full screen. All 'installed' applications are listed here.
+
 ### Menu Bar
 
 There is one global top menu bar that displays the menu of the active application and starts at the left side of the screen.
