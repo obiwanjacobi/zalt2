@@ -14,7 +14,7 @@
       "zsim": {
         "memoryModel": "RAM",
         "visualMemory": true,
-        "cpuFrequency": 8000000
+        "cpuFrequency": 20000000
       },
       "z88dkv2": [
         {

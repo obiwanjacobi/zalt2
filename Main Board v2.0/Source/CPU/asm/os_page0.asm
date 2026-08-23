@@ -13,7 +13,7 @@
 section code_crt_init
 org $0000
 
-; RST dispatch targets (defined in dispatch.asm)
+; RST dispatch targets (defined in os_rst.asm)
 extern os_rst_00, os_rst_08, os_rst_10, os_rst_18
 extern os_rst_20, os_rst_28, os_rst_30, os_rst_38
 

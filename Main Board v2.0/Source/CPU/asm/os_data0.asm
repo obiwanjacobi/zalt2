@@ -12,6 +12,10 @@ public var_os_caller_mmu, var_os_caller_sp
 var_os_caller_mmu: defs 2       ; mmu taskid:bank
 var_os_caller_sp: defs 2        ; stack pointer
 
+public var_os_temp
+; temporary storage for OS routines
+var_os_temp: defs 8
+
 ; system IO status byte (bitfield)
 public var_os_sys_io_status
 var_os_sys_io_status: defb 0

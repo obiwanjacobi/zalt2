@@ -122,3 +122,44 @@ Just before the INT or RST returns (from page0):
 
 - activate stashed Task/Bank
 - reinstate the SP (clear var to indicate no task/bank to switch back to)
+
+### RST - OS function
+
+```z80asm
+; os_page0.asm
+    di
+    jp os_rst_n
+
+; os_rst_n - os_rst.asm
+    exx
+    ; TODO=> save registers BC' DE', and HL'
+    ld bc, <function-table>
+    jp os_rst_dispatch
+
+; os_rst_dispatch
+    ; get rst-id and adjust caller return address (uses HL' and E')
+    ; save (push) all caller's registers (retrieve earlier: BC', DE' and HL')
+    ; save caller mmu + SP in TCB
+    
+    ; switch to full os-task (mmu + SP)
+    ; execute os-function (uses BC and E) - requires parameters!
+    
+    ; load current task mmu and SP
+    ; restore (pop) all caller's registers
+    ; return to caller
+```
+
+### INT - Timer Interrupt
+
+```z80asm
+; os_int.asm
+    ; save (push) all caller's registers (retrieve earlier: BC, DE and HL)
+    ; save caller mmu + SP in TCB
+
+    ; switch to full os-task (mmu + SP)
+    ; execute task-scheduler
+
+    ; load current task mmu and SP
+    ; restore (pop) all caller's registers
+    ; return to caller (ei)
+```
