@@ -3,11 +3,10 @@ section code_crt_init
 #include "os_defs.inc"
 #include "os_task.inc"
 
-extern mmu_map_enable
-extern mmu_map_write
-extern mmu_bank_read
-extern mmu_bank_write
-extern os_mem_init
+extern var_os_task_current, var_os_task_table, var_os_mem_page_table
+
+extern mmu_map_enable, mmu_map_write, mmu_bank_read, mmu_bank_write
+extern os_mem_init, os_mmu_init
 
 extern mem_clear
 
@@ -76,7 +75,7 @@ os_task_init:
 
     ret
 
-public os_task_create, os_task_destroy, os_task_switch_to, os_task_switch_to_os
+public os_task_create, os_task_destroy, os_task_switch_to
 ; TODO: task scheduler and context switching.
 
 ; creates a new task and returns its task_id in A (0 = os, 1..N = user tasks)
@@ -89,23 +88,8 @@ os_task_destroy:
 os_task_switch_to:
     ret
 
-; switches to the os-task
-os_task_switch_to_os:
-    ld hl, var_os_task_current
 
-    ; debug: should never happen
-    ; check if already in os-task context (task_id = 0)
-    xor a
-    cp (hl)
-    ret z
-
-    ld a, (hl)              ; A = current task_id
-    call os_task_base_ptr   ; hl = base pointer of current task
-
-    ; swicth!
-
-    ret
-
+public os_task_current_base_ptr, os_task_base_ptr
 ; returns the base pointer in HL of the current task
 ; Destroys: A, B, DE, HL
 os_task_current_base_ptr:
@@ -120,7 +104,7 @@ os_task_base_ptr:
     ret z
 
     ld b, a     ; counter
-    ld de, OS_TASK_TABLE_ENTRY_SIZE
+    ld de, OS_TASK_STRUCT_SIZE
 
 .os_task_base_ptr_loop
     add hl, de

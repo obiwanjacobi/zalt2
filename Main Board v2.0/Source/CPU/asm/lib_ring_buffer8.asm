@@ -95,7 +95,9 @@ lib_ring_buffer8_push_can_write:
 
 	; write byte at data[head]
 	pop hl                  ; base
+	pop af                 ; payload
 	push hl                 ; keep base for head update
+	push af                 ; keep payload for data write
 	inc hl
 	inc hl
 	inc hl                  ; data base

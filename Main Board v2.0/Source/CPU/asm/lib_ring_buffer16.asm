@@ -182,7 +182,9 @@ lib_ring_buffer16_push_can_write:
 
 	; HL = base pointer
 	pop hl
+	pop af                   ; payload
 	push hl                  ; keep base for head update
+	push af                  ; keep payload for data write
 
 	; HL = data_base + old_head
 	ld a, 6
@@ -220,6 +222,7 @@ lib_ring_buffer16_pop:
 	ld c, (hl)
 	inc hl
 	ld b, (hl)
+	inc hl
 
 	; empty when head == tail
 	ld a, d
@@ -256,12 +259,10 @@ lib_ring_buffer16_pop_has_data:
 
 	; store updated tail (BC)
 	pop af
-	ex af, af'
 	pop hl
 	inc hl
 	inc hl
 	ld (hl), c
 	inc hl
 	ld (hl), b
-	ex af, af'
 	ret

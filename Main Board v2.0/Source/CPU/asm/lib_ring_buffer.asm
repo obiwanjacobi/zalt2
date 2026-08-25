@@ -14,7 +14,7 @@ public lib_ring_buffer_push, lib_ring_buffer_pop
 ; Initializes the ring buffer at the given address.
 ; HL = address of ring buffer struct
 ; BC = size of reserved memory pointed to by HL (number of bytes)
-; Destroys: HL, DE, BC, A
+; Destroys: HL, BC, A
 lib_ring_buffer_construct:
     mem_clear_dbg
 
@@ -85,14 +85,8 @@ lib_ring_buffer_canpush:
     jr nz, lib_ring_buffer_canpush_ret_true
     ld a, c
     cp e
-    jr nz, lib_ring_buffer_canpush_ret_true
-
-    ; full path: Z is already set by cp e
-    pop hl
-    ret
-
 .lib_ring_buffer_canpush_ret_true
-    ; can-push path: Z is already clear from the last cp
+    ; can-push path: Z is assigned from the last cp
     pop hl
     ret
 
@@ -120,14 +114,8 @@ lib_ring_buffer_canpull:
     jr nz, lib_ring_buffer_canpull_ret_true
     ld a, c
     cp e
-    jr nz, lib_ring_buffer_canpull_ret_true
-
-    ; empty path: Z is already set by cp e
-    pop hl
-    ret
-
 .lib_ring_buffer_canpull_ret_true
-    ; can-pull path: Z is already clear from the last cp
+    ; can-pull path: Z is assigned from the last cp
     pop hl
     ret
 
@@ -190,7 +178,9 @@ lib_ring_buffer_push:
 
     ; HL = base pointer
     pop hl
+    pop af                   ; payload
     push hl                  ; keep base for head update
+    push af                  ; keep payload for data write
 
     ; HL = data_base + old_head
     ld a, 6
@@ -269,7 +259,6 @@ lib_ring_buffer_pop:
 
 .lib_ring_buffer_pop_store_tail
     pop af
-    ex af, af'
     pop hl
     inc hl
     inc hl
@@ -277,5 +266,4 @@ lib_ring_buffer_pop:
     inc hl
     ld (hl), d
 
-    ex af, af'
     ret

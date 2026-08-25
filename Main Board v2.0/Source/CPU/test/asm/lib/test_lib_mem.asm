@@ -4,10 +4,6 @@
 
 extern mem_clear, mem_fill
 
-public UT_mem_fill_writes_all_bytes
-public UT_mem_fill_keeps_guards
-public UT_mem_clear_zeroes_all_bytes
-
 guard_lo:   defb 0x5A
 buffer:     defs 8, 0x11
 guard_hi:   defb 0xA5

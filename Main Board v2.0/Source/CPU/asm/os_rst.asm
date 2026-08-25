@@ -9,12 +9,13 @@ section code_crt_init
 public os_rst_00, os_rst_08, os_rst_10, os_rst_18
 public os_rst_20, os_rst_28, os_rst_30, os_rst_38
 
-extern var_os_caller_mmu, var_os_caller_sp
+extern var_os_temp, var_os_task_table
 
 extern os_func_table, fs_func_table, video_func_table
 extern audio_func_table, reserved_func_table, debug_func_table
 extern os_init
 extern mmu_bank_read, mmu_bank_write
+extern os_task_current_base_ptr
 
 ; boot (warm/cold)
 os_rst_00:
@@ -120,7 +121,7 @@ os_rst_dispatch:
     ex de, hl
     ld (var_os_temp+4), hl
 
-    ; at this point BC', DE', HL' and the function table address are saved in var_os_temp
+    ; at this point DE', HL' and the function table address are saved in var_os_temp
 
     ; read and advance the inline function byte
     ex (sp), hl             ; HL = inline_byte_addr (original HL' is now on top of stack)
@@ -159,7 +160,7 @@ os_rst_dispatch:
 
     ; at this point all the caller's registers are saved onto their stack, 
     ;   the function table and the function id are in var_os_temp storage
-    ;   function parameters are in the in the other register set (exx)
+    ;   function parameters are (still) in the in the other register set
 
     call os_task_current_base_ptr       ; destroys A, B, DE and HL
     ex de, hl                           ; DE contains TCB pointer of current task
@@ -212,16 +213,17 @@ os_rst_dispatch:
     ld h, 0
     add hl, hl              ; HL = id * 2
     add hl, de              ; HL = table[func_id]
-    ld a, (hl)
+    ld e, (hl)
     inc hl
     ld h, (hl)
-    ld l, a                 ; HL = target function address
+    ld l, e                 ; HL = target function address
 
     ; push os_rst_return then func_addr; RET jumps to func_addr
     ld de, os_rst_return
     push de
     push hl                 ; func_addr on top of stack   
     exx                     ; switch to function parameters register-set
+    ex af, af'
     ret                     ; jump to function; its RET -> os_rst_return
 
 .os_rst_return
