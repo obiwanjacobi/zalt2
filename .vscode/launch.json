@@ -9,7 +9,7 @@
       "presentation": {
         "hidden": false
       },
-      "preLaunchTask": "Build Unit Tests",
+      "preLaunchTask": "Build Unit Tests ${input:testTarget}",
       "remoteType": "zsim",
       "zsim": {
         "memoryModel": "RAM",
@@ -18,8 +18,8 @@
       },
       "z88dkv2": [
         {
-          "path": "Main Board v2.0/Source/CPU/.build/test/**/*.lis",
-          "mapFile": "Main Board v2.0/Source/CPU/.build/test/unittests.map",
+          "path": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/**/*.lis",
+          "mapFile": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/unittests.map",
           "srcDirs": [
             "Main Board v2.0/Source/CPU"
           ]
@@ -27,7 +27,7 @@
       ],
       "loadObjs": [
         {
-          "path": "Main Board v2.0/Source/CPU/.build/test/unittests.bin",
+          "path": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/unittests.bin",
           "start": "0x8000"
         }
       ],
@@ -37,6 +37,18 @@
         "codeCoverageEnabled": true
       },
       "unitTestTimeout": 5
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testTarget",
+      "type": "pickString",
+      "description": "Test target to run",
+      "options": [
+        "lib",
+        "os"
+      ],
+      "default": "lib"
     }
   ]
 }

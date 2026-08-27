@@ -1,0 +1,17 @@
+; Sources for the 'lib' unit test target.
+; Assembled into test/.build/lib/unittests.bin.
+; Paths are relative to the project root.
+; The test runtime must stay first - it defines the load address entry.
+test/asm/unit_tests.asm
+
+; --- modules under test ---
+asm/lib_mem.asm
+asm/lib_ring_buffer.asm
+asm/lib_ring_buffer8.asm
+asm/lib_ring_buffer16.asm
+
+; --- test cases ---
+test/asm/lib/test_lib_mem.asm
+test/asm/lib/test_lib_ring_buffer.asm
+test/asm/lib/test_lib_ring_buffer8.asm
+test/asm/lib/test_lib_ring_buffer16.asm
