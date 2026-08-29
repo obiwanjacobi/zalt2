@@ -4,6 +4,8 @@
 ; The test runtime must stay first - it defines the load address entry.
 test/asm/unit_tests.asm
 
+asm/lib_mem.asm
+
 ; --- modules under test ---
 asm/os_data0.asm
 asm/os_data.asm
@@ -12,7 +14,10 @@ asm/os_mem.asm
 asm/os_task.asm
 asm/os_int.asm
 asm/os_sys.asm
-asm/os_func_tables.asm
+
+; --- test function stubs ---
+test/asm/os/tst_func_tables.asm
+test/asm/tst_mmu.asm
 
 ; --- test cases ---
 test/asm/os/tst_os_rst.asm

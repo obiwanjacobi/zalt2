@@ -87,6 +87,8 @@ os_rst_30:
 ; panic and stray code execution handler. Assumes DI
 ; does not return to caller.
 os_rst_38:
+    ; DEBUG: save all registers in memory
+    
     ; read and advance the inline panic code (byte)
     ex (sp), hl             ; HL = inline_byte_addr
     ld e, (hl)              ; E = panic code

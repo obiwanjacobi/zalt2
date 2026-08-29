@@ -4,12 +4,9 @@
     {
       "type": "dezog",
       "request": "launch",
-      "name": "Z80 Unit Tests (zsim)",
+      "name": "Z80 Unit Tests lib (zsim)",
       "unitTests": true,
-      "presentation": {
-        "hidden": false
-      },
-      "preLaunchTask": "Build Unit Tests ${input:testTarget}",
+      "preLaunchTask": "Build Unit Tests lib",
       "remoteType": "zsim",
       "zsim": {
         "memoryModel": "RAM",
@@ -18,8 +15,8 @@
       },
       "z88dkv2": [
         {
-          "path": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/**/*.lis",
-          "mapFile": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/unittests.map",
+          "path": "Main Board v2.0/Source/CPU/test/asm/.build/lib/**/*.lis",
+          "mapFile": "Main Board v2.0/Source/CPU/test/asm/.build/lib/unittests.map",
           "srcDirs": [
             "Main Board v2.0/Source/CPU"
           ]
@@ -27,7 +24,7 @@
       ],
       "loadObjs": [
         {
-          "path": "Main Board v2.0/Source/CPU/test/.build/${input:testTarget}/unittests.bin",
+          "path": "Main Board v2.0/Source/CPU/test/asm/.build/lib/unittests.bin",
           "start": "0x8000"
         }
       ],
@@ -37,18 +34,40 @@
         "codeCoverageEnabled": true
       },
       "unitTestTimeout": 5
-    }
-  ],
-  "inputs": [
+    },
     {
-      "id": "testTarget",
-      "type": "pickString",
-      "description": "Test target to run",
-      "options": [
-        "lib",
-        "os"
+      "type": "dezog",
+      "request": "launch",
+      "name": "Z80 Unit Tests os (zsim)",
+      "unitTests": true,
+      "preLaunchTask": "Build Unit Tests os",
+      "remoteType": "zsim",
+      "zsim": {
+        "memoryModel": "RAM",
+        "visualMemory": true,
+        "cpuFrequency": 20000000
+      },
+      "z88dkv2": [
+        {
+          "path": "Main Board v2.0/Source/CPU/test/asm/.build/os/**/*.lis",
+          "mapFile": "Main Board v2.0/Source/CPU/test/asm/.build/os/unittests.map",
+          "srcDirs": [
+            "Main Board v2.0/Source/CPU"
+          ]
+        }
       ],
-      "default": "lib"
+      "loadObjs": [
+        {
+          "path": "Main Board v2.0/Source/CPU/test/asm/.build/os/unittests.bin",
+          "start": "0x8000"
+        }
+      ],
+      "rootFolder": "${workspaceFolder}",
+      "startAutomatically": false,
+      "history": {
+        "codeCoverageEnabled": true
+      },
+      "unitTestTimeout": 5
     }
   ]
 }
