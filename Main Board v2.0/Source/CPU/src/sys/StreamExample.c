@@ -17,7 +17,7 @@
  */
 
 #include "Sys.h"
-#include "Async.h"
+#include "../os/async.h"
 #include "Stream.h"
 
 /* 32-byte ring buffer (power of 2 required) */
@@ -33,14 +33,14 @@ static Stream  _hd_stream;
  * ----------------------------------------------------------------------- */
 typedef struct
 {
-    AsyncThis _async;       /* base — must be first */
+    async_t   _async;       /* base — must be first */
     uint8_t   byte;
     uint16_t  remaining;
 } HdReadThis;
 
 typedef struct
 {
-    AsyncThis _async;       /* base — must be first */
+    async_t   _async;       /* base — must be first */
     uint8_t   byte;
 } FileConsumerThis;
 

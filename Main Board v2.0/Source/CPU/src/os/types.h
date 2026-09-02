@@ -52,22 +52,4 @@ typedef struct {
     uint16_t len;
 } slice;
 
-//
-// Async
-//
-
-typedef enum
-{
-    asyncResult_None,
-    asyncResult_Pending,
-    asyncResult_Completed,
-    asyncResult_Error,
-} async_result_t;
-
-typedef struct
-{
-    uint16_t State;
-    async_result_t Result;
-} async_t;
-
 #endif //__TYPES_H__
