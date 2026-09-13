@@ -32,6 +32,10 @@
 typedef uintptr_t ptr_t;
 #define nullptr ((void*)0)
 
+#define true  1
+#define false 0
+//typedef uint8_t bool_t;
+
 //
 // Relative Pointer
 //

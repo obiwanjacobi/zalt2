@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-#define true  1
-#define false 0
-typedef uint8_t bool_t;
+#include "../os/types.h"
 
 #endif /* __SYS_H__ */

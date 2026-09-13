@@ -47,9 +47,7 @@ typedef uint8_t result_t;
 #define Succeeded(r) ((r) == S_OK)
 #define Failed(r) ((r) != S_OK)
 
-// void Error_Set(result_t error);
 void FastCall(Error_Set(result_t error));
-
 result_t Error_Get();
 
 #endif //__ERROR_H__

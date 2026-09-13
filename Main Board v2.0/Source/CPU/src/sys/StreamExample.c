@@ -26,21 +26,21 @@ static uint8_t _hd_buf[HD_BUF_SIZE];
 static Stream  _hd_stream;
 
 /* -----------------------------------------------------------------------
- * Derived AsyncThis structs — AsyncThis MUST be the first member so that
- * (AsyncThis*) casts are safe (C standard guarantees pointer equivalence).
+ * Derived async_t structs — async_t MUST be the first member so that
+ * (asynct*) casts are safe (C standard guarantees pointer equivalence).
  * Per-instance state lives here instead of static locals, so multiple
  * concurrent instances of the same function never clobber each other.
  * ----------------------------------------------------------------------- */
 typedef struct
 {
-    async_t   _async;       /* base — must be first */
+    async_t   async;       /* base — must be first */
     uint8_t   byte;
     uint16_t  remaining;
 } HdReadThis;
 
 typedef struct
 {
-    async_t   _async;       /* base — must be first */
+    async_t   async;       /* base — must be first */
     uint8_t   byte;
 } FileConsumerThis;
 
@@ -50,18 +50,16 @@ static FileConsumerThis _consumer_async;
 /* -----------------------------------------------------------------------
  * Producer: reads one 512-byte sector from HD, writes bytes to stream.
  * ----------------------------------------------------------------------- */
-Async_FunctionWithParams(HdRead, uint16_t sector)
-{
+Async_BeginParams(HdRead, uint16_t sector)
     HdReadThis *self = (HdReadThis *)async;
 
     self->remaining = 512;
 
     /* Wait for drive to be ready */
     Async_WaitUntil(Hd_IsReady());
-
     Hd_StartRead(sector);
 
-    while (self->remaining > 0)
+    while (self->remaining > 0 && !Stream_IsDone(&_hd_stream))
     {
         /* Wait for HD to have a byte available */
         Async_WaitUntil(Hd_ByteReady());
@@ -76,14 +74,13 @@ Async_FunctionWithParams(HdRead, uint16_t sector)
 
     /* Signal to consumer that no more data is coming */
     Stream_Close(&_hd_stream);
-}
-Async_EndFn();
+
+Async_End;
 
 /* -----------------------------------------------------------------------
  * Consumer: drains the stream and processes each byte.
  * ----------------------------------------------------------------------- */
-Async_Function(FileConsumer)
-{
+Async_Begin(FileConsumer)
     FileConsumerThis *self = (FileConsumerThis *)async;
 
     /* Wait until there's something to read, or the stream is finished */
@@ -94,15 +91,18 @@ Async_Function(FileConsumer)
     {
         self->byte = Stream_Read(&_hd_stream);
         /* TODO: process byte */
+
+        // Uncomment the following line to abort the stream in case of an error
+        // Stream_Abort(&_hd_stream);
     }
 
     /* If stream is not done yet, yield and come back for more */
     if (!Stream_IsDone(&_hd_stream))
-        Async_Return();
+        Async_Continue();
 
     /* Stream fully drained and closed - we're done */
-}
-Async_EndFn();
+
+Async_End;
 
 /* -----------------------------------------------------------------------
  * Main loop
@@ -110,13 +110,13 @@ Async_EndFn();
 void Main_Loop(void)
 {
     Stream_Construct(&_hd_stream, _hd_buf, HD_BUF_SIZE);
-    Async_Construct((AsyncThis *)&_hd_async);
-    Async_Construct((AsyncThis *)&_consumer_async);
+    Async_Init(_hd_async);
+    Async_Init(_consumer_async);
 
     for (;;)
     {
-        HdRead((AsyncThis *)&_hd_async, 0 /* sector number */);
-        FileConsumer((AsyncThis *)&_consumer_async);
+        HdRead(&_hd_async, 0 /* sector number */);
+        FileConsumer(&_consumer_async);
 
         /* other tasks here... */
     }
