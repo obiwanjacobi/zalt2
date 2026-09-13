@@ -2,12 +2,14 @@
 ; This file provides C-callable wrappers for assembly library functions,
 ; allowing them to be called from C code.
 
-extern mem_fill, mem_clear
+extern mem_fill, mem_fill2, mem_fill3, mem_fill4
+extern mem_clear, mem_clear2, mem_clear3, mem_clear4
 extern lib_ring_buffer_construct, lib_ring_buffer_canpush, lib_ring_buffer_canpop, lib_ring_buffer_push, lib_ring_buffer_pop
 extern lib_ring_buffer8_construct, lib_ring_buffer8_canpush, lib_ring_buffer8_canpop, lib_ring_buffer8_push, lib_ring_buffer8_pop
 extern lib_ring_buffer16_construct, lib_ring_buffer16_canpush, lib_ring_buffer16_canpop, lib_ring_buffer16_push, lib_ring_buffer16_pop
 
-public _Memory_Fill, _Memory_Clear
+public _Memory_Fill, _Memory_Fill2, _Memory_Fill3, _Memory_Fill4
+public _Memory_Clear, _Memory_Clear2, _Memory_Clear3, _Memory_Clear4
 public _RingBuffer_Construct, _RingBuffer_CanPush, _RingBuffer_CanPop, _RingBuffer_Push, _RingBuffer_Pop
 public _RingBuffer8_Construct, _RingBuffer8_CanPush, _RingBuffer8_CanPop, _RingBuffer8_Push, _RingBuffer8_Pop
 public _RingBuffer16_Construct, _RingBuffer16_CanPush, _RingBuffer16_CanPop, _RingBuffer16_Push, _RingBuffer16_Pop
@@ -21,6 +23,30 @@ _Memory_Fill:
     push de  ; restore return address
     jp mem_fill
 
+; C callee: void Memory_Fill2(void* memory, uint8_t value)
+_Memory_Fill2:
+    pop de  ; return address
+    pop hl  ; dest
+    pop af  ; value
+    push de  ; restore return address
+    jp mem_fill2
+
+; C callee: void Memory_Fill3(void* memory, uint8_t value)
+_Memory_Fill3:
+    pop de  ; return address
+    pop hl  ; dest
+    pop af  ; value
+    push de  ; restore return address
+    jp mem_fill3
+
+; C callee: void Memory_Fill4(void* memory, uint8_t value)
+_Memory_Fill4:
+    pop de  ; return address
+    pop hl  ; dest
+    pop af  ; value
+    push de  ; restore return address
+    jp mem_fill4
+
 ; C callee: void Memory_Clear(void* memory, uint16_t size)
 _Memory_Clear:
     pop de  ; return address
@@ -28,6 +54,27 @@ _Memory_Clear:
     pop bc  ; size
     push de  ; restore return address
     jp mem_clear
+
+; C callee: void Memory_Clear2(void* memory)
+_Memory_Clear2:
+    pop de  ; return address
+    pop hl  ; dest
+    push de  ; restore return address
+    jp mem_clear2
+
+; C callee: void Memory_Clear3(void* memory)
+_Memory_Clear3:
+    pop de  ; return address
+    pop hl  ; dest
+    push de  ; restore return address
+    jp mem_clear3
+
+; C callee: void Memory_Clear4(void* memory)
+_Memory_Clear4:
+    pop de  ; return address
+    pop hl  ; dest
+    push de  ; restore return address
+    jp mem_clear4
 
 ; C callee: void* RingBuffer_Construct(void* rb, uint16_t size)
 _RingBuffer_Construct:
