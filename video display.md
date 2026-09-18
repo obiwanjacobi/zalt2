@@ -66,6 +66,8 @@ With any luck this list only has to be communicated once by the application and 
 
 Opening dialogs can be send separately by the application.
 
+See also [window manager](<./window manager.md>).
+
 #### Layout
 
 Graphics layout requires two passes: one measure pass that determins sizes and positions of elements and then a drawing pass (top down).

@@ -23,7 +23,7 @@ Task API:
 
 - `Task_Yield` / `Task_Sleep`
 - Locking Shared Resources? Lock/Mutex
-- Inter Process (Task) Communication? Pipes, Shared Memory, Mapped File?
+- Inter Process (Task) Communication? Pipes, Shared Memory (Mapped File)?
 - Atomic operations -prevent task switch for a short time.
 
 > We can reserve `HALT` as a yield+idle and wait for next scheduling interrupt. Although it would not be used often? If a task yields and we do not have to perform other (OS) tasks...
@@ -41,7 +41,7 @@ The OS protects its code from illegal access by:
 - Marking its MMU Pages with the OS bit. The CPLD monitors execution to manage a supervisor bit and will invalidate the memory access (write/execute) when illegal (MMU page has OS bit on but the supervisor FF is off).
 - OS functions (RSTs tracked by the CPLD) can switch to their private stack and MMU banks to pull-in additional data/code.
 - The CPLD can even track `IORQ` (+ address) to prevent illegal IO-requests (supervisor bit).
-- THe CPLD only allows MMU IO-access when supervisor bit is on.
+- The CPLD only allows MMU IO-access when supervisor bit is on.
 
 ## Program Loader
 
@@ -68,7 +68,7 @@ Memory Allocators:
 
 Normal Stack allocation (local vars) is done through the programming language.
 
-> Can memory be reseverd? And is this then guarenteed?
+> Can memory be reseverd? And is this then guaranteed?
 
 Dedicated memory pages can be allocated (per task) for smart-device interaction.
 These pages are mapped to both the specific device and the application in order for them to share data.
@@ -158,143 +158,97 @@ Examples of devices that require extra APIs
 - Audio
 - Video
 
-## Smart Devices
+## Memory Map
 
-Peripheral devices, like storage, video, audio etc. will be smart devices.
-The idea is that communication is done at a higher abstraction level allowing the device to implement more services
+- 512kB ROM
+- 512kB RAM
 
-Each device implements its own 'DMA' controller to effectively blast bytes over memory (in/out) in one or more memroy-page sized blocks.
+- Memory Page is 4kB
+- Number of active Pages: 16 (16 x 4kB = 64kB)
+- Memory Bank is 64kB (16 Pages) - layout of memory in Z80 address space.
+- Total number of addressable Pages: 8192 (32MB)
 
-## Window Manager
+A Memory Page can be positioned in any 4kB slot in the Z80 address space.
 
-(Analog to a tiling window manager)
+### Z80 CPU Address Space
 
-See also video display.md
+There are 16 pages of 4kB in CPU memory.
 
-To keep a GUI simple, responsive and light-weight:
+| Idx | Start | End | Size | Description |
+| -- | -- | -- | -- | -- |
+| f | $F000 | $FFFF | 4kB | |
+| e | $E000 | $EFFF | 4kB | |
+| d | $D000 | $DFFF | 4kB | |
+| c | $C000 | $CFFF | 4kB | |
+| b | $B000 | $BFFF | 4kB | |
+| a | $A000 | $AFFF | 4kB | |
+| 9 | $9000 | $9FFF | 4kB | |
+| 8 | $8000 | $8FFF | 4kB | |
+| 7 | $7000 | $7FFF | 4kB | |
+| 6 | $6000 | $6FFF | 4kB | |
+| 5 | $5000 | $5FFF | 4kB | |
+| 4 | $4000 | $4FFF | 4kB | |
+| 3 | $3000 | $3FFF | 4kB | OS-resident |
+| 2 | $2000 | $2FFF | 4kB | OS-resident |
+| 1 | $1000 | $1FFF | 4kB | OS-resident |
+| 0 | $0000 | $0FFF | 4kB | OS-resident |
 
-One bar at the top of the screen (like an old Mac) containing the (focused) application's main menu and some simplified Taskbar functionality.
+The number of 'OS-resident' pages is not yet determined.
 
-The rest of the screen is to display the main window of the current application.
-More than one application can be active.
+## Tasks and Banks
 
-There is a stack of 'main screens' that can be active - one at a time.
-A layout definition for the stack slot defines what windows are displayed, where.
+- Number of Tasks: 64 (6-bits)
+- Number of Banks (per Task): 32 (5-bits)
 
-The simplest is simply one main window, that fills the screen. Another could have two smaller windows to the side, or add an additional small window at the bottom.
+Total of 11 bits.
 
-This way the complexity is kept at a minimum and the user can still switch between applications.
+The CPLD manages the MMU Tasks/Banks.
 
-```txt
-|-----------------------------------|
-|File Edit View Help         Windows|
-|-----------------------------------|
-|                                   |
-|                                   |
-|    This is the main app window    |
-|                                   |
-|                                   |
-|                                   |
-|-----------------------------------|
-```
+| Task | Bank | Description |
+| -- | -- | -- |
+| 0 | 0 | Fixed OS Bank that manages os-function dispatching. |
+| 0 | 1-23 | OS and device-driver functional memory configurations. |
+| 0 | 24-31 | Last 8 Banks are reserved for Smart Device / Extension Bus IO transfer memory configuration. |
+| 1-63 | 0-31 | Custom Task (program) memory layout configured by the ProgramLoader. |
 
-```txt
-|-----------------------------------|
-|File Edit View Help         Windows|
-|-----------------------------------|
-|                     |             |
-|                     |             |
-|    This is an       |  Secondary  |
-|    app window       | app window  |
-|                     |             |
-|                     |             |
-|-----------------------------------|
-```
+MMU-Banks can be used as a stack, where each new memory layout is another bank.
+When the code is done with that layout it can be popped and the previous layout is reactivated.
 
-> It could be a good idea to implement the window manager inside the display interface card (smart device) and communicate with it using a higher-level protocol (no mult- monitor).
+### OS Memory
 
-> Base the graphic representation on tiles and sprites (cursor) that can be (re)used for writing games?
+| Page | Description |
+| -- | -- |
+| 0-n | OS entry point and book keeping. All Banks have these Pages mapped at the beginning of the CPU address space. |
 
-> TBD:
+These first pages contain the data variables required by the OS, OS-function entries (function tables) and interrupt handlers.
 
-- Can an application present more than one window that the system will treat as valid content for the screen layout? Even if that window is paired with one or more windows of other applications?
+| Type | Description |
+| -- | -- |
+| OS Resident Code | OS code that needs to be accessible at all times (mapped into all Banks) |
+| OS Resident Data | OS data that needs to be accessible at all times (mapped into all Banks) |
+| OS Code/Data Segments | OS function-specific code segments that are mapped in/out whenever needed, such as device-driver code. Can be mixed with data variables (only OS can do that). |
+| OS Blob | Static data used by the OS. Logos, fonts, math tables etc. Located in ROM. |
 
-- Focus on hover? Could be a setting that the user can turn on/off.
+Some of the OS code may be located in ROM.
+Some other code may be loaded from the MCU system SD-Card into RAM.
 
-> The RayLib graphics layout program can output .rlg files that contain control types and coordinates. Could be an easy way to design windows gui.
+The OS is 'loaded' and initialized during the boot-sequence when the system starts.
 
-- Have a single line of console entry on the bottom of the screen? Enter a command line quickly. If large output needs to be read (by the user) it can be folded open/extended (upward).
+### Application Memory
 
-- Have a Taskbar that gives quick access to all open applications.
+Typically the following types of segements are in play for a typical application:
 
-- Have a default windows that serves like a start-menu, but full screen. All 'installed' applications are listed here.
+| Type | Description |
+| -- | -- |
+| Application Code | There can be multiple segements of application code |
+| Application Data | Initialized, uninitialized variables and the call stack |
+| Application Blob | Large binary objects (files, images etc) that are read (or written) in chunks (4-8kB) - windowed data access. |
+| Shared Code | Shared library code that can be used by multiple applications (stateless) |
+| Dispatch | Jump table where the application jumps to another Bank to access additional code. This segement is always present in all Banks for the application (Task) |
 
-### Menu Bar
+> It would be nice if the OS could perform an application call stack check to prevent or at least detect a stack overrun, where either the stack overwrites application data or visa versa.
 
-There is one global top menu bar that displays the menu of the active application and starts at the left side of the screen.
-When more than one application is shown on the same screen, the active application is the one that has the focus.
+Although the memory page size is 4kB, these segments may span multiple pages.
+The maximum number of pages that is in CPU address space at one time for an application (incl. dispatch) is dependent on the number of memory pages required by the resident part of the OS.
 
-The application menu bar can be:
-
-- Text: Sub-menus are text with optional small icon graphics and optional shortcut keys.
-- A simplified ribbon type: a combination of a menu and a toolbar. More advanced.
-- Something else? Text main menu's the fold-out onto toolbars?
-
-On the right of the Menu Bar there is a system-provided way to manage Windows:
-
-- Open an application:
-  - into a new window
-  - add to the current window
-- Move an application
-  - to a different pane in the current screen (like swap)
-  - to a new screen
-- Close an application
-- Show a list of open Applications
-- Order the stack of screens
-
-> If we let the application register Commands (not menu UI) the system can present it any whay the user likes.
-The way VScode works with commands in a central drop list at the top of the screen may be a very compact and general way to invoke application functionality. What would light-weight commands look like?
-
-- Command Id (zero when category)
-- Category Id (hierarchy of commands)
-- Text (Title/Description)
-- Icon-Reference (graphic) (optional)
-- Shortcut Key Binding
-
-The application registers commands at startup (or declarive in binary?). Command-state (enabled/disable) can be retrieved from the app through a standard interface.
-
-The application can use categories to group commands into a hierarchy. If a command-id is zero, its registration represents a category and the category-id must be set. The system will pre-define several common categories.
-
-### Screen Controls
-
-Besides menus, several other re-usable, system-provided screen controls are available:
-
-- Push Button
-- Switch/Toggle
-- Radio Button (can be used to make tab-strip)
-- Selection/List Box  (popup overlay)
-- Text (formatted)
-- Picture (Image)
-- Drag Handle (sizing, splitter)
-- Panel (control grouping + text)
-
-Layout Controls:
-
-- Grid Layout (column and row spanning)
-- Stack Layout (horizontal/vertical)
-- Well (Pile?) Layout (only one visible at a time)
-
-### Dialogs
-
-An application can use system calls to open predefined Dialogs:
-
-- Output Message
-- Input Message
-- Load File
-- Save File
-- Fonts*
-- Color Picker*
-
-*) Nice to Have
-
-The dialogs are presented in the middle of the screen and are all Modal -you have to dismis the dialog before control is returned to the application.
+The application is loaded and initialized by the OS Program Loader that will place the code and data in memory (pages) and configure the Banks to represent the required segements.

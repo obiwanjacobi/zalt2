@@ -1,5 +1,10 @@
 # Smart Device
 
+Peripheral devices, like storage, video, audio etc. will be smart devices.
+The idea is that communication is done at a higher abstraction level allowing the device to implement more services
+
+Each device implements its own 'DMA' controller to effectively blast bytes over memory (in/out) in one or more memroy-page sized blocks.
+
 ## DMA Data Exchange
 
 For an efficient data transfer between an user application and a smart device, DMA will be used.
