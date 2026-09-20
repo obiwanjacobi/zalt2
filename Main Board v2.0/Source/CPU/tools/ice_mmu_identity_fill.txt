@@ -1,0 +1,52 @@
+; Z80 ICE command line instructions to identity-fill the MMU mapping RAMs for 
+; task_id=0, bank=0 and enable the MMU.
+; The Z80 has only 16 x 4KB pages (page_index 0-15) in its 64K address space, 
+; so a single task/bank context covers the whole space; page_frame is set equal 
+; to page_index for each page (RAM1=page_index, RAM2=0 -> no protection bits).
+
+; Port layout verified against CPLD/Xilinx ISE/src/MemController.vhd (io_latch_*
+; select the cell during programming; MAP[3:0] comes from A[15:12], hardwired
+; on the PCB to the SRAM address pins, not from any CPLD latch).
+
+; Also loads the normal (non-IO) latches with the same task_id=0/bank=0, since
+; those - not the IO latches - drive MMU_MAP once ram_ce_en enables the RAMs
+; for ordinary CPU memory cycles, so code can actually execute through the
+; freshly identity-mapped pages.
+
+out 03ff 00
+out 02ff 00
+out 0eff 00
+out 0fff 00
+out 1eff 01
+out 1fff 00
+out 2eff 02
+out 2fff 00
+out 3eff 03
+out 3fff 00
+out 4eff 04
+out 4fff 00
+out 5eff 05
+out 5fff 00
+out 6eff 06
+out 6fff 00
+out 7eff 07
+out 7fff 00
+out 8eff 08
+out 8fff 00
+out 9eff 09
+out 9fff 00
+out aeff 0a
+out afff 00
+out beff 0b
+out bfff 00
+out ceff 0c
+out cfff 00
+out deff 0d
+out dfff 00
+out eeff 0e
+out efff 00
+out feff 0f
+out ffff 00
+out 00ff 00
+out 01ff 00
+out 05ff 01

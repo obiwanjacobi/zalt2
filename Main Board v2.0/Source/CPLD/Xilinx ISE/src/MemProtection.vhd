@@ -30,6 +30,11 @@ entity MemProtection is
         CLK20       : in  std_logic;
         CPU_RST_N   : in  std_logic;
 
+        -- Mapping MMU enable state from MemController. While '0' the mapping
+        -- RAM contents (and thus the MP flags) are not yet initialised, so
+        -- violations must not trigger an NMI.
+        MMU_CE_EN   : in  std_logic;
+
         -- Memory protection violation flags (active-high, from mapping RAM)
         MMU_MP_EXE  : in  std_logic;
         MMU_MP_RD   : in  std_logic;
@@ -73,8 +78,10 @@ architecture rtl of MemProtection is
 
 begin
 
-    -- Any active-high violation flag triggers the NMI
-    mp_violation <= MMU_MP_EXE or MMU_MP_RD or MMU_MP_WR;
+    -- Any active-high violation flag triggers the NMI, but only once the
+    -- mapping RAM is enabled; before that its contents (and the MP flags
+    -- decoded from it) are assumed to be garbage.
+    mp_violation <= (MMU_MP_EXE or MMU_MP_RD or MMU_MP_WR) and MMU_CE_EN;
 
     -- -------------------------------------------------------------------------
     -- NMI generation

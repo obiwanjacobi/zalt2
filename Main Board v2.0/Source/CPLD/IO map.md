@@ -25,6 +25,25 @@ Registers 0x08FF–0x0DFF (A[11:8] = 8..D) are **reserved / free**.
 
 ---
 
+## SRAM data ports — MemController
+
+Used to read or write individual cells in the two mapping RAM chips.
+The IO latch registers (0x02FF / 0x03FF) must be loaded with the target
+cell address (MAP[10:4]) before accessing these ports.
+
+**A[15:12]** carries the lowest 4 bits of the cell address (MAP[3:0]).
+These lines are hardwired on the PCB directly to the SRAM address pins;
+the CPLD does not decode A[15:12] for these ports.
+
+**Qualifier:** A[7:0] = `0xFF`, A[11:8] = `E` or `F`
+
+| Port  | A[11:8] | A[15:12] | Dir | Description                              |
+|-------|---------|----------|-----|------------------------------------------|
+| 0xXEFF | E      | MAP[3:0] | r/w | MMU RAM1 — low  byte of 16-bit mapping entry |
+| 0xXFFF | F      | MAP[3:0] | r/w | MMU RAM2 — high byte of 16-bit mapping entry |
+
+---
+
 ## MPU cause register — MemProtection
 
 **Qualifier:** A[15:12] = `0x0`, A[7:0] = `0xFF`, A[11:8] = `0x4`
@@ -57,22 +76,3 @@ Registers 0x08FF–0x0DFF (A[11:8] = 8..D) are **reserved / free**.
 `SYSDDIR` tracks `CPU_WR_N` combinationally and is valid for the full IO cycle.  
 Wait states (default 3 × 50 ns = 150 ns) are inserted automatically on both ports
 to give the MCU time to respond; the count is set by the `WAIT_CYCLES` generic in `SysBridge`.
-
----
-
-## SRAM data ports — MemController
-
-Used to read or write individual cells in the two mapping RAM chips.
-The IO latch registers (0x02FF / 0x03FF) must be loaded with the target
-cell address (MAP[10:4]) before accessing these ports.
-
-**A[15:12]** carries the lowest 4 bits of the cell address (MAP[3:0]).
-These lines are hardwired on the PCB directly to the SRAM address pins;
-the CPLD does not decode A[15:12] for these ports.
-
-**Qualifier:** A[7:0] = `0xFF`, A[11:8] = `E` or `F`
-
-| Port  | A[11:8] | A[15:12] | Dir | Description                              |
-|-------|---------|----------|-----|------------------------------------------|
-| 0xXEFF | E      | MAP[3:0] | r/w | MMU RAM1 — low  byte of 16-bit mapping entry |
-| 0xXFFF | F      | MAP[3:0] | r/w | MMU RAM2 — high byte of 16-bit mapping entry |

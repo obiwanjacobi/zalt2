@@ -7,23 +7,34 @@ use ieee.std_logic_1164.all;
 -- Manages the two external mapping SRAM chips and the CPLD-internal address
 -- latches that control them.
 --
--- Two independent sets of 11-bit latches drive the MMU_MAP address bus:
+-- MMU_MAP is an 11-bit cell address, split into a task_id field (hi) and a
+-- bank field (lo) by the TASK_BITS generic (bank width = MMU_MAP'length - TASK_BITS).
+-- Both fields are generic-width so the split can be moved without touching
+-- the write logic.
 --
---   Normal latches (latch_lo / latch_hi)
+-- Two independent sets of latches drive the MMU_MAP address bus:
+--
+--   Normal latches (latch_bank / latch_task)
 --     Hold the current CPU logical-page address.  MMU_MAP is driven by these
 --     latches during ordinary CPU memory cycles so the mapping RAMs
 --     continuously present the correct physical address bits (MA24..MA12)
 --     to the SRAM array.  Both mapping RAMs are CE-enabled at all times;
 --     write-enable and data buffers are inactive during normal operation.
+--     The bank write is staged (pending_bank) and only committed to
+--     latch_bank/latch_task together, on the task_id write, so all 11 bits
+--     of MMU_MAP change atomically — software must write the bank latch
+--     first, then the task_id latch to commit.
 --
---   IO latches (io_latch_lo / io_latch_hi)
+--   IO latches (io_latch_bank / io_latch_task)
 --     Hold the mapping-RAM cell address for programming operations.
 --     Software loads these before issuing an SRAM data read or write.
 --     During an SRAM cycle MMU_MAP is switched to these latches.
 --     MAP[3:0] of the cell address are provided by A[15:12] of the Z80
 --     IN r,(C) / OUT (C),r instruction, but those lines are hardwired on the
 --     PCB directly to the SRAM address pins and are invisible to the CPLD.
---     The CPLD drives MMU_MAP[10:4] only from io_latch_hi and io_latch_lo.
+--     The CPLD drives MMU_MAP[10:4] only from io_latch_task and io_latch_bank.
+--     These latches are written directly (no staging) — programming does not
+--     affect the mapping currently in use by the CPU.
 --
 -- All CPLD system-IO ports require A[7:0]=0xFF so that normal user code
 -- using an 8-bit port number (OUT (n),A) can never inadvertently hit the MMU.
@@ -31,11 +42,12 @@ use ieee.std_logic_1164.all;
 -- IO address scheme:
 --
 --   Latch registers  A[15:12]="0000", A[7:0]=0xFF, A[11:8]=register select
---     0x00FF  Normal lower latch  latch_lo[7:0]    → MAP[7:0]   (r/w)
---     0x01FF  Normal upper latch  latch_hi[2:0]    → MAP[10:8]  (r/w)
---     0x02FF  IO lower latch      io_latch_lo[7:0] → MAP[7:0]   (r/w)
---     0x03FF  IO upper latch      io_latch_hi[2:0] → MAP[10:8]  (r/w)
---     0x05FF  RAM CE enable       bit0: '1'=enable both RAMs, '0'=disable  (w/o)
+--     0x00FF  Normal bank    latch  pending_bank   → staged, → MAP bank    (r/w)
+--     0x01FF  Normal task_id latch  latch_task     → MAP task_id  (r/w)
+--                                   commits pending_bank → latch_bank at the same time
+--     0x02FF  IO     bank    latch  io_latch_bank  → MAP bank    (r/w)
+--     0x03FF  IO     task_id latch  io_latch_task  → MAP task_id  (r/w)
+--     0x05FF  RAM CE enable         bit0: '1'=enable both RAMs, '0'=disable  (w/o)
 --             Defaults to '0' (disabled) on reset.
 --
 --   SRAM data ports  A[7:0]=0xFF, A[11:8]=E or F, A[15:12]=MAP[3:0]
@@ -47,13 +59,16 @@ use ieee.std_logic_1164.all;
 --     0xXFFF  MMU RAM2  (high byte of the 16-bit mapping entry)  X = MAP[3:0]
 --
 -- MMU_MAP is always driven by the latches only:
---   SRAM cycle  → MAP[10:8] = io_latch_hi,  MAP[7:0] = io_latch_lo
---   Normal      → MAP[10:8] = latch_hi,      MAP[7:0] = latch_lo
+--   SRAM cycle  → MAP task_id = io_latch_task,  MAP bank = io_latch_bank
+--   Normal      → MAP task_id = latch_task,      MAP bank = latch_bank
 --   (MAP[3:0] CPLD output pins are not connected to the SRAM on the PCB;
 --    A[15:12] are hardwired there to supply the low cell-address nibble.)
 -- =============================================================================
 
 entity MemController is
+    generic (
+        TASK_BITS     : natural := 3    -- width of the task_id field of MMU_MAP; bank field is MMU_MAP'length - TASK_BITS
+    );
     port (
         CLK20         : in  std_logic;
         CPU_RST_N     : in  std_logic;
@@ -82,6 +97,10 @@ entity MemController is
         MMU_RAM2_DE_N : out std_logic;   -- data buffer enable for RAM2
         MMU_RAM_DDIR  : out std_logic;   -- '0' = RAM→CPU (read), '1' = CPU→RAM (write)
 
+        -- Mapping RAM enable state, for MemProtection to suppress violations
+        -- while the mapping RAM contents are not yet initialised.
+        MMU_CE_EN     : out std_logic;
+
         -- CPU IO read interface
         D_OUT         : out std_logic_vector(7 downto 0);
         D_OE          : out std_logic
@@ -90,6 +109,9 @@ end entity MemController;
 
 -- =============================================================================
 architecture rtl of MemController is
+
+    -- Width of the bank field; task_id field width is TASK_BITS.
+    constant BANK_BITS : natural := MMU_MAP'length - TASK_BITS;
 
     -- -------------------------------------------------------------------------
     -- System IO decode — latch registers
@@ -101,38 +123,47 @@ architecture rtl of MemController is
     signal sys_read  : std_logic;
     signal reg_sel   : std_logic_vector(3 downto 0);  -- A[11:8]
     -- Normal latch selects
-    signal sel_lo    : std_logic;   -- 0x00FF → latch_lo    (MAP[7:0])
-    signal sel_hi    : std_logic;   -- 0x01FF → latch_hi    (MAP[10:8])
+    signal sel_bank    : std_logic;   -- 0x00FF → latch_bank    (MAP bank)
+    signal sel_task    : std_logic;   -- 0x01FF → latch_task    (MAP task_id)
     -- IO latch selects
-    signal sel_io_lo : std_logic;   -- 0x02FF → io_latch_lo (MAP[7:0])
-    signal sel_io_hi : std_logic;   -- 0x03FF → io_latch_hi (MAP[10:8])
+    signal sel_io_bank : std_logic;   -- 0x02FF → io_latch_bank (MAP bank)
+    signal sel_io_task : std_logic;   -- 0x03FF → io_latch_task (MAP task_id)
     signal sel_ce    : std_logic;   -- 0x05FF → ram_ce_en   (write-only)
 
     -- -------------------------------------------------------------------------
     -- RAM CE enable flip-flop
-    -- Controls MMU_RAM1_CE_N and MMU_RAM2_CE_N together.
-    -- Defaults to '0' (RAMs disabled) on reset so the MA bus is not driven
-    -- until the OS explicitly enables the mapping RAMs after initialisation.
+    -- Controls MMU_RAM1_CE_N and MMU_RAM2_CE_N together (in addition to the
+    -- per-chip SRAM access override below).
+    -- Defaults to '0' (RAMs disabled outside of SRAM access) on reset so the
+    -- MA bus is not driven until the OS explicitly enables the mapping RAMs
+    -- after initialisation. The boot ROM can still program the mapping RAM
+    -- via the SRAM data ports before ram_ce_en is set, since each chip's CE
+    -- is force-enabled during its own data-port access.
     -- -------------------------------------------------------------------------
     signal ram_ce_en : std_logic;
 
     -- -------------------------------------------------------------------------
     -- CPLD-internal MMU_MAP latches — Normal (active during CPU memory cycles)
-    --   latch_lo[7:0] → MAP[7:0]
-    --   latch_hi[2:0] → MAP[10:8]  (bits [7:3] of the write data are ignored)
+    --   latch_bank(BANK_BITS-1 downto 0) → MAP bank
+    --   latch_task(TASK_BITS-1 downto 0) → MAP task_id
+    --   pending_bank holds a bank write until the task_id write commits both
+    --   latch_bank and latch_task together, so MMU_MAP changes atomically.
     -- -------------------------------------------------------------------------
-    signal latch_lo    : std_logic_vector(7 downto 0);
-    signal latch_hi    : std_logic_vector(2 downto 0);
+    signal latch_bank   : std_logic_vector(BANK_BITS - 1 downto 0);
+    signal latch_task   : std_logic_vector(TASK_BITS - 1 downto 0);
+    signal pending_bank : std_logic_vector(BANK_BITS - 1 downto 0);
 
     -- -------------------------------------------------------------------------
     -- CPLD-internal MMU_MAP latches — IO (active during SRAM programming cycles)
-    --   io_latch_lo[7:0] → MAP[7:0]
-    --   io_latch_hi[2:0] → MAP[10:8] (bits [7:3] of the write data are ignored)
+    --   io_latch_bank(BANK_BITS-1 downto 0) → MAP bank
+    --   io_latch_task(TASK_BITS-1 downto 0) → MAP task_id
+    --   Written directly (no staging/atomicity) — programming does not affect
+    --   the mapping currently driving CPU memory cycles.
     --   Note: MAP[3:0] CPLD output pins are not connected to the SRAM on the PCB;
     --         A[15:12] are hardwired to those SRAM address lines instead.
     -- -------------------------------------------------------------------------
-    signal io_latch_lo : std_logic_vector(7 downto 0);
-    signal io_latch_hi : std_logic_vector(2 downto 0);
+    signal io_latch_bank : std_logic_vector(BANK_BITS - 1 downto 0);
+    signal io_latch_task : std_logic_vector(TASK_BITS - 1 downto 0);
 
     -- -------------------------------------------------------------------------
     -- SRAM data-port decode
@@ -149,6 +180,16 @@ architecture rtl of MemController is
 
 begin
 
+    -- Each latch write is a single 8-bit D_IN, so both fields must fit in a byte.
+    assert TASK_BITS <= 8 and BANK_BITS <= 8
+        report "MemController: TASK_BITS/BANK_BITS must each be <= 8 (D_IN is 8 bits wide)"
+        severity failure;
+
+    -- The two fields must exactly cover all 11 MMU_MAP bits.
+    assert TASK_BITS + BANK_BITS = MMU_MAP'length
+        report "MemController: TASK_BITS + BANK_BITS must equal MMU_MAP'length (11)"
+        severity failure;
+
     -- -------------------------------------------------------------------------
     -- System IO decode (latch registers)
     -- -------------------------------------------------------------------------
@@ -161,11 +202,11 @@ begin
     sys_read  <= sys_io and (not CPU_RD_N);
     reg_sel   <= A(11 downto 8);
 
-    sel_lo    <= '1' when sys_io = '1' and reg_sel = x"0" else '0';
-    sel_hi    <= '1' when sys_io = '1' and reg_sel = x"1" else '0';
-    sel_io_lo <= '1' when sys_io = '1' and reg_sel = x"2" else '0';
-    sel_io_hi <= '1' when sys_io = '1' and reg_sel = x"3" else '0';
-    sel_ce    <= '1' when sys_io = '1' and reg_sel = x"5" else '0';
+    sel_bank    <= '1' when sys_io = '1' and reg_sel = x"0" else '0';
+    sel_task    <= '1' when sys_io = '1' and reg_sel = x"1" else '0';
+    sel_io_bank <= '1' when sys_io = '1' and reg_sel = x"2" else '0';
+    sel_io_task <= '1' when sys_io = '1' and reg_sel = x"3" else '0';
+    sel_ce      <= '1' when sys_io = '1' and reg_sel = x"5" else '0';
 
     -- -------------------------------------------------------------------------
     -- MMU_MAP latch registers
@@ -173,18 +214,24 @@ begin
     process(CLK20, CPU_RST_N)
     begin
         if CPU_RST_N = '0' then
-            latch_lo    <= (others => '0');
-            latch_hi    <= (others => '0');
-            io_latch_lo <= (others => '0');
-            io_latch_hi <= (others => '0');
-            ram_ce_en   <= '0';
+            latch_bank    <= (others => '0');
+            latch_task    <= (others => '0');
+            pending_bank  <= (others => '0');
+            io_latch_bank <= (others => '0');
+            io_latch_task <= (others => '0');
+            ram_ce_en     <= '0';
         elsif rising_edge(CLK20) then
             if sys_write = '1' then
-                if sel_lo    = '1' then latch_lo    <= D_IN;              end if;
-                if sel_hi    = '1' then latch_hi    <= D_IN(2 downto 0); end if;
-                if sel_io_lo = '1' then io_latch_lo <= D_IN;              end if;
-                if sel_io_hi = '1' then io_latch_hi <= D_IN(2 downto 0); end if;
-                if sel_ce    = '1' then ram_ce_en   <= D_IN(0);           end if;
+                if sel_bank    = '1' then pending_bank <= D_IN(BANK_BITS - 1 downto 0); end if;
+                if sel_task    = '1' then
+                    -- Commit the staged bank field together with the task_id
+                    -- field so all MMU_MAP bits change on the same clock edge.
+                    latch_bank <= pending_bank;
+                    latch_task <= D_IN(TASK_BITS - 1 downto 0);
+                end if;
+                if sel_io_bank = '1' then io_latch_bank <= D_IN(BANK_BITS - 1 downto 0); end if;
+                if sel_io_task = '1' then io_latch_task <= D_IN(TASK_BITS - 1 downto 0); end if;
+                if sel_ce      = '1' then ram_ce_en <= D_IN(0); end if;
             end if;
         end if;
     end process;
@@ -196,20 +243,19 @@ begin
     -- -------------------------------------------------------------------------
     sram_active <= sel_ram1 or sel_ram2;
 
-    MMU_MAP(7 downto 0)  <= io_latch_lo when sram_active = '1' else latch_lo;
-    MMU_MAP(10 downto 8) <= io_latch_hi when sram_active = '1' else latch_hi;
+    MMU_MAP(BANK_BITS - 1 downto 0) <= io_latch_bank when sram_active = '1' else latch_bank;
+    MMU_MAP(10 downto BANK_BITS)    <= io_latch_task when sram_active = '1' else latch_task;
 
     -- -------------------------------------------------------------------------
-    -- IO read: return latch values on D bus
-    -- io_latch_lo is stored as 4 bits; pad to 8 for readback.
-    -- Upper bits of the 'hi' latches read back as '0'.
+    -- IO read: return latch values on D bus, zero-padded to 8 bits.
+    -- Bank reads return the committed latch, not the staged pending value.
     -- -------------------------------------------------------------------------
-    D_OUT <= latch_lo                    when sys_read = '1' and sel_lo    = '1' else
-             "00000" & latch_hi         when sys_read = '1' and sel_hi    = '1' else
-             io_latch_lo                when sys_read = '1' and sel_io_lo = '1' else
-             "00000" & io_latch_hi      when sys_read = '1' and sel_io_hi = '1' else
+    D_OUT <= (7 downto BANK_BITS => '0') & latch_bank      when sys_read = '1' and sel_bank    = '1' else
+             (7 downto TASK_BITS => '0') & latch_task      when sys_read = '1' and sel_task    = '1' else
+             (7 downto BANK_BITS => '0') & io_latch_bank    when sys_read = '1' and sel_io_bank = '1' else
+             (7 downto TASK_BITS => '0') & io_latch_task    when sys_read = '1' and sel_io_task = '1' else
              (others => '0');
-    D_OE  <= sys_read and (sel_lo or sel_hi or sel_io_lo or sel_io_hi);
+    D_OE  <= sys_read and (sel_bank or sel_task or sel_io_bank or sel_io_task);
 
     -- -------------------------------------------------------------------------
     -- SRAM data-port decode
@@ -226,11 +272,15 @@ begin
 
     -- -------------------------------------------------------------------------
     -- Mapping RAM chip enables
-    -- CE is gated by ram_ce_en so the OS can disable the RAMs during init.
+    -- CE follows ram_ce_en, but each chip is also force-enabled during its own
+    -- SRAM data-port access so the boot ROM can program the mapping RAM before
+    -- ram_ce_en is set.
     -- WE is pulsed only during an SRAM write cycle to the selected chip.
     -- -------------------------------------------------------------------------
-    MMU_RAM1_CE_N <= not ram_ce_en;
-    MMU_RAM2_CE_N <= not ram_ce_en;
+    MMU_RAM1_CE_N <= not (ram_ce_en or (sel_ram1 and (io_read or io_write)));
+    MMU_RAM2_CE_N <= not (ram_ce_en or (sel_ram2 and (io_read or io_write)));
+
+    MMU_CE_EN <= ram_ce_en;
 
     MMU_RAM1_WE_N <= not (io_write and sel_ram1);
     MMU_RAM2_WE_N <= not (io_write and sel_ram2);
@@ -240,13 +290,13 @@ begin
     -- DE_N is asserted only during an SRAM data IO cycle to the matching chip.
     -- During normal memory operation DE_N is inactive so the mapping RAM data
     -- outputs drive only the MA lines and never appear on the CPU data bus.
-    -- DDIR selects direction: '1' = CPU→RAM (write), '0' = RAM→CPU (read).
+    -- DDIR selects direction: '0' = CPU→RAM (write), '1' = RAM→CPU (read).
     -- -------------------------------------------------------------------------
     MMU_RAM1_DE_N <= not ((io_read or io_write) and sel_ram1);
     MMU_RAM2_DE_N <= not ((io_read or io_write) and sel_ram2);
 
-    -- Direction: '1' = CPU→RAM (write), '0' = RAM→CPU (read)
-    MMU_RAM_DDIR  <= io_write;
+    -- Direction: '0' = CPU→RAM (write), '1' = RAM→CPU (read)
+    MMU_RAM_DDIR  <= not io_write;
 
 end architecture rtl;
 
@@ -273,6 +323,8 @@ begin
     MMU_RAM1_DE_N <= '1';
     MMU_RAM2_DE_N <= '1';
     MMU_RAM_DDIR  <= '0';
+
+    MMU_CE_EN <= '0';
 
     D_OUT <= (others => '0');
     D_OE  <= '0';

@@ -1,0 +1,47 @@
+# User Constraints File (UCF)
+# Device: XC95288XL-TQ144
+# Board:  Isolated bring-up/sanity test board (JTAG + 3V3 only, all other pins floating)
+#
+# Pin picks below are deliberately spread one-per-bank so a bank-specific
+# supply/solder problem shows up as one bad channel instead of all of them.
+#
+# VCCIO bank ranges (from XC95288XL_TQ144.bsdl PIN_MAP):
+#   Bank1: P1-P36     (VCCIO=P1)
+#   Bank2: P37-P54    (VCCIO=P37)
+#   Bank3: P55-P72    (VCCIO=P55)
+#   Bank4: P73-P108   (VCCIO=P73)
+#   Bank5: P109-P126  (VCCIO=P109)
+#   Bank6: P127-P144  (VCCIO=P127)
+#
+# JTAG dedicated pins (TDI=P63, TMS=P65, TCK=P67, TDO=P122) - do not reuse.
+# VCC (+3V3): P1 P8 P37 P42 P55 P73 P84 P109 P127 P141
+# GND:        P18 P29 P36 P47 P62 P72 P89 P90 P99 P108 P114 P123 P144
+
+# ----------------------------------------------------------------------------
+# Clock (inject externally - any frequency, Hz..MHz range)
+# ----------------------------------------------------------------------------
+
+NET "CLK_IN" LOC = "P9" ;    # PB01_01, bank1
+
+# ----------------------------------------------------------------------------
+# Enable input - gates all outputs low when '0'; tie/float to probe the pin
+# ----------------------------------------------------------------------------
+
+NET "ENABLE" LOC = "P54" | PULLUP ;   # PB08_07, bank2
+
+# ----------------------------------------------------------------------------
+# Test outputs - one representative pin per VCCIO bank
+# ----------------------------------------------------------------------------
+
+NET "TEST_OUT<0>" LOC = "P2" ;    # PB03_01, bank1
+NET "TEST_OUT<1>" LOC = "P38" ;   # PB04_07, bank2
+NET "TEST_OUT<2>" LOC = "P56" ;   # PB08_10, bank3
+NET "TEST_OUT<3>" LOC = "P74" ;   # PB12_07, bank4
+NET "TEST_OUT<4>" LOC = "P110" ;  # PB11_01, bank5
+NET "TEST_OUT<5>" LOC = "P128" ;  # PB09_13, bank6
+
+# ----------------------------------------------------------------------------
+# Fast monitor output (scope) - independent liveness check
+# ----------------------------------------------------------------------------
+
+NET "MON_OUT" LOC = "P10" ;   # PB01_02, bank1

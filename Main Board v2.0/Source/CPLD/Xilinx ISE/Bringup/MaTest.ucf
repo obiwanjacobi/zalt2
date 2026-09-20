@@ -1,0 +1,38 @@
+# User Constraints File (UCF)
+# Device: XC95288XL-TQ144
+# Board:  Zalt2 Main Board v2.0 (U7) - all other chips removed for this test
+#
+# Pin locations match Main.ucf so the same physical net (MA<12..24> + its
+# R1-R26 pull-ups) is being tested, without touching the real Main design.
+
+NET "MA<12>" LOC = "P46" ;
+NET "MA<13>" LOC = "P48" ;
+NET "MA<14>" LOC = "P49" ;
+NET "MA<15>" LOC = "P50" ;
+NET "MA<16>" LOC = "P51" ;
+NET "MA<17>" LOC = "P52" ;
+NET "MA<18>" LOC = "P53" ;
+NET "MA<19>" LOC = "P54" ;
+NET "MA<20>" LOC = "P56" ;
+NET "MA<21>" LOC = "P57" ;
+NET "MA<22>" LOC = "P20" ;
+NET "MA<23>" LOC = "P21" ;
+NET "MA<24>" LOC = "P22" ;
+
+# Expansion bus header pin, unused with no card plugged in - safe probe point
+NET "MA_ALL_HIGH" LOC = "P27" ;   # BC1 in Main.ucf
+
+# Per-bit passthrough for a logic analyzer - spare pins, all chips removed
+#NET "MA_BITS<12>" LOC = "P26" ;   # BC2
+#NET "MA_BITS<13>" LOC = "P25" ;   # BC3
+#NET "MA_BITS<14>" LOC = "P24" ;   # BC4
+#NET "MA_BITS<15>" LOC = "P23" ;   # BC5
+#NET "MA_BITS<16>" LOC = "P15" ;   # BC13
+#NET "MA_BITS<17>" LOC = "P14" ;   # BC14
+#NET "MA_BITS<18>" LOC = "P13" ;   # BC15
+#NET "MA_BITS<19>" LOC = "P12" ;   # BC16
+#NET "MA_BITS<20>" LOC = "P11" ;   # BC17
+#NET "MA_BITS<21>" LOC = "P10" ;   # BC18
+#NET "MA_BITS<22>" LOC = "P111" ;  # MMU_MAP0
+#NET "MA_BITS<23>" LOC = "P112" ;  # MMU_MAP1
+#NET "MA_BITS<24>" LOC = "P113" ;  # MMU_MAP2

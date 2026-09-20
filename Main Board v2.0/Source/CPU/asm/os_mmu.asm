@@ -94,7 +94,7 @@ mmu_map_disable:
 ;   L       → IO bank    latch → SRAM addr[7:4]  (SRAM addr[3:0] not from CPLD)
 ;   A[3:0]  → A[15:12] of IN instruction → SRAM addr[3:0] (PCB-hardwired)
 ;
-; Input:   H[2:0] = task_id
+; Input:   H      = task_id
 ;          L      = bank
 ;          A[3:0] = page_index
 ; Output:  E      = page_frame low  byte (RAM1[7:0])
@@ -112,7 +112,6 @@ mmu_map_read:
     ; -- Load IO task_id latch ------------------------------------------------
     ld   b, MMU_B_IO_TASK_ID    ; B=0x03 → port 0x03FF
     ld   a, h
-    and  0x07                   ; mask task_id to 3 bits
     out  (c), a
 
     ; -- Load IO bank latch ---------------------------------------------------
@@ -158,14 +157,13 @@ mmu_map_read:
 ; Write a page_frame (16-bit) into the MMU map.
 ; Protection bits in RAM2[7:5] are written as specified in D[7:5].
 ;
-; Input:   H[2:0] = task_id
+; Input:   H      = task_id
 ;          L      = bank
 ;          A[3:0] = page_index
 ;          E      = page_frame low  byte (→ RAM1)
 ;          D[4:0] = page_frame high byte (→ RAM2[4:0])
 ;          D[7:5] = protected bits
 ; Destroys: A, BC, HL
-; Assumes:  map is enabled (mmu_map_enable called previously)
 ; =============================================================================
 mmu_map_write:
     ld   c, MMU_PORT             ; C = 0xFF for all MMU accesses
@@ -181,7 +179,6 @@ mmu_map_write:
     ; -- Load IO task_id latch ------------------------------------------------
     ld   b, MMU_B_IO_TASK_ID    ; B=0x03 → port 0x03FF
     ld   a, h
-    and  0x07                   ; mask task_id to 3 bits
     out  (c), a
 
     ; -- Load IO bank latch ---------------------------------------------------
@@ -286,23 +283,23 @@ mmu_bank_read:
 ; =============================================================================
 ; mmu_bank_write
 ; Write the normal-latch values (task_id and bank) that drive the MMU during
-; ordinary CPU memory cycles.  Takes effect immediately on the next CPU memory
-; cycle; the mapping RAMs will present the new physical address for the new
-; task_id:bank context.
+; ordinary CPU memory cycles.  The bank (low) latch must be written first; it
+; is only staged in the CPLD until the task_id (high) latch write, which
+; commits both bytes together so all 11 bits of the map address change
+; atomically on the next CPU memory cycle.
 ;
-; Input:   H[2:0] = task_id
-;          L      = bank
+; Input:   H = task_id
+;          L = bank
 ; Destroys: A, BC
 ; =============================================================================
 mmu_bank_write:
     ld   c, MMU_PORT             ; C = 0xFF for all MMU accesses
-    ld   b, MMU_B_TASK_ID       ; B=0x01 → port 0x01FF
-    ld   a, h
-    and  0x07                   ; mask task_id to 3 bits
+    ld   b, MMU_B_BANK          ; B=0x00 → port 0x00FF (staged until task_id write)
+    ld   a, l
     out  (c), a
 
-    ld   b, MMU_B_BANK          ; B=0x00 → port 0x00FF
-    ld   a, l
+    ld   b, MMU_B_TASK_ID       ; B=0x01 → port 0x01FF (commits bank+task_id)
+    ld   a, h
     out  (c), a
 
     ret
@@ -312,8 +309,8 @@ mmu_bank_write:
 ; Read the current IO-latch values (task_id and bank) that address the map
 ; during SRAM programming cycles (mmu_map_read / mmu_map_write).
 ;
-; Output:  H[2:0] = task_id  (IO task_id latch, MAP[10:8])
-;          L      = bank     (IO bank    latch, MAP[7:0])
+; Output:  H = task_id  (IO task_id latch)
+;          L = bank     (IO bank latch)
 ; Destroys: A, BC
 ; =============================================================================
 mmu_map_bank_read:
@@ -332,19 +329,18 @@ mmu_map_bank_read:
 ; SRAM programming cycles.  Sets the target cell for the next
 ; mmu_map_read / mmu_map_write call (without performing an access).
 ;
-; Input:   H[2:0] = task_id
-;          L      = bank
+; Input:   H = task_id
+;          L = bank
 ; Destroys: A, BC
 ; =============================================================================
 mmu_map_bank_write:
-    ld   c, MMU_PORT             ; C = 0xFF for all MMU accesses
-    ld   b, MMU_B_IO_TASK_ID    ; B=0x03 → port 0x03FF
-    ld   a, h
-    and  0x07                   ; mask task_id to 3 bits
-    out  (c), a
-
+    ld   c, MMU_PORT            ; C = 0xFF for all MMU accesses
     ld   b, MMU_B_IO_BANK       ; B=0x02 → port 0x02FF
     ld   a, l
+    out  (c), a
+
+    ld   b, MMU_B_IO_TASK_ID    ; B=0x03 → port 0x03FF
+    ld   a, h
     out  (c), a
 
     ret

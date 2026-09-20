@@ -77,13 +77,9 @@ entity Main is
         MMU_MP_WR   : in std_logic;   -- write access   (MREQ + WR)
 
         -- --------------------------------------------------------------------
-        -- Expansion Bus - IRQ inputs (from cards)
+        -- Expansion Bus - IRQ inputs (from cards) and INTACK outputs
         -- --------------------------------------------------------------------
         BIRQ        : in  std_logic_vector(7 downto 0);
-
-        -- --------------------------------------------------------------------
-        -- Expansion Bus - INTACK outputs
-        -- --------------------------------------------------------------------
         BINTACK     : out std_logic_vector(7 downto 0);
 
         -- --------------------------------------------------------------------
@@ -146,6 +142,9 @@ architecture rtl of Main is
 
     signal bclk_int  : std_logic;
 
+    -- Mapping RAM enable state, from MemController to MemProtection
+    signal mmu_ce_en : std_logic;
+
 begin
 
     -- -------------------------------------------------------------------------
@@ -176,8 +175,8 @@ begin
     -- -------------------------------------------------------------------------
     -- MMU - Mapping RAM Control
     -- -------------------------------------------------------------------------
-    --u_MemController : entity work.MemController(rtl)
-    u_MemController : entity work.MemController(rtl_null)
+    u_MemController : entity work.MemController(rtl)
+    --u_MemController : entity work.MemController(rtl_null)
         port map (
             CLK20         => CLK20,
             CPU_RST_N     => CPU_RST_N,
@@ -195,6 +194,7 @@ begin
             MMU_RAM1_DE_N => MMU_RAM1_DE_N,
             MMU_RAM2_DE_N => MMU_RAM2_DE_N,
             MMU_RAM_DDIR  => MMU_RAM_DDIR,
+            MMU_CE_EN     => mmu_ce_en,
             D_OUT         => mmc_d_out,
             D_OE          => mmc_d_oe
         );
@@ -207,6 +207,7 @@ begin
         port map (
             CLK20      => CLK20,
             CPU_RST_N  => CPU_RST_N,
+            MMU_CE_EN  => mmu_ce_en,
             MMU_MP_EXE => MMU_MP_EXE,
             MMU_MP_RD  => MMU_MP_RD,
             MMU_MP_WR  => MMU_MP_WR,

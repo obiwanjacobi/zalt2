@@ -165,4 +165,6 @@ See also Interrupt Controller for System IO interrupts.
   - [ ] select the memory bank for the device requesting the interrupt.
 
 - [ ] BINTACK is not really used. Each BIRQn has its own ACK.
-- [ ] MMU-enable needs to be active when data is being written or read using IO - even when the FF is off.
+- [x] MMU-enable needs to be active when data is being written or read using IO - even when the FF is off.
+- [x] When MMU-enable is false (disabled) the protection bits (MMU_MP_XX) are ignored.
+- [x] Writes to the normal MMU latch must be atomic to change all 11 bits at the same time.

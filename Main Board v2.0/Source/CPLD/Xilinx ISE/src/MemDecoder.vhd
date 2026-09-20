@@ -41,7 +41,8 @@ begin
 
     -- A memory cycle is active when MREQ is asserted and either RD or WR is
     -- asserted (excludes RFSH cycles which assert MREQ without RD/WR).
-    mem_active <= (not CPU_MREQ_N) and ((not CPU_RD_N) or (not CPU_WR_N));
+    --mem_active <= (not CPU_MREQ_N) and ((not CPU_RD_N) or (not CPU_WR_N));
+    mem_active <= '1';  -- temporarily force memory active for testing
 
     -- ROM: top 512 kB of 32 MB physical space (0x1F80000..0x1FFFFFF)
     rom_sel <= '1' when MA(24 downto 19) = "111111" else '0';
