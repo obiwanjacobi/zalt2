@@ -175,7 +175,8 @@ begin
     -- -------------------------------------------------------------------------
     -- MMU - Mapping RAM Control
     -- -------------------------------------------------------------------------
-    u_MemController : entity work.MemController(rtl)
+    --u_MemController : entity work.MemController(rtl)
+    u_MemController : entity work.MemController(rtl_io_test)
     --u_MemController : entity work.MemController(rtl_null)
         port map (
             CLK20         => CLK20,

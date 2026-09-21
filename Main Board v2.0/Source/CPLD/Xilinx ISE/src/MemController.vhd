@@ -67,7 +67,7 @@ use ieee.std_logic_1164.all;
 
 entity MemController is
     generic (
-        TASK_BITS     : natural := 3    -- width of the task_id field of MMU_MAP; bank field is MMU_MAP'length - TASK_BITS
+        TASK_BITS     : natural := 6    -- width of the task_id field of MMU_MAP; bank field is MMU_MAP'length - TASK_BITS
     );
     port (
         CLK20         : in  std_logic;
@@ -330,3 +330,101 @@ begin
     D_OE  <= '0';
 
 end architecture rtl_null;
+
+-- =============================================================================
+-- Test architecture: latch registers only.
+--
+-- Implements just the sys_io latch decode/write/read logic (latch_bank,
+-- latch_task, pending_bank, io_latch_bank, io_latch_task, ram_ce_en) so an
+-- OUT to a latch register followed by an IN from the same register can be
+-- verified on real hardware. SRAM data-port decode, MMU_MAP output and the
+-- mapping-RAM control signals are not implemented; those outputs are tied
+-- to fixed disabled values.
+--
+-- Use from top-level with:
+--   entity work.MemController(rtl_io_test)
+-- =============================================================================
+architecture rtl_io_test of MemController is
+
+    constant BANK_BITS : natural := MMU_MAP'length - TASK_BITS;
+
+    signal sys_io    : std_logic;
+    signal sys_write : std_logic;
+    signal sys_read  : std_logic;
+    signal reg_sel   : std_logic_vector(3 downto 0);
+
+    signal sel_bank    : std_logic;
+    signal sel_task    : std_logic;
+    signal sel_io_bank : std_logic;
+    signal sel_io_task : std_logic;
+    signal sel_ce      : std_logic;
+
+    signal ram_ce_en : std_logic;
+
+    signal latch_bank   : std_logic_vector(BANK_BITS - 1 downto 0);
+    signal latch_task   : std_logic_vector(TASK_BITS - 1 downto 0);
+    signal pending_bank : std_logic_vector(BANK_BITS - 1 downto 0);
+
+    signal io_latch_bank : std_logic_vector(BANK_BITS - 1 downto 0);
+    signal io_latch_task : std_logic_vector(TASK_BITS - 1 downto 0);
+
+begin
+
+    sys_io <= '1' when CPU_IORQ_N = '0' and CPU_M1_N = '1'
+                       and A(15 downto 12) = "0000"
+                       and A(7 downto 0)   = x"FF"
+              else '0';
+
+    sys_write <= sys_io and (not CPU_WR_N);
+    sys_read  <= sys_io and (not CPU_RD_N);
+    reg_sel   <= A(11 downto 8);
+
+    sel_bank    <= '1' when sys_io = '1' and reg_sel = x"0" else '0';
+    sel_task    <= '1' when sys_io = '1' and reg_sel = x"1" else '0';
+    sel_io_bank <= '1' when sys_io = '1' and reg_sel = x"2" else '0';
+    sel_io_task <= '1' when sys_io = '1' and reg_sel = x"3" else '0';
+    sel_ce      <= '1' when sys_io = '1' and reg_sel = x"5" else '0';
+
+    process(CLK20, CPU_RST_N)
+    begin
+        if CPU_RST_N = '0' then
+            latch_bank    <= (others => '0');
+            latch_task    <= (others => '0');
+            pending_bank  <= (others => '0');
+            io_latch_bank <= (others => '0');
+            io_latch_task <= (others => '0');
+            ram_ce_en     <= '0';
+        elsif rising_edge(CLK20) then
+            if sys_write = '1' then
+                if sel_bank    = '1' then pending_bank <= D_IN(BANK_BITS - 1 downto 0); end if;
+                if sel_task    = '1' then
+                    latch_bank <= pending_bank;
+                    latch_task <= D_IN(TASK_BITS - 1 downto 0);
+                end if;
+                if sel_io_bank = '1' then io_latch_bank <= D_IN(BANK_BITS - 1 downto 0); end if;
+                if sel_io_task = '1' then io_latch_task <= D_IN(TASK_BITS - 1 downto 0); end if;
+                if sel_ce      = '1' then ram_ce_en <= D_IN(0); end if;
+            end if;
+        end if;
+    end process;
+
+    D_OUT <= (7 downto BANK_BITS => '0') & latch_bank    when sys_read = '1' and sel_bank    = '1' else
+             (7 downto TASK_BITS => '0') & latch_task    when sys_read = '1' and sel_task    = '1' else
+             (7 downto BANK_BITS => '0') & io_latch_bank  when sys_read = '1' and sel_io_bank = '1' else
+             (7 downto TASK_BITS => '0') & io_latch_task  when sys_read = '1' and sel_io_task = '1' else
+             (7 downto 1         => '0') & ram_ce_en      when sys_read = '1' and sel_ce      = '1' else
+             (others => '0');
+    D_OE  <= sys_read and (sel_bank or sel_task or sel_io_bank or sel_io_task or sel_ce);
+
+    -- Not implemented in this test mode: SRAM data ports and mapping-RAM control.
+    MMU_MAP       <= (others => '0');
+    MMU_RAM1_CE_N <= '1';
+    MMU_RAM2_CE_N <= '1';
+    MMU_RAM1_WE_N <= '1';
+    MMU_RAM2_WE_N <= '1';
+    MMU_RAM1_DE_N <= '1';
+    MMU_RAM2_DE_N <= '1';
+    MMU_RAM_DDIR  <= '0';
+    MMU_CE_EN     <= ram_ce_en;
+
+end architecture rtl_io_test;
